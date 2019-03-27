@@ -12,8 +12,8 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-*        MAX     | V  |
-*     I=1,...,N  |  I |
+*     .   MAX     | V  |
+*     .I=1,...,N  |  I |
       REAL FUNCTION RMAXABS(V, N)
       REAL V(N)
 
@@ -29,12 +29,12 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-*       N
-*      ===
-*      \    | X  |
-*      /    |  I |
-*      ===
-*     I = 1
+*     .  N
+*     . ===
+*     . \    | X  |
+*     . /    |  I |
+*     . ===
+*     .I = 1
       REAL FUNCTION RNORM1(V, N)
       REAL V(N)
 
@@ -48,15 +48,15 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-*              _________
-*             /  N
-*            / ====
-*           /  \
-*          /    \     2
-*         /     /    X
-*        /     /      I
-*       /      ====
-*     \/       I = 1
+*     .         _________
+*     .        /  N
+*     .       / ====
+*     .      /  \
+*     .     /    \     2
+*     .    /     /    X
+*     .   /     /      I
+*     .  /      ====
+*     .\/       I = 1
       REAL FUNCTION RNORM2(V, N)
       REAL V(N)
 
@@ -97,19 +97,16 @@
 
       END
 
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
       PROGRAM MAIN
 
-      LOGICAL PROOF1
+      PARAMETER (N = 4)
 
-      INTEGER N
-      REAL V(4)
+      REAL V(N)
+      REAL NORM1, NORM2, NORMINF
+      REAL TERM1, TERM2, TERM3
 
-      REAL NORM1
-      REAL NORM2
-      REAL NORMINF
-
-      N = 4
       V(1) = -1.0
       V(2) = 1.0
       V(3) = -1.0
@@ -122,10 +119,35 @@
       WRITE(*,*) 'Vettore:'
       CALL VECPRINT(V, N)
 
-      WRITE(*,*) 'Norma 1: ', NORM1
-      WRITE(*,*) 'Norma 2: ', NORM2
-      WRITE(*,*) 'Norma inf: ', NORMINF
+      WRITE(*,*) 'Norma 1  :', NORM1
+      WRITE(*,*) 'Norma 2  :', NORM2
+      WRITE(*,*) 'Norma inf:', NORMINF
 
-      WRITE(*,*) 'Th. 1: ', PROOF1(V, N)
+*     .                                  _
+*     .|| X ||     <=   || X ||   <=   \/n || X ||
+*     .      inf              2                  inf
+      TERM1 = NORMINF
+      TERM2 = NORM2
+      TERM3 = SQRT(REAL(N)) * NORMINF
+
+      WRITE(*,*) 'Th. 1:', TERM1, '<=', TERM2, '<=', TERM3
+
+*     .                                _
+*     .|| X ||   <=   || X ||   <=   \/n || X ||
+*     .      2              1                  2
+      TERM1 = TERM2
+      TERM2 = TERM1
+      TERM3 = SQRT(REAL(N)) * TERM2
+
+      WRITE(*,*) 'Th. 2:', TERM1, '<=', TERM2, '<=', TERM3
+
+*     .
+*     .|| X ||     <=   || X ||   <=   n || X ||
+*     .      inf              1                inf
+      TERM1 = NORMINF
+      TERM2 = NORM1
+      TERM3 = N * NORMINF
+
+      WRITE(*,*) 'Th. 3:', TERM1, '<=', TERM2, '<=', TERM3
 
       END
