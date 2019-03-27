@@ -1,19 +1,13 @@
 *     Trovare il massimo (o il minimo) di un insieme di numeri
 
-      SUBROUTINE VECMAX(V, N, VMAX)
-      REAL V(N), VMAX
+      SUBROUTINE VECMAXMIN(V, N, VMAX, VMIN)
+      REAL V(N), VMAX, VMIN
       VMAX = V(1)
+      VMIN = V(1)
       DO I = 2, N
          IF (V(I) .GT. VMAX) THEN
             VMAX = V(I)
          ENDIF
-      ENDDO
-      END
-
-      SUBROUTINE VECMIN(V, N, VMIN)
-      REAL V(N), VMIN
-      VMIN = V(1)
-      DO I = 2, N
          IF (V(I) .LT. VMIN) THEN
             VMIN = V(I)
          ENDIF
@@ -25,7 +19,6 @@
       REAL V(MAX), VMAX, VMIN
       WRITE(*,*) 'Insert 10 numbers: '
       READ(*,*) (V(I), I = 1, MAX)
-      CALL VECMAX(V, MAX, VMAX)
-      CALL VECMIN(V, MAX, VMIN)
+      CALL VECMAXMIN(V, MAX, VMAX, VMIN)
       WRITE(*,*) 'The maximum is: ', VMAX, 'and the minimum is: ', VMIN
       END
