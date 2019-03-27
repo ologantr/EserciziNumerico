@@ -3,6 +3,7 @@
 
       REAL FUNCTION AVGVECTOR(V, N)
       REAL V(N)
+      AVGVECTOR = 0
       DO I = 1, N
          AVGVECTOR = AVGVECTOR + V(I)
       ENDDO
