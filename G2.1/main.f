@@ -1,14 +1,20 @@
 *     Verificare il Teorema di equivalenza tra le norme vettoriali.
 *     In particolare le relazioni le tre norme vettoriali studiate.
 
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+*     Print the values of the components indexed from 1 to N
+*     of the vector V.
       SUBROUTINE VECPRINT(V, N)
       REAL V(N)
       WRITE(*,*) (V(I), I = 1, N)
       END
 
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+*        MAX     | V  |
+*     I=1,...,N  |  I |
       REAL FUNCTION RMAXABS(V, N)
-
       REAL V(N)
 
       RMAXABS = ABS(V(1))
@@ -21,10 +27,17 @@
 
       END
 
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+*       N
+*      ===
+*      \    | X  |
+*      /    |  I |
+*      ===
+*     I = 1
       REAL FUNCTION RNORM1(V, N)
-
       REAL V(N)
+
       RNORM1 = 0
 
       DO I = 1, N
@@ -33,10 +46,20 @@
 
       END
 
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+*              _________
+*             /  N
+*            / ====
+*           /  \
+*          /    \     2
+*         /     /    X
+*        /     /      I
+*       /      ====
+*     \/       I = 1
       REAL FUNCTION RNORM2(V, N)
-
       REAL V(N)
+
       RNORM2 = 0
 
       DO I = 1, N
@@ -47,12 +70,15 @@
 
       END
 
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+*     An helper function just for clarity calling RMAXABS.
       REAL FUNCTION RNORMINF(V, N)
       REAL V(N)
       RNORMINF = RMAXABS(V, N)
       END
 
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
       LOGICAL FUNCTION PROOF1(V, N)
 
