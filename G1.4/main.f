@@ -13,6 +13,7 @@
       PROGRAM MAIN
       PARAMETER (MAX = 10)
       REAL AVGVECTOR, V(MAX), AVG
+      WRITE(*,*) 'Insert 10 numbers: '
       READ(*,*) (V(I), I = 1, MAX)
       AVG = AVGVECTOR(V, MAX)
       WRITE(*,*) AVG
