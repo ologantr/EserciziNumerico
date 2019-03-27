@@ -1,3 +1,6 @@
+*     Scrivere un programma per la risoluzione delle equazioni di
+*     secondo grado.
+
       FUNCTION DELTA(A, B, C)
       REAL A, B, C
       DELTA = B*B - 4*A*C

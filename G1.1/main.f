@@ -1,4 +1,9 @@
+*     Dati due numeri interi dire se il primo e' multiplo del secondo.
+*     Caso particolare dato un numero intero dire se il numero
+*     e' pari o dispari.
+
       PROGRAM MAIN
+
       INTEGER A, B
       WRITE(*,*) 'Insert the first number(A): '
       READ(*,*) A

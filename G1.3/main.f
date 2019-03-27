@@ -1,3 +1,6 @@
+*     Scrivere i programmi per la sommatoria e produttoria di
+*     n numeri reali e complessi.
+
       REAL FUNCTION RSUM(X, N)
       REAL X(N)
       RSUM = 0
