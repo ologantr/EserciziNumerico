@@ -80,25 +80,6 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-      LOGICAL FUNCTION PROOF1(V, N)
-
-      REAL V(N)
-      REAL TERM1, TERM2, TERM3
-
-      TERM1 = RNORMINF(V, N)
-      TERM2 = RNORM2(V, N)
-      TERM3 = SQRT(REAL(N)) * RNORMINF(V, N)
-
-      IF (TERM1 .LE. TERM2 .AND. TERM2 .LE. TERM3) THEN
-         PROOF1 = .TRUE.
-      ELSE
-         PROOF1 = .FALSE.
-      ENDIF
-
-      END
-
-*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
       PROGRAM MAIN
 
       PARAMETER (N = 4)
