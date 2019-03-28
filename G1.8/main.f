@@ -1,4 +1,4 @@
-*     Ordinamento di un insieme di numeri, stampare l'insieme ordinato
+*     Ordinamento di un insieme di numeri, stampare insieme ordinato
 
       SUBROUTINE SWAP(A, B)
       INTEGER A, B, TEMP
