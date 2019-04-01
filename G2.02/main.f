@@ -21,9 +21,51 @@
       ENDDO
       END
 
+*     Subroutine per stampa vettore
       SUBROUTINE PRINTVEC(V, N)
       REAL V(N)
       WRITE(*,*) (V(I), I = 1, N)
+      END
+
+*     Massimo di un vettore in valore assoluto
+      REAL FUNCTION RMAXABS(V, N)
+      REAL V(N)
+
+      RMAXABS = ABS(V(1))
+
+      DO I = 2, N
+         IF (ABS(V(I)) .GT. RMAXABS) THEN
+            RMAXABS = ABS(V(I))
+         ENDIF
+      ENDDO
+
+      END
+
+*     Norma 1
+      REAL FUNCTION RNORM1(V, N)
+      REAL V(N)
+      RNORM1 = 0
+
+      DO I = 1, N
+         RNORM1 = RNORM1 + ABS(V(I))
+      ENDDO
+      END
+
+*     Norma 2
+      REAL FUNCTION RNORM2(V, N)
+      REAL V(N)
+      RNORM2 = 0
+
+      DO I = 1, N
+         RNORM2 = RNORM2 + V(I) ** 2
+      ENDDO
+      RNORM2 = SQRT(RNORM2)
+      END
+
+*     Norma infinito
+      REAL FUNCTION RNORMINF(V, N)
+      REAL V(N)
+      RNORMINF = RMAXABS(V, N)
       END
 
       PROGRAM MAIN
