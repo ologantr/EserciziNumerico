@@ -119,8 +119,8 @@
          DO J = 1, N
             S = S + (ABS(A(I, J))) ** 2
          ENDDO
-         FROBENIUSNORM = SQRT(S)
       ENDDO
+      FROBENIUSNORM = SQRT(S)
       END
 
 
