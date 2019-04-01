@@ -20,7 +20,7 @@
       V(1) = VAL_MIN
       V(N) = VAL_MAX
 
-      STEP = (ABS(VAL_MIN) + ABS(VAL_MAX)) / (N - 1)
+      STEP = (VAL_MAX - VAL_MIN) / (N - 1)
 
       DO I = 2, N - 1
          V(I) = V(I - 1) + STEP
