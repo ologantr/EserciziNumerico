@@ -5,14 +5,8 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-      PROGRAM MAIN
-
-*     Numero di componenti
-      PARAMETER (N = 5)
-
-*     Minimo e massimo dell'intervallo dei valori
-      PARAMETER (VAL_MIN = -1.0)
-      PARAMETER (VAL_MAX = +1.0)
+*     Subroutine per calcolo del vettore
+      SUBROUTINE VECCOMPUTE(V, N, VAL_MIN, VAL_MAX)
 
       REAL V(N)
       REAL STEP
@@ -25,7 +19,28 @@
       DO I = 2, N - 1
          V(I) = V(I - 1) + STEP
       ENDDO
+      END
 
-      WRITE(*,*) V
+      SUBROUTINE PRINTVEC(V, N)
+      REAL V(N)
+      WRITE(*,*) (V(I), I = 1, N)
+      END
 
+      PROGRAM MAIN
+
+*     Numero di componenti
+      PARAMETER (N = 5)
+
+*     Minimo e massimo dell'intervallo dei valori
+      PARAMETER (VAL_MIN = -1.0)
+      PARAMETER (VAL_MAX = +1.0)
+
+*     Vettore delle componenti
+      REAL V(N)
+
+*     Generazione del vettore
+      CALL VECCOMPUTE(V, N, VAL_MIN, VAL_MAX)
+
+*     Stampa del vettore
+      CALL PRINTVEC(V, N)
       END
