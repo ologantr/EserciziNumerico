@@ -110,6 +110,22 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+*     Dato che non abbiamo la IMSL, ho scelto di implementare la
+*     norma di Frobenius essendo una sovrastima della norma 2
+      REAL FUNCTION FROBENIUSNORM(A, N)
+      REAL A(N, N), S
+      S = 0
+      DO I = 1, N
+         DO J = 1, N
+            S = S + (ABS(A(I, J))) ** 2
+         ENDDO
+         FROBENIUSNORM = SQRT(S)
+      ENDDO
+      END
+
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
       PROGRAM MAIN
 
       PARAMETER (N = 7)
