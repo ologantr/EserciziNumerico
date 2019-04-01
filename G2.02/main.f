@@ -68,10 +68,25 @@
       RNORMINF = RMAXABS(V, N)
       END
 
+*     Scrive su file i dati relativi alle norme
+      SUBROUTINE COMPUTENORMS(V, N, VAL_MIN, VAL_MAX)
+      REAL V(N), NORM1, NORM2, NORMINF
+      DO I = 2, N
+         CALL VECCOMPUTE(V, I, VAL_MIN, VAL_MAX)
+         NORM1 = RNORM1(V, I)
+         NORM2 = RNORM2(V, I)
+         NORMINF = RNORMINF(V, I)
+         WRITE(1,*) I, NORM1
+         WRITE(2,*) I, NORM2
+         WRITE(3,*) I, NORMINF
+      ENDDO
+      END
+
+
       PROGRAM MAIN
 
 *     Numero di componenti
-      PARAMETER (N = 5)
+      PARAMETER (N = 15)
 
 *     Minimo e massimo dell'intervallo dei valori
       PARAMETER (VAL_MIN = -1.0)
@@ -80,9 +95,7 @@
 *     Vettore delle componenti
       REAL V(N)
 
-*     Generazione del vettore
-      CALL VECCOMPUTE(V, N, VAL_MIN, VAL_MAX)
+*     Chiamata alla funzione per calcolo delle norme
+      CALL COMPUTENORMS(V, N, VAL_MIN, VAL_MAX)
 
-*     Stampa del vettore
-      CALL PRINTVEC(V, N)
       END
