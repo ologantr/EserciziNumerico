@@ -8,6 +8,7 @@
 *     Genera un vettore di dimensione N i cui valori sono omogeneamente
 *     distribuiti tra VAL_MIN e VAL_MAX
       SUBROUTINE GENVEC(V, N, VAL_MIN, VAL_MAX)
+
       REAL V(N)
       REAL STEP
 
@@ -19,12 +20,11 @@
       DO I = 2, N - 1
          V(I) = V(I - 1) + STEP
       ENDDO
-
       END
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-*     Elemento massimo di un vettore in valore assoluto
+*     Massimo tra gli elementi di un vettore in valore assoluto
       REAL FUNCTION RMAXABS(V, N)
       REAL V(N)
 
