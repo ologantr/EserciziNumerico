@@ -1,3 +1,5 @@
 main
-a.out
+
 *.dat
+fort.*
+*.png
