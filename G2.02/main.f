@@ -7,7 +7,6 @@
 
 *     Subroutine per calcolo del vettore
       SUBROUTINE VECCOMPUTE(V, N, VAL_MIN, VAL_MAX)
-
       REAL V(N)
       REAL STEP
 
