@@ -5,8 +5,9 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-*     Subroutine per calcolo del vettore
-      SUBROUTINE VECCOMPUTE(V, N, VAL_MIN, VAL_MAX)
+*     Genera un vettore di dimensione N i cui valori sono omogeneamente
+*     distribuiti tra VAL_MIN e VAL_MAX
+      SUBROUTINE GENVEC(V, N, VAL_MIN, VAL_MAX)
       REAL V(N)
       REAL STEP
 
@@ -18,15 +19,12 @@
       DO I = 2, N - 1
          V(I) = V(I - 1) + STEP
       ENDDO
+
       END
 
-*     Subroutine per stampa vettore
-      SUBROUTINE PRINTVEC(V, N)
-      REAL V(N)
-      WRITE(*,*) (V(I), I = 1, N)
-      END
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-*     Massimo di un vettore in valore assoluto
+*     Elemento massimo di un vettore in valore assoluto
       REAL FUNCTION RMAXABS(V, N)
       REAL V(N)
 
@@ -40,38 +38,55 @@
 
       END
 
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
 *     Norma 1
       REAL FUNCTION RNORM1(V, N)
       REAL V(N)
+
       RNORM1 = 0
 
       DO I = 1, N
          RNORM1 = RNORM1 + ABS(V(I))
       ENDDO
+
       END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 *     Norma 2
       REAL FUNCTION RNORM2(V, N)
       REAL V(N)
+
       RNORM2 = 0
 
       DO I = 1, N
          RNORM2 = RNORM2 + V(I) ** 2
       ENDDO
+
       RNORM2 = SQRT(RNORM2)
+
       END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 *     Norma infinito
       REAL FUNCTION RNORMINF(V, N)
       REAL V(N)
+
       RNORMINF = RMAXABS(V, N)
+
       END
 
-*     Scrive su file i dati relativi alle norme
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+*     Scrive su tre file il valore assunto dalle tre norme vettoriale
+*     al crescere del numero di componenti
       SUBROUTINE COMPUTENORMS(V, N, VAL_MIN, VAL_MAX)
       REAL V(N), NORM1, NORM2, NORMINF
+
       DO I = 2, N
-         CALL VECCOMPUTE(V, I, VAL_MIN, VAL_MAX)
+         CALL GENVEC(V, I, VAL_MIN, VAL_MAX)
          NORM1 = RNORM1(V, I)
          NORM2 = RNORM2(V, I)
          NORMINF = RNORMINF(V, I)
@@ -79,8 +94,10 @@
          WRITE(2,*) I, NORM2
          WRITE(3,*) I, NORMINF
       ENDDO
+
       END
 
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
       PROGRAM MAIN
 
