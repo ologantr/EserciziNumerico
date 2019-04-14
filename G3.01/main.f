@@ -6,17 +6,6 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-*     Print the values of the components indexed from 1 to N
-*     of the vector V.
-      SUBROUTINE VECPRINT(V, N)
-      REAL V(N)
-      WRITE(*,*) (V(I), I = 1, N)
-      END
-
-*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
-*     Print the values of the components indexed from 1 to N
-*     of the vector V.
       SUBROUTINE MATPRINT(A, N)
       REAL A(N, N)
 
@@ -28,6 +17,8 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+*     Generate an Hilbert matrix of N components in the space referenced
+*     by A.
       SUBROUTINE MATHILBERT(A, N)
       REAL A(N, N)
 
@@ -41,7 +32,8 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-*     Sum of the abs of the items of the i-th row in matrix A.
+*     Sum of the absolute value of all the items in the i-th row in the
+*     matrix A.
       REAL FUNCTION RSUMROW(A, N, I)
       REAL A(N, N)
 
@@ -55,7 +47,8 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-*     Sum of the abs of the items of the j-th column in matrix A.
+*     Sum of the absolute value of all the items in the j-th column in
+*     the matrix A.
       REAL FUNCTION RSUMCOL(A, N, J)
       REAL A(N, N)
 
@@ -86,6 +79,7 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+*     Store in V the sum of the elements in each row in the matrix M.
       SUBROUTINE SUMOFROWS(V, M, N)
       REAL V(N)
       REAL M(N, N)
@@ -98,6 +92,7 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+*     Store in V the sum of the elements in each column in the matrix M.
       SUBROUTINE SUMOFCOLS(V, M, N)
       REAL V(N)
       REAL M(N, N)
@@ -141,19 +136,13 @@
       CALL MATPRINT(A, N)
 
       CALL SUMOFROWS(SUMROWS, A, N)
-
-      WRITE(*,*) 'Somma degli elementi delle singole righe:'
-      CALL VECPRINT(SUMROWS, N)
-
       CALL SUMOFCOLS(SUMCOLS, A, N)
-
-      WRITE(*,*) 'Sum degli elementi delle singole colonne:'
-      CALL VECPRINT(SUMCOLS, N)
 
       MAXINROWS = RMAXABS(SUMROWS, N)
       MAXINCOLS = RMAXABS(SUMCOLS, N)
 
-      WRITE(*,*) 'Norma 1:', MAXINROWS
+      WRITE(*,*) 'Norma 1  :', MAXINROWS
+      WRITE(*,*) 'Norma 2  :', FROBENIUSNORM(A, N)
       WRITE(*,*) 'Norma inf:', MAXINCOLS
 
       END
