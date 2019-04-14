@@ -63,7 +63,7 @@
 
       DO I = 1, N
          DO J = 1, N
-            NORM_2 = NORM_2 + (ABS(A(I, J))) ** 2
+            NORM_2 = NORM_2 + A(I, J) * A(I, J)
          ENDDO
       ENDDO
 
