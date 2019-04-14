@@ -32,46 +32,23 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-*     Sum of the absolute value of all the items in the i-th row in the
-*     matrix A.
-      REAL FUNCTION RSUMROW(A, N, I)
+      REAL FUNCTION NORM_1(A, N)
       REAL A(N, N)
+      REAL TMP
 
-      RSUMROW = 0
+      NORM_1 = 0
 
       DO J = 1, N
-         RSUMROW = RSUMROW + ABS(A(I, J))
-      ENDDO
+         TMP = 0
 
-      END
+*        Sum each element in a column and store the result in TMP.
+         DO I = 1, N
+            TMP = TMP + A(I, J)
+         ENDDO
 
-*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
-*     Sum of the absolute value of all the items in the j-th column in
-*     the matrix A.
-      REAL FUNCTION RSUMCOL(A, N, J)
-      REAL A(N, N)
-
-      RSUMCOL = 0
-
-      DO I = 1, N
-         RSUMCOL = RSUMCOL + ABS(A(I, J))
-      ENDDO
-
-      END
-
-*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
-*     .   MAX     | V  |
-*     .I=1,...,N  |  I |
-      REAL FUNCTION RMAXABS(V, N)
-      REAL V(N)
-
-      RMAXABS = ABS(V(1))
-
-      DO I = 2, N
-         IF (ABS(V(I)) .GT. RMAXABS) THEN
-            RMAXABS = ABS(V(I))
+*        NORM_1 is the greatest TMP we got.
+         IF (TMP .GT. NORM_1) THEN
+            NORM_1 = TMP
          ENDIF
       ENDDO
 
@@ -79,45 +56,44 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-*     Store in V the sum of the elements in each row in the matrix M.
-      SUBROUTINE SUMOFROWS(V, M, N)
-      REAL V(N)
-      REAL M(N, N)
+      REAL FUNCTION NORM_2(A, N)
+      REAL A(N, N)
 
-      DO I = 1, N
-         V(I) = RSUMROW(M, N, I)
-      ENDDO
+      NORM_2 = 0
 
-      END
-
-*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
-*     Store in V the sum of the elements in each column in the matrix M.
-      SUBROUTINE SUMOFCOLS(V, M, N)
-      REAL V(N)
-      REAL M(N, N)
-
-      DO I = 1, N
-         V(I) = RSUMCOL(M, N, I)
-      ENDDO
-
-      END
-
-*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
-*     Dato che non abbiamo la IMSL, ho scelto di implementare la
-*     norma di Frobenius essendo una sovrastima della norma 2
-      REAL FUNCTION FROBENIUSNORM(A, N)
-      REAL A(N, N), S
-      S = 0
       DO I = 1, N
          DO J = 1, N
-            S = S + (ABS(A(I, J))) ** 2
+            NORM_2 = NORM_2 + (ABS(A(I, J))) ** 2
          ENDDO
       ENDDO
-      FROBENIUSNORM = SQRT(S)
+
+      NORM_2 = SQRT(NORM_2)
+
       END
 
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+      REAL FUNCTION NORM_INF(A, N)
+      REAL A(N, N)
+      REAL TMP
+
+      NORM_INF = 0
+
+      DO J = 1, N
+         TMP = 0
+
+*        Sum each element in a row and store the result in TMP.
+         DO I = 1, N
+            TMP = TMP + A(I, J)
+         ENDDO
+
+*        NORM_INF is the greatest TMP we got.
+         IF (TMP .GT. NORM_INF) THEN
+            NORM_INF = TMP
+         ENDIF
+      ENDDO
+
+      END
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
@@ -126,23 +102,15 @@
       PARAMETER (N = 7)
 
       REAL A(N, N)
-      REAL SUMROWS(N)
-      REAL SUMCOLS(N)
-      REAL MAXINROWS, MAXINCOLS
+      REAL NORM_1, NORM_2, NORM_INF
 
       CALL MATHILBERT(A, N)
 
       WRITE(*,*) 'Matrice:'
       CALL MATPRINT(A, N)
 
-      CALL SUMOFROWS(SUMROWS, A, N)
-      CALL SUMOFCOLS(SUMCOLS, A, N)
-
-      MAXINROWS = RMAXABS(SUMROWS, N)
-      MAXINCOLS = RMAXABS(SUMCOLS, N)
-
-      WRITE(*,*) 'Norma 1  :', MAXINROWS
-      WRITE(*,*) 'Norma 2  :', FROBENIUSNORM(A, N)
-      WRITE(*,*) 'Norma inf:', MAXINCOLS
+      WRITE(*,*) 'Norma 1  :', NORM_1(A, N)
+      WRITE(*,*) 'Norma 2  :', NORM_2(A, N)
+      WRITE(*,*) 'Norma inf:', NORM_INF(A, N)
 
       END
