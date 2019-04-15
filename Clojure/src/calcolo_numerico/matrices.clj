@@ -18,7 +18,11 @@
               (matrix/shift (matrix/diagonal-matrix side) [1]))))
 
 (defn toeplitz [n]
-  (let [xs (range 1 (inc n))]
-    (apply mat-op/+
-           (for [i (range n)]
-             (matrix/shift (matrix/diagonal-matrix (repeat n (nth xs i))) [i])))))
+  (let [xs     (range 1 (inc n))
+        diag   (matrix/diagonal-matrix (repeat n (first xs)))
+        uppers (for [i (range 1 n)]
+                 (matrix/shift (matrix/diagonal-matrix (repeat n (nth xs i))) [i]))
+        lowers (map matrix/transpose uppers)]
+    (mat-op/+ (apply mat-op/+ uppers)
+              diag
+              (apply mat-op/+ lowers))))
