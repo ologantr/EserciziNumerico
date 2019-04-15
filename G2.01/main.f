@@ -88,6 +88,10 @@
       REAL NORM1, NORM2, NORMINF
       REAL TERM1, TERM2, TERM3
 
+*     Verificare inoltre con i valori:
+*     V(2) = (-1.0, 1.0)
+*     V(2) = (-20.0, 20.0)
+
       V(1) = -1.0
       V(2) = 1.0
       V(3) = -1.0
@@ -113,6 +117,12 @@
 
       WRITE(*,*) 'Th. 1:', TERM1, '<=', TERM2, '<=', TERM3
 
+      IF (TERM1 .LE. TERM2 .AND. TERM2 .LE. TERM3) THEN
+         WRITE(*,*) 'Verificato'
+      ELSE
+         WRITE(*,*) 'NON verificato'
+      ENDIF
+
 *     .                                _
 *     .|| X ||   <=   || X ||   <=   \/n || X ||
 *     .      2              1                  2
@@ -122,6 +132,12 @@
 
       WRITE(*,*) 'Th. 2:', TERM1, '<=', TERM2, '<=', TERM3
 
+      IF (TERM1 .LE. TERM2 .AND. TERM2 .LE. TERM3) THEN
+         WRITE(*,*) 'Verificato'
+      ELSE
+         WRITE(*,*) 'NON verificato'
+      ENDIF
+
 *     .
 *     .|| X ||     <=   || X ||   <=   n || X ||
 *     .      inf              1                inf
@@ -130,5 +146,11 @@
       TERM3 = N * NORMINF
 
       WRITE(*,*) 'Th. 3:', TERM1, '<=', TERM2, '<=', TERM3
+
+      IF (TERM1 .LE. TERM2 .AND. TERM2 .LE. TERM3) THEN
+         WRITE(*,*) 'Verificato'
+      ELSE
+         WRITE(*,*) 'NON verificato'
+      ENDIF
 
       END
