@@ -16,3 +16,9 @@
     (mat-op/+ (matrix/shift (matrix/diagonal-matrix side) [-1])
               (matrix/diagonal-matrix center)
               (matrix/shift (matrix/diagonal-matrix side) [1]))))
+
+(defn toeplitz [n]
+  (let [xs (range 1 (inc n))]
+    (apply mat-op/+
+           (for [i (range n)]
+             (matrix/shift (matrix/diagonal-matrix (repeat n (nth xs i))) [i])))))
