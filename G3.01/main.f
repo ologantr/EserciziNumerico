@@ -9,8 +9,8 @@
       SUBROUTINE MATPRINT(A, N)
       REAL A(N, N)
 
-      DO J = 1, N
-         WRITE(*,*) (A(I, J), I = 1, N)
+      DO I = 1, N
+         WRITE(*,*) (A(I, J), J = 1, N)
       ENDDO
 
       END
