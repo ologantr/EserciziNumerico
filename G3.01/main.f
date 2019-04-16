@@ -35,8 +35,8 @@
 *     Generate a Wilkinson matrix of N components in the space referenced
 *     by A.
       SUBROUTINE MATWILKINSON(A, N)
-      REAL A(N, N)
-      S = -N/2
+      REAL A(N, N), S
+      S = -(N-1)/2.0
 
       DO I = 1, N
          DO J = 1, N
@@ -44,11 +44,13 @@
          ENDDO
       ENDDO
 
-      DO I = 2, N+1
+      DO I = 2, N
          A(I-1, I) = 1
          A(I, I-1) = 1
          A(I-1, I-1) = ABS(S + I - 2)
       ENDDO
+
+      A(N, N) = -S
      
       END
 
@@ -141,8 +143,6 @@
       WRITE(*,*) 'Norma inf:', NORM_INF(A, N)
 
       WRITE(*,*) 'Matrice C (Wilkinson):'
-      CALL MATPRINT(C, N)
-
       WRITE(*,*) 'Norma 1  :', NORM_1(C, N)
       WRITE(*,*) 'Norma 2  :', NORM_2(C, N)
       WRITE(*,*) 'Norma inf:', NORM_INF(C, N)
