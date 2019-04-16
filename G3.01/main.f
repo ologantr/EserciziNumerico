@@ -32,6 +32,28 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+*     Generate a Wilkinson matrix of N components in the space referenced
+*     by A.
+      SUBROUTINE MATWILKINSON(A, N)
+      REAL A(N, N)
+      S = -N/2
+
+      DO I = 1, N
+         DO J = 1, N
+            A(I, J) = 0
+         ENDDO
+      ENDDO
+
+      DO I = 2, N+1
+         A(I-1, I) = 1
+         A(I, I-1) = 1
+         A(I-1, I-1) = ABS(S + I - 2)
+      ENDDO
+     
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
       REAL FUNCTION NORM_1(A, N)
       REAL A(N, N)
       REAL TMP
@@ -101,16 +123,28 @@
 
       PARAMETER (N = 7)
 
-      REAL A(N, N)
+      REAL A(N, N), C(N, N)
       REAL NORM_1, NORM_2, NORM_INF
 
       CALL MATHILBERT(A, N)
+      CALL MATWILKINSON(C, N)
 
-      WRITE(*,*) 'Matrice:'
+      WRITE(*,*) 'Matrice di Wilkinson:'
+      CALL MATPRINT(C, N)
+
+      WRITE(*,*) 'Matrice di Hilbert:'
       CALL MATPRINT(A, N)
 
+      WRITE(*,*) 'Matrice A (Hilbert):'
       WRITE(*,*) 'Norma 1  :', NORM_1(A, N)
       WRITE(*,*) 'Norma 2  :', NORM_2(A, N)
       WRITE(*,*) 'Norma inf:', NORM_INF(A, N)
+
+      WRITE(*,*) 'Matrice C (Wilkinson):'
+      CALL MATPRINT(C, N)
+
+      WRITE(*,*) 'Norma 1  :', NORM_1(C, N)
+      WRITE(*,*) 'Norma 2  :', NORM_2(C, N)
+      WRITE(*,*) 'Norma inf:', NORM_INF(C, N)
 
       END
