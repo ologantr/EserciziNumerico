@@ -1,6 +1,6 @@
 (ns calcolo-numerico.matrices
-  (:require [clojure.core.matrix :as matrix]
-            [clojure.core.matrix.operators :as mat-op]
+  (:require [clojure.math.numeric-tower :as math]
+            [clojure.core.matrix :as matrix]
             [calcolo-numerico.vectors :as vectors]))
 
 (defn- hilbert-element [i j]
@@ -11,8 +11,19 @@
 
 (defn wilkinson [n]
   (let [side   (vectors/ones n)
-        center (matrix/abs (range (- (/ (dec n) 2))
-                                  (+ (/ n 2))))]
-    (mat-op/+ (matrix/shift (matrix/diagonal-matrix side) [-1])
-              (matrix/diagonal-matrix center)
-              (matrix/shift (matrix/diagonal-matrix side) [1]))))
+        center (matrix/emap math/abs (range (- (/ (dec n) 2))
+                                            (+ (/ n 2))))]
+    (matrix/add
+     (matrix/shift (matrix/diagonal-matrix side) [-1])
+     (matrix/diagonal-matrix center)
+     (matrix/shift (matrix/diagonal-matrix side) [1]))))
+
+(defn toeplitz [n]
+  (let [xs     (range 1 (inc n))
+        diag   (matrix/diagonal-matrix (repeat n (first xs)))
+        uppers (for [i (range 1 n)]
+                 (matrix/shift (matrix/diagonal-matrix (repeat n (nth xs i))) [i]))
+        lowers (map matrix/transpose uppers)]
+    (matrix/add (apply matrix/add uppers)
+                diag
+                (apply matrix/add lowers))))

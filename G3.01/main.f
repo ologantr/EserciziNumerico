@@ -32,6 +32,27 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+*     Generate a Toeplitz matrix of N components in the space referenced
+*     by A
+      SUBROUTINE MATTOEPLITZ(A, N)
+      REAL A(N, N)
+
+      DO I = 1, N
+         DO J = N, I, -1
+            A(I, J) = J - I + 1
+         ENDDO
+      ENDDO
+
+      DO I = 2, N
+         DO J = 1, I - 1
+            A(I, J) = I - J + 1
+         ENDDO
+      ENDDO
+     
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
       REAL FUNCTION NORM_1(A, N)
       REAL A(N, N)
       REAL TMP
@@ -101,16 +122,26 @@
 
       PARAMETER (N = 7)
 
-      REAL A(N, N)
+      REAL A(N, N), B(N, N)
       REAL NORM_1, NORM_2, NORM_INF
 
       CALL MATHILBERT(A, N)
+      CALL MATTOEPLITZ(B, N)
 
-      WRITE(*,*) 'Matrice:'
+      WRITE(*,*) 'Matrice di Hilbert:'
       CALL MATPRINT(A, N)
 
+      WRITE(*,*) 'Matrice di Toeplitz:'
+      CALL MATPRINT(B, N)
+
+      WRITE(*,*) 'Matrice A (Hilbert):'
       WRITE(*,*) 'Norma 1  :', NORM_1(A, N)
       WRITE(*,*) 'Norma 2  :', NORM_2(A, N)
       WRITE(*,*) 'Norma inf:', NORM_INF(A, N)
+
+      WRITE(*,*) 'Matrice B (Toeplitz):'
+      WRITE(*,*) 'Norma 1  :', NORM_1(B, N)
+      WRITE(*,*) 'Norma 2  :', NORM_2(B, N)
+      WRITE(*,*) 'Norma inf:', NORM_INF(B, N)
 
       END
