@@ -55,7 +55,7 @@
 
 *        Element of the main diagonal starting from A(1, 1)
 *        I - 2 is the offset for each element starting from S
-*        Absolute value is needed so all values are positives
+*        Absolute value is needed so all values are positive
          A(I-1, I-1) = ABS(S + I - 2)
       ENDDO
 
