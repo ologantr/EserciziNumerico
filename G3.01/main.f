@@ -36,6 +36,8 @@
 *     by A.
       SUBROUTINE MATWILKINSON(A, N)
       REAL A(N, N), S
+
+*     Start value for the main diagonal of the matrix (A(1, 1))
       S = -(N-1)/2.0
 
       DO I = 1, N
@@ -45,11 +47,21 @@
       ENDDO
 
       DO I = 2, N
+*        Upper diagonal
          A(I-1, I) = 1
+
+*        Lower diagonal
          A(I, I-1) = 1
+
+*        Element of the main diagonal starting from A(1, 1)
+*        I - 2 is the offset for each element starting from S
+*        Absolute value is needed so all values are positives
          A(I-1, I-1) = ABS(S + I - 2)
       ENDDO
 
+*     To avoid an out-of-range assignment (A(N+1,N+1)), it is
+*     better to stop the DO cycle one element earlier and manually
+*     assign the A(N, N) element to -S (ABS(S))
       A(N, N) = -S
      
       END
