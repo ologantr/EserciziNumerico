@@ -32,6 +32,42 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+*     Generate a Wilkinson matrix of N components in the space referenced
+*     by A.
+      SUBROUTINE MATWILKINSON(A, N)
+      REAL A(N, N), S
+
+*     Start value for the main diagonal of the matrix (A(1, 1))
+      S = -(N-1)/2.0
+
+      DO I = 1, N
+         DO J = 1, N
+            A(I, J) = 0
+         ENDDO
+      ENDDO
+
+      DO I = 2, N
+*        Upper diagonal
+         A(I-1, I) = 1
+
+*        Lower diagonal
+         A(I, I-1) = 1
+
+*        Element of the main diagonal starting from A(1, 1)
+*        I - 2 is the offset for each element starting from S
+*        Absolute value is needed so all values are positive
+         A(I-1, I-1) = ABS(S + I - 2)
+      ENDDO
+
+*     To avoid an out-of-range assignment (A(N+1,N+1)), it is
+*     better to stop the DO cycle one element earlier and manually
+*     assign the A(N, N) element to -S (ABS(S))
+      A(N, N) = -S
+
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
 *     Generate a Toeplitz matrix of N components in the space referenced
 *     by A
       SUBROUTINE MATTOEPLITZ(A, N)
@@ -48,7 +84,7 @@
             A(I, J) = I - J + 1
          ENDDO
       ENDDO
-     
+
       END
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -122,26 +158,35 @@
 
       PARAMETER (N = 7)
 
-      REAL A(N, N), B(N, N)
+      REAL A(N, N), B(N, N), C(N, N)
       REAL NORM_1, NORM_2, NORM_INF
 
       CALL MATHILBERT(A, N)
-      CALL MATTOEPLITZ(B, N)
+      CALL MATWILKINSON(B, N)
+      CALL MATTOEPLITZ(C, N)
 
       WRITE(*,*) 'Matrice di Hilbert:'
       CALL MATPRINT(A, N)
 
-      WRITE(*,*) 'Matrice di Toeplitz:'
+      WRITE(*,*) 'Matrice di Wilkinson:'
       CALL MATPRINT(B, N)
+
+      WRITE(*,*) 'Matrice di Toeplitz:'
+      CALL MATPRINT(C, N)
 
       WRITE(*,*) 'Matrice A (Hilbert):'
       WRITE(*,*) 'Norma 1  :', NORM_1(A, N)
       WRITE(*,*) 'Norma 2  :', NORM_2(A, N)
       WRITE(*,*) 'Norma inf:', NORM_INF(A, N)
 
-      WRITE(*,*) 'Matrice B (Toeplitz):'
+      WRITE(*,*) 'Matrice B (Wilkinson):'
       WRITE(*,*) 'Norma 1  :', NORM_1(B, N)
       WRITE(*,*) 'Norma 2  :', NORM_2(B, N)
       WRITE(*,*) 'Norma inf:', NORM_INF(B, N)
+
+      WRITE(*,*) 'Matrice C (Toeplitz):'
+      WRITE(*,*) 'Norma 1  :', NORM_1(C, N)
+      WRITE(*,*) 'Norma 2  :', NORM_2(C, N)
+      WRITE(*,*) 'Norma inf:', NORM_INF(C, N)
 
       END
