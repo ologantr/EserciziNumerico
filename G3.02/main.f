@@ -52,6 +52,42 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+*     Generate an Hilbert matrix of N components in the space referenced
+*     by A.
+      SUBROUTINE MATHILBERT(A, N)
+      REAL A(N, N)
+
+      DO I = 1, N
+         DO J = 1, N
+            A(I, J) = 1.0 / (I + J - 1)
+         ENDDO
+      ENDDO
+
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+*     Generate a Toeplitz matrix of N components in the space referenced
+*     by A
+      SUBROUTINE MATTOEPLITZ(A, N)
+      REAL A(N, N)
+
+      DO I = 1, N
+         DO J = N, I, -1
+            A(I, J) = J - I + 1
+         ENDDO
+      ENDDO
+
+      DO I = 2, N
+         DO J = 1, I - 1
+            A(I, J) = I - J + 1
+         ENDDO
+      ENDDO
+
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
       REAL FUNCTION NORM_1(A, N)
       REAL A(N, N)
       REAL TMP
@@ -122,6 +158,7 @@
       REAL NORM_1, NORM_2, NORM_INF
 
       DO I = 5, N
+*        Wilkinson matrix
          CALL MATWILKINSON(A, I)
          NORM1 = NORM_1(A, I)
          NORM2 = NORM_2(A, I)
@@ -129,6 +166,24 @@
          WRITE(1,*) I, NORM1
          WRITE(2,*) I, NORM2
          WRITE(3,*) I, NORMINF
+
+*        Hilbert matrix
+         CALL MATHILBERT(A, I)
+         NORM1 = NORM_1(A, I)
+         NORM2 = NORM_2(A, I)
+         NORMINF = NORM_INF(A, I)
+         WRITE(7,*) I, NORM1
+         WRITE(8,*) I, NORM2
+         WRITE(9,*) I, NORMINF
+
+*        Toeplitz matrix
+         CALL MATTOEPLITZ(A, I)
+         NORM1 = NORM_1(A, I)
+         NORM2 = NORM_2(A, I)
+         NORMINF = NORM_INF(A, I)
+         WRITE(10,*) I, NORM1
+         WRITE(11,*) I, NORM2
+         WRITE(12,*) I, NORMINF
       ENDDO
 
       END
