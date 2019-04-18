@@ -1,8 +1,8 @@
-set term png
+set term pngcairo
 set output "hilbert_norms.png"
 
 set yrange[0:*]
 
-plot "fort.7" title "Norma 1" with lines, \
-     "fort.8" title "Norma 2" with lines, \
-     "fort.9" title "Norma ∞" with lines
+plot "fort.7" title "Norma 1" w line dt '-', \
+     "fort.8" title "Norma 2" w line dt '.', \
+     "fort.9" title "Norma ∞" w line dt '-.'
