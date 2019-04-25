@@ -245,8 +245,7 @@
 *     .
       TERM1 = NORM2
       TERM2 = SQRT(NORM1 * NORMINF)
-      WRITE(*,*) 'Th. 3:', TERM1, '<=', TERM2
-      WRITE(*,*) NORM1, NORM2, NORMINF
+      WRITE(*,*) 'Th. 4:', TERM1, '<=', TERM2
 
       IF (TERM1 .LE. TERM2) THEN
          WRITE(*,*) 'Verificato'
@@ -264,10 +263,23 @@
 
       REAL A(N, N), B(N, N), C(N, N)
 
+      WRITE(*,*) 'Genero matrici di ordine', N
+      WRITE(*,*) ''
+
       CALL MATWILKINSON(A, N)
       CALL MATHILBERT(B, N)
       CALL MATTOEPLITZ(C, N)
 
+      WRITE(*,*) 'Matrice di Wilkinson:'
       CALL CHECKTHESES(A, N)
+      WRITE(*,*) ''
+
+      WRITE(*,*) 'Matrice di Hilbert:'
+      CALL CHECKTHESES(B, N)
+      WRITE(*,*) ''
+
+      WRITE(*,*) 'Matrice di Toeplitz:'
+      CALL CHECKTHESES(C, N)
+      WRITE(*,*) ''
 
       END
