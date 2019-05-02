@@ -42,6 +42,8 @@ M-x pyvenv-activate
 
 And provide the path to your virtualenv directory.
 
+This is like running `source env/bin/activate` from the shell.
+
 Then run:
 
 ```
