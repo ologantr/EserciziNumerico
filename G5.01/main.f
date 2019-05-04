@@ -168,19 +168,70 @@
       END
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+      REAL FUNCTION RNORM1(V, N)
+      REAL V(N)
+
+      RNORM1 = 0
+
+      DO I = 1, N
+         RNORM1 = RNORM1 + ABS(V(I))
+      ENDDO
+
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+      REAL FUNCTION SOLERROR(X, N)
+      REAL X(N), ERRX(N), SOL(N), NORMERRX, NORMSOL
+
+      DO I = 1, N
+         SOL(I) = 1
+         ERRX(I) = SOL(I) - X(I)
+      ENDDO
+
+      NORMSOL = RNORM1(SOL, N)
+      NORMERRX = RNORM1(ERRX, N)
+      SOLERROR = NORMERRX/NORMSOL
+     
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
       
       PROGRAM MAIN
-      PARAMETER (N = 7)
+      PARAMETER (N = 3)
       REAL A(N, N+1), X(N)
+      REAL ERR, SOLERROR
 
-      CALL MATTOEPLITZ(A, N)
+      CALL MATHILBERT(A, N)
       CALL COMPUTEBVECTOR(A, N)
-      CALL TOZERO(A, N)
+
+      WRITE(*,*) 'Initial Matrix:'
       CALL MATPRINT(A, N)
+
+      WRITE(*,*) 'B Vector'
+      WRITE(*,*) (A(I, N+1), I = 1, N)
+
+      CALL TOZERO(A, N)
+
+      WRITE(*,*) ''
+      WRITE(*,*) 'Matrix after Gauss Elimination:'
+      CALL MATPRINT(A, N)
+
+      WRITE(*,*) ''
+      WRITE(*,*) 'B Vector after Gauss Elimination:'
+      WRITE(*,*) (A(I, N+1), I = 1, N)
 
       CALL BACKSUB(A, N, X)
 
       WRITE(*,*) ''
+      WRITE(*,*) 'X Vector:'
       WRITE(*,*) (X(I), I = 1, N)
+
+      ERR = SOLERROR(X, N)
+
+      WRITE(*,*) ''
+      WRITE(*,*) 'Relative Error:'
+      WRITE(*,*) ERR
 
       END
