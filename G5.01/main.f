@@ -21,6 +21,21 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+*     Generate an Hilbert matrix of N components in the space referenced
+*     by A.
+      SUBROUTINE MATHILBERT(A, N)
+      REAL A(N, N)
+
+      DO I = 1, N
+         DO J = 1, N
+            A(I, J) = 1.0 / (I + J - 1)
+         ENDDO
+      ENDDO
+
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
 *     Generate a Wilkinson matrix of N components in the space referenced
 *     by A.
       SUBROUTINE MATWILKINSON(A, N)
@@ -68,9 +83,9 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-      SUBROUTINE COMPUTEBVECTOR(A, N, B)
+      SUBROUTINE COMPUTEBVECTOR(A, N)
 
-      REAL A(N, N), B(N), STEMP
+      REAL A(N, N), STEMP
 
       STEMP = 0
 
@@ -78,7 +93,7 @@
          DO J = 1, N
             STEMP = STEMP + A(I, J)
          ENDDO
-         B(I) = STEMP
+         A(I, N+1) = STEMP
          STEMP = 0
       ENDDO
 
@@ -86,53 +101,64 @@
      
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-      SUBROUTINE TOZERO(A, B, N)
+      SUBROUTINE TOZERO(A, N)
 
-      REAL A(N, N), B(N), R, TEMP
-      INTEGER Y
+      REAL A(N, N), R, TEMP, PIVOT
+      INTEGER Y, P_POS
 
-      DO I = 1, N-1
-         IF (A(I,I) .EQ. 0) THEN
-            DO J = I + 1, N
-               IF (A(J, I) .NE. 0) THEN
-*                 Swap row i with row j
-                  DO Y = 1, N
-                     TEMP = A(I, Y)
-                     A(I, Y) = A(J, Y)
-                     A(J, Y) = TEMP
-                  ENDDO
-               ELSE IF (J .EQ. N) THEN
-                  WRITE(*,*) 'Matrix is singular'
-                  STOP
-               ENDIF
-            ENDDO
+*     A is the complete matrix of the linear system
+
+      DO K = 1, N-1
+         PIVOT = 0.0
+         DO I = K, N
+            IF (ABS(A(I, K)) .GT. PIVOT) THEN
+               PIVOT = A(I, K)
+               P_POS = I
+            ENDIF
+         ENDDO
+
+         IF (PIVOT .EQ. 0) THEN
+            STOP
          ELSE
-            DO K = I + 1, N
-               R = A(K, I)/A(I, I)
-               DO J = 1, N
-                  A(K, J) = A(K, J) - R*A(I, J)
+            IF (K .NE. P_POS) THEN
+               DO Y = 1, N+1
+*                 Swap row k with row
+                  TEMP = A(K, Y)
+                  A(K, Y) = A(P_POS, Y)
+                  A(P_POS, Y) = TEMP
                ENDDO
-               B(K) = B(K) - R*B(I)
+            ENDIF
+           
+            DO I = K+1, N
+               R = A(I, K)/A(K, K)
+               DO J = K, N
+                  A(I, J) = A(I, J) - R*A(K, J)
+               ENDDO
+               A(I, N+1) = A(I, N+1) - R*A(K, N+1)
             ENDDO
          ENDIF
       ENDDO
+
+      IF (A(N, N) .EQ. 0) THEN
+         STOP
+      ENDIF
 
       END
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-      SUBROUTINE BACKSUB(A, B, N, X)
+      SUBROUTINE BACKSUB(A, N, X)
 
-      REAL A(N, N), X(N), B(N)
+      REAL A(N, N), X(N)
 
       DO I = 1, N-1
          X(I) = 0
       ENDDO
 
-      X(N) = B(N)/A(N, N)
+      X(N) = A(N, N+1)/A(N, N)
 
       DO I = N-1, 1, -1
-         X(I) = B(I)
+         X(I) = A(I, N+1)
          DO J = I + 1, N
             X(I) = X(I) - A(I, J)*X(J)
          ENDDO
@@ -144,20 +170,15 @@
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
       
       PROGRAM MAIN
-      PARAMETER (N = 10)
-      REAL A(N, N), B(N), X(N)
+      PARAMETER (N = 7)
+      REAL A(N, N+1), X(N)
 
       CALL MATTOEPLITZ(A, N)
-      CALL COMPUTEBVECTOR(A, N, B)
-      WRITE(*,*) (B(I), I = 1, N)
-      WRITE(*,*) ''
-      CALL TOZERO(A, B, N)
+      CALL COMPUTEBVECTOR(A, N)
+      CALL TOZERO(A, N)
       CALL MATPRINT(A, N)
 
-      WRITE(*,*) ''
-      WRITE(*,*) (B(I), I = 1, N)
-
-      CALL BACKSUB(A, B, N, X)
+      CALL BACKSUB(A, N, X)
 
       WRITE(*,*) ''
       WRITE(*,*) (X(I), I = 1, N)
