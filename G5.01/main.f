@@ -199,39 +199,33 @@
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
       
       PROGRAM MAIN
-      PARAMETER (N = 3)
+      PARAMETER (N = 15)
       REAL A(N, N+1), X(N)
       REAL ERR, SOLERROR
 
-      CALL MATHILBERT(A, N)
-      CALL COMPUTEBVECTOR(A, N)
+      DO I = 3, N
+         CALL MATHILBERT(A, I)
+         CALL COMPUTEBVECTOR(A, I)
+         CALL TOZERO(A, I)
+         CALL BACKSUB(A, I, X)
+         ERR = SOLERROR(X, I)
+         WRITE(1,*) ERR
 
-      WRITE(*,*) 'Initial Matrix:'
-      CALL MATPRINT(A, N)
+         CALL MATWILKINSON(A, I)
+         CALL COMPUTEBVECTOR(A, I)
+         CALL TOZERO(A, I)
+         CALL BACKSUB(A, I, X)
+         ERR = SOLERROR(X, I)
+         WRITE(2,*) ERR
 
-      WRITE(*,*) 'B Vector'
-      WRITE(*,*) (A(I, N+1), I = 1, N)
+         CALL MATTOEPLITZ(A, I)
+         CALL COMPUTEBVECTOR(A, I)
+         CALL TOZERO(A, I)
+         CALL BACKSUB(A, I, X)
+         ERR = SOLERROR(X, I)
+         WRITE(3,*) ERR
+      ENDDO
 
-      CALL TOZERO(A, N)
 
-      WRITE(*,*) ''
-      WRITE(*,*) 'Matrix after Gauss Elimination:'
-      CALL MATPRINT(A, N)
-
-      WRITE(*,*) ''
-      WRITE(*,*) 'B Vector after Gauss Elimination:'
-      WRITE(*,*) (A(I, N+1), I = 1, N)
-
-      CALL BACKSUB(A, N, X)
-
-      WRITE(*,*) ''
-      WRITE(*,*) 'X Vector:'
-      WRITE(*,*) (X(I), I = 1, N)
-
-      ERR = SOLERROR(X, N)
-
-      WRITE(*,*) ''
-      WRITE(*,*) 'Relative Error:'
-      WRITE(*,*) ERR
 
       END
