@@ -83,9 +83,10 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-      SUBROUTINE COMPUTEBVECTOR(A, N)
+*     Computes the B vector so that the X vector is made up of ones.
+      SUBROUTINE COMPUTEBVECTOR(A, B, N)
 
-      REAL A(N, N), STEMP
+      REAL A(N, N), B(N), STEMP
 
       STEMP = 0
 
@@ -93,23 +94,24 @@
          DO J = 1, N
             STEMP = STEMP + A(I, J)
          ENDDO
-         A(I, N+1) = STEMP
+         B(I) = STEMP
          STEMP = 0
       ENDDO
 
       END
-     
+
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-      SUBROUTINE TOZERO(A, N)
+      SUBROUTINE TOZERO(A, B, N)
 
-      REAL A(N, N), R, TEMP, PIVOT
+      REAL A(N, N), B(N), R, TEMP, PIVOT
       INTEGER Y, P_POS
 
-*     A is the complete matrix of the linear system
+*     A is the matrix of the linear system
+*     B is the constant vector
 
       DO K = 1, N-1
-         PIVOT = 0.0
+         PIVOT = 0
          DO I = K, N
             IF (ABS(A(I, K)) .GT. PIVOT) THEN
                PIVOT = A(I, K)
@@ -117,28 +119,35 @@
             ENDIF
          ENDDO
 
+*        This equality comparison can give errors, it may be better to see if
+*        PIVOT is less or equal than epsilon (machine precision), but in this case
+*        it is unnecessary
          IF (PIVOT .EQ. 0) THEN
             STOP
          ELSE
             IF (K .NE. P_POS) THEN
-               DO Y = 1, N+1
-*                 Swap row k with row
+               DO Y = 1, N
+*                 Swap row k with row p_pos
                   TEMP = A(K, Y)
                   A(K, Y) = A(P_POS, Y)
                   A(P_POS, Y) = TEMP
+                  TEMP = B(K)
+                  B(K) = B(P_POS)
+                  B(P_POS) = TEMP
                ENDDO
             ENDIF
-           
+
             DO I = K+1, N
                R = A(I, K)/A(K, K)
                DO J = K, N
                   A(I, J) = A(I, J) - R*A(K, J)
                ENDDO
-               A(I, N+1) = A(I, N+1) - R*A(K, N+1)
+               B(I) = B(I) - R*B(K)
             ENDDO
          ENDIF
       ENDDO
 
+*     Same thing here for equality comparison
       IF (A(N, N) .EQ. 0) THEN
          STOP
       ENDIF
@@ -147,18 +156,18 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-      SUBROUTINE BACKSUB(A, N, X)
+      SUBROUTINE BACKSUB(A, B, N, X)
 
-      REAL A(N, N), X(N)
+      REAL A(N, N), X(N), B(N)
 
       DO I = 1, N-1
          X(I) = 0
       ENDDO
 
-      X(N) = A(N, N+1)/A(N, N)
+      X(N) = B(N)/A(N, N)
 
       DO I = N-1, 1, -1
-         X(I) = A(I, N+1)
+         X(I) = B(I)
          DO J = I + 1, N
             X(I) = X(I) - A(I, J)*X(J)
          ENDDO
@@ -200,32 +209,30 @@
       
       PROGRAM MAIN
       PARAMETER (N = 15)
-      REAL A(N, N+1), X(N)
+      REAL A(N, N), X(N), B(N)
       REAL ERR, SOLERROR
 
       DO I = 3, N
          CALL MATHILBERT(A, I)
-         CALL COMPUTEBVECTOR(A, I)
-         CALL TOZERO(A, I)
-         CALL BACKSUB(A, I, X)
+         CALL COMPUTEBVECTOR(A, B, I)
+         CALL TOZERO(A, B, I)
+         CALL BACKSUB(A, B, I, X)
          ERR = SOLERROR(X, I)
          WRITE(1,*) ERR
 
          CALL MATWILKINSON(A, I)
-         CALL COMPUTEBVECTOR(A, I)
-         CALL TOZERO(A, I)
-         CALL BACKSUB(A, I, X)
+         CALL COMPUTEBVECTOR(A, B, I)
+         CALL TOZERO(A, B, I)
+         CALL BACKSUB(A, B, I, X)
          ERR = SOLERROR(X, I)
          WRITE(2,*) ERR
 
          CALL MATTOEPLITZ(A, I)
-         CALL COMPUTEBVECTOR(A, I)
-         CALL TOZERO(A, I)
-         CALL BACKSUB(A, I, X)
+         CALL COMPUTEBVECTOR(A, B, I)
+         CALL TOZERO(A, B, I)
+         CALL BACKSUB(A, B, I, X)
          ERR = SOLERROR(X, I)
          WRITE(3,*) ERR
       ENDDO
-
-
 
       END
