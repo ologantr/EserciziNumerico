@@ -58,6 +58,14 @@ Install flake8 with:
 pip install flake8
 ```
 
+### Running tests
+
+Run:
+
+```
+python3 setup.py test
+```
+
 Before committing, please make sure your code is PEP8 compliant running `flake8`
 in this directory.
 

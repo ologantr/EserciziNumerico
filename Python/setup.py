@@ -11,11 +11,7 @@ setup(
     author='',
     author_email='',
 
-    package_dir={'': 'src'},
-    packages=[],
-    scripts=[''],
-
-    setup_requires=[],
+    setup_requires=["pytest-runner==4.4"],
     install_requires=[],
-    tests_require=[]
+    tests_require=["pytest==4.5.0"]
 )
