@@ -44,9 +44,19 @@ def x_coordinates(range_, step_count):
     return (x_min, *inner_xs, x_max)
 
 
-def evaluate_function(fn, range_, step_count):
-    return tuple((x, fn(x))
-                 for x in x_coordinates(range_, step_count))
+def evaluate_function(fn, xs):
+    """
+    Takes a function and a sequence of point where the
+    function will be evaluated and return a list of
+    (x, y) pairs.
+
+    >>> evaluate_function(lambda x: abs(x), [-1, 0, 1])
+    ((-1, 1), (0, 0), (1, 1))
+
+    >>> evaluate_function(lambda x: x ** 2, x_coordinates([-1, 1], 3))
+    ((-1.0, 1.0), (0.0, 0.0), (1.0, 1.0))
+    """
+    return tuple((x, fn(x)) for x in xs)
 
 
 def make_figure(points):
