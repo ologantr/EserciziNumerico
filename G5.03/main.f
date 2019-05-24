@@ -1,4 +1,9 @@
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*     Stampare, dopo il primo passo della fattorizzazione di Gauss, la matrice
+*     freccia che ha sulla diagonale tutti elementi uguali a 2 i restanti
+*     elementi della prima riga uguali a -1 e i restanti elementi della prima
+*     colonna uguali ad 1. Analizzare il risultato.
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
       SUBROUTINE ARROWMATRIX(A, N)
       REAL A(N, N)
