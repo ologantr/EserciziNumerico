@@ -1,3 +1,6 @@
+import operator
+from functools import reduce
+
 def progression(step, n, start=0):
     """
     Return an arithmetic progression of n elements with
@@ -36,3 +39,7 @@ def progression_fn(step, start=0):
     [-1.0, -0.5, 0.0, 0.5, 1.0]
     """
     return lambda n: start + (n * step)
+
+
+def product(xs):
+    return reduce(operator.mul, xs, 1)
