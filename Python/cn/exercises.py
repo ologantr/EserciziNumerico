@@ -1,7 +1,7 @@
 from math import cos, pi
 from cn.algebra import evaluate, linspace
 from cn.interpolation import linear_interpolation
-from cn.plot import make_compound_figure
+from cn.plot import make_compound_figure, make_plot_descriptor
 import cn.functions
 
 
@@ -40,4 +40,7 @@ def e7_01():
     interpolated_points = tuple((x, poly(x))
                                 for x in interpolation_xs)
 
-    make_compound_figure(actual_points, interpolated_points).show()
+    make_compound_figure(
+        make_plot_descriptor('Funzione originale', actual_points),
+        make_plot_descriptor('Funzione interpolata', interpolated_points)
+    ).show()
