@@ -1,6 +1,6 @@
 from cn.algebra import evaluate, linspace
 from cn.interpolation import linear_interpolation
-from cn.plot import make_figure
+from cn.plot import make_compound_figure
 import cn.functions as fns
 
 def e7_01():
@@ -15,5 +15,4 @@ def e7_01():
                                 for x in linspace(range_,
                                                   interpolated_points_number))
 
-    make_figure(real_points).show()
-    make_figure(interpolated_points).show()
+    make_compound_figure(real_points, interpolated_points).show()
