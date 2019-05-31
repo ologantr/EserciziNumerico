@@ -1,5 +1,6 @@
 from cn.arithmetic import product
 
+
 def linear_interpolation_(points):
     xs, ys = tuple(zip(*points))
     n = len(points)

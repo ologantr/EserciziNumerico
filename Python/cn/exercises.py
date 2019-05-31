@@ -3,6 +3,7 @@ from cn.interpolation import linear_interpolation
 from cn.plot import make_compound_figure
 import cn.functions as fns
 
+
 def e7_01():
     range_ = [-1, 1]
     real_points_number = 10
