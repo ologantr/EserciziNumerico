@@ -39,8 +39,18 @@ def e7_01():
     interpolation_fn = linear_interpolation(actual_points)
     interpolated_points = evaluate(interpolation_fn, interpolation_xs)
 
+    # Return a tuple of pair where the first item is the x value
+    # and the second item is the difference between what we got
+    # from the interpolation process and what the function
+    # actually returns.
+    error_points = tuple((expected_point[0],
+                          abs(expected_point[1] - interpolated_point[1]))
+                         for expected_point, interpolated_point
+                         in zip(expected_points, interpolated_points))
+
     make_compound_figure(
         make_plot_descriptor('Funzione originale', actual_points),
         make_plot_descriptor('Funzione interpolata', interpolated_points),
-        make_plot_descriptor('Funzione prevista', expected_points)
+        make_plot_descriptor('Funzione prevista', expected_points),
+        make_plot_descriptor('Errore', error_points)
     ).show()
