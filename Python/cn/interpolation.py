@@ -66,8 +66,9 @@ def linear_interpolation(points):
 
         return fn
 
+    bases = tuple(basis(j) for j in range(n))
+
     def lagrange(x):
-        bases = tuple(basis(j) for j in range(n))
         return sum(y * base(x)
                    for y, base in zip(ys, bases))
 
