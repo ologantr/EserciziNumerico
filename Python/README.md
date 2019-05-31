@@ -50,14 +50,6 @@ Then run:
 M-x python-run-or-switch-to-repl
 ```
 
-### Linter
-
-Install flake8 with:
-
-```
-pip install flake8
-```
-
 ### Running tests
 
 Run:
@@ -66,9 +58,14 @@ Run:
 python3 setup.py test
 ```
 
-Before committing, please make sure your code is PEP8 compliant running `flake8`
-in this directory.
+Please make sure all tests are running before publishing your commits.
 
-## Running
+### Linter
 
-The scripts included in the `bin` directory will be available in your PATH.
+Run:
+
+```
+python3 setup.py flake8
+```
+
+Please make sure the linter doesn't complain before publishing your commits.
