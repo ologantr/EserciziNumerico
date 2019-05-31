@@ -40,7 +40,10 @@ def e7_01():
     interpolated_points = tuple((x, poly(x))
                                 for x in interpolation_xs)
 
+    expected_points = evaluate(function, interpolation_xs)
+
     make_compound_figure(
         make_plot_descriptor('Funzione originale', actual_points),
-        make_plot_descriptor('Funzione interpolata', interpolated_points)
+        make_plot_descriptor('Funzione interpolata', interpolated_points),
+        make_plot_descriptor('Funzione prevista', expected_points)
     ).show()
