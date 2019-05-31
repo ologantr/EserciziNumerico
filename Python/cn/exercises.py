@@ -9,8 +9,7 @@ def alt_linspace(range_, step_count):
     min_, max_ = range_
 
     def x(i):
-        return cos(((2 * (step_count - i)+ 1)
-                    * pi)
+        return cos(((2 * (step_count - i) + 1) * pi)
                    / (2 * (step_count + 1)))
 
     def t(i):
@@ -35,12 +34,10 @@ def e7_01():
     interpolation_xs = space_fn(range_, interpolation_points_number)
 
     actual_points = evaluate(function, actual_xs)
-
-    poly = linear_interpolation(actual_points)
-    interpolated_points = tuple((x, poly(x))
-                                for x in interpolation_xs)
-
     expected_points = evaluate(function, interpolation_xs)
+
+    interpolation_fn = linear_interpolation(actual_points)
+    interpolated_points = evaluate(interpolation_fn, interpolation_xs)
 
     make_compound_figure(
         make_plot_descriptor('Funzione originale', actual_points),
