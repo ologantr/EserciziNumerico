@@ -69,5 +69,5 @@
   * [ ] Esercizio 2
   * [ ] Esercizio 3
 
-* [ ] Gruppo 8
-  * [ ] Esercizio 1
+* [x] Gruppo 8 *Da non svolgere*
+  * [x] Esercizio 1
