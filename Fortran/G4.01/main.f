@@ -78,10 +78,12 @@
       END
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*     Calculate the inverse matrix of A with the Gauss-Jordan algorithm
+*     A is the matrix, ID is the identity matrix
+*     At the end of this algorithm, ID will be
+*     the inverse matrix of A
 
       SUBROUTINE GAUSSJORDAN(A, ID, N)
-*     A is the matrix, I is the matrix inverse
-*     B is the known vector and N is the order of the matrix
 
       REAL A(N, N), ID(N, N), COPY(N, N)
       REAL MAX_VAL, TEMP, Q
