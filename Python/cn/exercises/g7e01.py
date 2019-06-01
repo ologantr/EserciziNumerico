@@ -1,8 +1,23 @@
-from math import cos, pi
+from math import cos, sin, pi
 from cn.algebra import evaluate, linspace
 from cn.interpolation import linear_interpolation
 from cn.plot import make_compound_figure, make_plot_descriptor
-import cn.functions
+
+
+def fn_1(x):
+    return 1/(1 + (25 * (x ** 2)))
+
+
+def fn_2(x):
+    return x/(1 + (x ** 2))
+
+
+def fn_3(x):
+    return abs(x)
+
+
+def fn_4(x):
+    return sin(x) / x
 
 
 def alt_linspace(range_, step_count):
@@ -24,7 +39,7 @@ def alt_linspace(range_, step_count):
 
 
 def run():
-    function = cn.functions.fn_1
+    function = fn_1      # fn_1 or fn_2 or fn_3 or fn_4
     space_fn = linspace  # linspace or alt_linspace
     range_ = [-1, 1]
     actual_points_number = 5
