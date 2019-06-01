@@ -23,7 +23,7 @@ def alt_linspace(range_, step_count):
         return tuple(t(i) for i in range(step_count))
 
 
-def e7_01():
+def run():
     function = cn.functions.fn_1
     space_fn = linspace  # linspace or alt_linspace
     range_ = [-1, 1]
