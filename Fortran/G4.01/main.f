@@ -78,6 +78,66 @@
       END
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+*     Generate an Hilbert matrix of N components in the space referenced
+*     by A.
+      SUBROUTINE MATHILBERT(A, N)
+      REAL A(N, N)
+
+      DO I = 1, N
+         DO J = 1, N
+            A(I, J) = 1.0 / (I + J - 1)
+         ENDDO
+      ENDDO
+
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+*     Generate a Toeplitz matrix of N components in the space referenced
+*     by A
+      SUBROUTINE MATTOEPLITZ(A, N)
+      REAL A(N, N)
+
+      DO I = 1, N
+         DO J = N, I, -1
+            A(I, J) = J - I + 1
+         ENDDO
+      ENDDO
+
+      DO I = 2, N
+         DO J = 1, I - 1
+            A(I, J) = I - J + 1
+         ENDDO
+      ENDDO
+
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+      REAL FUNCTION NORM_1(A, N)
+      REAL A(N, N)
+      REAL TMP
+
+      NORM_1 = 0
+
+      DO J = 1, N
+         TMP = 0
+
+*        Sum each element in a column and store the result in TMP.
+         DO I = 1, N
+            TMP = TMP + A(I, J)
+         ENDDO
+
+*        NORM_1 is the greatest TMP we got.
+         IF (TMP .GT. NORM_1) THEN
+            NORM_1 = TMP
+         ENDIF
+      ENDDO
+
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 *     Calculate the inverse matrix of A with the Gauss-Jordan algorithm
 *     A is the matrix, ID is the identity matrix
 *     At the end of this algorithm, ID will be
@@ -143,10 +203,38 @@
       ENDDO
       END
 
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+*     Wrapper function to compute the condition number
+      REAL FUNCTION CONDNUMBER(A, N)
+      REAL NORM_1
+      REAL A(N, N), INV(N, N), A_NORM, INV_NORM
+
+*     Compute the inverse matrix of A, stored in INV
+      CALL GAUSSJORDAN(A, INV, N)
+
+*     Compute the norm 1 of A and the norm 1 of the inverse of A
+      A_NORM = NORM_1(A, N)
+      INV_NORM = NORM_1(INV, N)
+
+*     At this point we can compute the cond number by multiplying
+*     the two norms
+      CONDNUMBER = A_NORM * INV_NORM
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
       PROGRAM MAIN
-      PARAMETER (N = 5)
+
+      PARAMETER (N = 15)
+
       REAL A(N, N), B(N, N)
-      CALL MATWILKINSON(A, N)
+
+      DO K = 2, N
+         CALL MATWILKINSON(A, K)
+         CALL IDENTITYMATRIX(B, K)
+         CALL GAUSSJORDAN(A, B, N)
+
       CALL IDENTITYMATRIX(B, N)
       CALL GAUSSJORDAN(A, B, N)
       CALL MATPRINT(B, N)
