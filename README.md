@@ -66,6 +66,7 @@
 
 * [x] Gruppo 7
   * [x] Esercizio 1
+    * [Python](Python/cn/exercises/g7e01.py)
   * [x] Esercizio 2 *Da non svolgere*
   * [x] Esercizio 3 *Da non svolgere*
 
