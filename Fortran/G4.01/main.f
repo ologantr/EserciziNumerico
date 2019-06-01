@@ -210,6 +210,9 @@
       REAL NORM_1
       REAL A(N, N), INV(N, N), A_NORM, INV_NORM
 
+*     We need to compute the identity matrix to use Gauss-Jordan
+      CALL IDENTITYMATRIX(INV, N)
+
 *     Compute the inverse matrix of A, stored in INV
       CALL GAUSSJORDAN(A, INV, N)
 
@@ -228,14 +231,20 @@
 
       PARAMETER (N = 15)
 
-      REAL A(N, N), B(N, N)
+      REAL A(N, N)
+      REAL COND
 
       DO K = 2, N
          CALL MATWILKINSON(A, K)
-         CALL IDENTITYMATRIX(B, K)
-         CALL GAUSSJORDAN(A, B, N)
+         COND = CONDNUMBER(A, K)
+         WRITE(1,*) K, COND
 
-      CALL IDENTITYMATRIX(B, N)
-      CALL GAUSSJORDAN(A, B, N)
-      CALL MATPRINT(B, N)
+         CALL MATHILBERT(A, K)
+         COND = CONDNUMBER(A, K)
+         WRITE(2,*) K, COND
+
+         CALL MATTOEPLITZ(A, K)
+         COND = CONDNUMBER(A, K)
+         WRITE(3,*) K, COND
+      ENDDO
       END
