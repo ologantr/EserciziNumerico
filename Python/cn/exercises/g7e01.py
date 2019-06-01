@@ -4,6 +4,10 @@ from cn.interpolation import linear_interpolation
 from cn.plot import make_compound_figure, make_plot_descriptor
 
 
+##
+## Given functions
+##
+
 def fn_1(x):
     return 1/(1 + (25 * (x ** 2)))
 
@@ -19,6 +23,10 @@ def fn_3(x):
 def fn_4(x):
     return sin(x) / x
 
+
+##
+## Alternative x-axis points generator
+##
 
 def alt_linspace(range_, step_count):
     min_, max_ = range_
@@ -38,15 +46,19 @@ def alt_linspace(range_, step_count):
         return tuple(t(i) for i in range(step_count))
 
 
-def run():
+##
+## Exercise execution
+##
+
+def analyze_function():
     function = fn_1      # fn_1 or fn_2 or fn_3 or fn_4
     space_fn = linspace  # linspace or alt_linspace
     range_ = [-1, 1]
-    actual_points_number = 5
-    interpolation_points_number = 100
+    actual_points_count = 5
+    interpolation_points_count = 100
 
-    actual_xs = space_fn(range_, actual_points_number)
-    interpolation_xs = space_fn(range_, interpolation_points_number)
+    actual_xs = space_fn(range_, actual_points_count)
+    interpolation_xs = space_fn(range_, interpolation_points_count)
 
     actual_points = evaluate(function, actual_xs)
     expected_points = evaluate(function, interpolation_xs)
