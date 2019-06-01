@@ -41,8 +41,8 @@
   * [x] Esercizio 3
     * [Fortran](Fortran/G3.03)
 
-* [ ] Gruppo 4
-  * [ ] Esercizio 1
+* [x] Gruppo 4
+  * [x] Esercizio 1
 
 * [ ] Gruppo 5
   * [x] Esercizio 1
