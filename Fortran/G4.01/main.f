@@ -18,13 +18,13 @@
       END
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-*     Copies A into B
+*     Copies B into A
       SUBROUTINE MATRIXCPY(A, B, N)
       REAL A(N, N), B(N, N)
 
       DO I = 1, N
          DO J = 1, N
-            B(I, J) = A(I, J)
+            A(I, J) = B(I, J)
          ENDDO
       ENDDO
 
@@ -89,14 +89,13 @@
 
       NSCAMBI = 0
 
-      CALL IDENTITYMATRIX(ID, N)
       CALL MATRIXCPY(COPY, A, N)
 
       DO K = 1, N - 1
          MAX_VAL = A(K, K)
          L = K
          DO I = K, N
-            TEMP = ABS(M(I, K))
+            TEMP = ABS(A(I, K))
             IF (MAX_VAL .LT. TEMP) THEN
                MAX_VAL = TEMP
                L = I
@@ -119,7 +118,7 @@
          DO I = K + 1, N
             Q = COPY(I, K) / COPY(K, K)
             DO J = K, N
-               COPY(I ,J) = (COPY(I, J)-(Q*COPY(K, J)))
+               COPY(I, J) = (COPY(I, J)-(Q*COPY(K, J)))
             ENDDO
             DO J = 1, N
                ID(I, J) = (ID(I, J)-(Q*ID(K, J)))
@@ -132,7 +131,7 @@
       DO K = N, 1, -1
          DO I = 1, K - 1
             Q = COPY(I, K) / COPY(K, K)
-            DO J = 1, N
+            DO J = 1, K
                COPY(I, J) = (COPY(I, J)-Q*COPY(K, J))
             ENDDO
             DO J = 1, N
@@ -140,7 +139,7 @@
             ENDDO
          ENDDO
          DO J = 1, N
-            ID(K, J) = (ID(K, J)-Q*ID(K, K))
+            ID(K, J) = (ID(K, J)/COPY(K, K))
          ENDDO
       ENDDO
       END
@@ -149,7 +148,7 @@
       PARAMETER (N = 5)
       REAL A(N, N), B(N, N)
       CALL MATWILKINSON(A, N)
+      CALL IDENTITYMATRIX(B, N)
       CALL GAUSSJORDAN(A, B, N)
-      CALL MATPRINT(A, N)
       CALL MATPRINT(B, N)
       END
