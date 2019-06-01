@@ -85,9 +85,7 @@
 
       REAL A(N, N), ID(N, N), COPY(N, N)
       REAL MAX_VAL, TEMP, Q
-      INTEGER L, NSCAMBI
-
-      NSCAMBI = 0
+      INTEGER L
 
       CALL MATRIXCPY(COPY, A, N)
 
@@ -106,7 +104,6 @@
          ENDIF
          IF (K .NE. L) THEN
             DO J = 1, N
-               NSCAMBI = NSCAMBI + 1
                TEMP = COPY(K, J)
                COPY(K, J) = COPY(L, J)
                COPY(L, J) = TEMP
