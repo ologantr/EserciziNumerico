@@ -1,8 +1,8 @@
 from math import cos, sin, pi
 from cn.algebra import evaluate, linspace
 from cn.interpolation import linear_interpolation
-from cn.plot import make_compound_figure, make_plot_descriptor
-
+from cn.plot import make_simple_figure, make_compound_figure, make_plot_descriptor
+import cn.vector
 
 ##
 ## Given functions
@@ -81,3 +81,32 @@ def analyze_function():
         make_plot_descriptor('Funzione prevista', expected_points),
         make_plot_descriptor('Errore', error_points)
     ).show()
+
+
+def analyze_error():
+    function = fn_1
+    space_fn = linspace
+    range_ = [-1, 1]
+    actual_points_count_list = (5, 6, 11, 12, 20, 25)
+    interpolation_points_count = 100
+    norm_fn = cn.vector.norm_inf
+
+    def compute_error(actual_points_count):
+        actual_xs = space_fn(range_, actual_points_count)
+        interpolation_xs = space_fn(range_, interpolation_points_count)
+
+        actual_points = evaluate(function, actual_xs)
+        expected_points = evaluate(function, interpolation_xs)
+
+        interpolation_fn = linear_interpolation(actual_points)
+        interpolated_points = evaluate(interpolation_fn, interpolation_xs)
+
+        error_ys = (abs(expected_point[1] - interpolated_point[1])
+                    for expected_point, interpolated_point
+                    in zip(expected_points, interpolated_points))
+
+        return norm_fn(error_ys)
+
+    errors = tuple((x, compute_error(x)) for x in actual_points_count_list)
+
+    make_simple_figure(errors).show()
