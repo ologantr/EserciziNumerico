@@ -31,24 +31,21 @@ def jacobi(matrix, steps):
     a, b = matrix
     order = len(a)
 
-    def step(previous, i):
+    def x(previous, i):
         def sum_(i):
             return sum(a[i][j] * previous[j]
                        for j in range(order)
                        if j != i)
 
-        def x(i):
-            return (b[i] - sum_(i)) / a[i][i]
+        return (b[i] - sum_(i)) / a[i][i]
 
-        return x(i)
-
-    def result(previous):
-        return tuple(step(previous, i)
+    def step(previous):
+        return tuple(x(previous, i)
                      for i in range(order))
 
-    r = [result(b)]
+    result = [step(b)]
 
     for _ in range(steps - 1):
-        r.append(result(r[-1]))
+        result.append(step(result[-1]))
 
-    return tuple(r)
+    return tuple(result)
