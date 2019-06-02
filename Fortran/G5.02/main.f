@@ -227,6 +227,14 @@ C     mantenendo lo stesso vettore dei termini noti. Confrontare la
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+      SUBROUTINE PRINTVECTOR(V, N)
+
+      WRITE(*,*) (V(I), I = 1, N)
+
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
       PROGRAM MAIN
 
 *     Ordine della matrice
