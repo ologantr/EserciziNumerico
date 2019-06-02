@@ -269,5 +269,11 @@ C     		the matrix and the B vector again
 *     Solution to the original matrix
       CALL PRINTVECTOR(X_AFTER, N)
 
+*     Blank
+      WRITE(*,*) ''
+
+*     Solution to the perturbated matrix
+      CALL PRINTVECTOR(X_BEFORE, N)
+
 
       END
