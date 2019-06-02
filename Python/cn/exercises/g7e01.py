@@ -1,12 +1,14 @@
 from math import cos, sin, pi
 from cn.algebra import evaluate, linspace
 from cn.interpolation import linear_interpolation
-from cn.plot import make_simple_figure, make_compound_figure, make_plot_descriptor
+from cn.plot import (make_simple_figure, make_compound_figure,
+                     make_plot_descriptor)
 import cn.vector
 
-##
-## Given functions
-##
+
+#
+# Given functions
+#
 
 def fn_1(x):
     return 1/(1 + (25 * (x ** 2)))
@@ -24,9 +26,9 @@ def fn_4(x):
     return sin(x) / x
 
 
-##
-## Alternative x-axis points generator
-##
+#
+# Alternative x-axis points generator
+#
 
 def alt_linspace(range_, step_count):
     min_, max_ = range_
@@ -46,9 +48,9 @@ def alt_linspace(range_, step_count):
         return tuple(t(i) for i in range(step_count))
 
 
-##
-## Exercise execution
-##
+#
+# Exercise execution
+#
 
 def analyze_function():
     function = fn_1      # fn_1 or fn_2 or fn_3 or fn_4
