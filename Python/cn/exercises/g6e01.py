@@ -1,3 +1,8 @@
+from cn.linear_algebra import jacobi, seidel
+from cn.plot import make_compound_figure, make_plot_descriptor
+import cn.vector
+
+
 MATRICES = (
     (((3, 0, 4),
       (7, 4, 2),
@@ -27,56 +32,23 @@ MATRICES = (
 )
 
 
-def jacobi(matrix, steps):
-    a, b = matrix
-    order = len(a)
+def analyze_error():
+    matrix = MATRICES[0]
+    steps = 100
+    norm_fn = cn.vector.norm_inf
 
-    def x(previous, i):
-        def sum_(i):
-            return sum(a[i][j] * previous[j]
-                       for j in range(order)
-                       if j != i)
+    jacobi_result = jacobi(matrix, steps)
+    seidel_result = seidel(matrix, steps)
 
-        return (b[i] - sum_(i)) / a[i][i]
+    jacobi_norms = tuple(norm_fn(result) for result in jacobi_result)
+    seidel_norms = tuple(norm_fn(result) for result in seidel_result)
 
-    def step(previous):
-        return tuple(x(previous, i)
-                     for i in range(order))
+    jacobi_error = tuple((i, norm_fn(jacobi_norms[:i]))
+                         for i in range(1, steps))
+    seidel_error = tuple((i, norm_fn(seidel_norms[:i]))
+                         for i in range(1, steps))
 
-    result = [step(b)]
-
-    for _ in range(steps - 1):
-        result.append(step(result[-1]))
-
-    return tuple(result)
-
-
-def seidel(matrix, steps):
-    a, b = matrix
-    order = len(a)
-
-    def x(current, previous, i):
-        def sum_1(current, i):
-            return sum(a[i][j] * current[j]
-                       for j in range(i - 1))
-
-        def sum_2(previous, i):
-            return sum(a[i][j] * previous[j]
-                       for j in range(i + 1, order))
-
-        return (b[i] - sum_1(current, i) - sum_2(previous, i)) / a[i][i]
-
-    def step(previous):
-        current = []
-
-        for i in range(order):
-            current.append(x(current, previous, i))
-
-        return tuple(current)
-
-    result = [step(b)]
-
-    for _ in range(steps - 1):
-        result.append(step(result[-1]))
-
-    return tuple(result)
+    make_compound_figure(
+        make_plot_descriptor('Jacobi error', jacobi_error),
+        make_plot_descriptor('Seidel error', seidel_error)
+    ).show()
