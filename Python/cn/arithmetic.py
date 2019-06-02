@@ -21,4 +21,13 @@ def progression(step, start=0):
 
 
 def product(xs):
+    """
+    Like the sum() builtin, but multiply instead of adding.
+
+    >>> product(x for x in range(1, 4))
+    6
+
+    >>> product((-1, 2, 5))
+    -10
+    """
     return reduce(operator.mul, xs, 1)
