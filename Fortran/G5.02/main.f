@@ -225,7 +225,7 @@ C     mantenendo lo stesso vettore dei termini noti. Confrontare la
 
       END
 
-*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
       PROGRAM MAIN
 
@@ -233,15 +233,28 @@ C     mantenendo lo stesso vettore dei termini noti. Confrontare la
       PARAMETER (N = 15)
       PARAMETER (OFFSET = 0.01)
 
-      REAL A(N, N), B(N), X(N), ERR, SOLERROR
+      REAL A(N, N), B(N), SOLERROR
+      REAL X_BEFORE(N), X_AFTER(N)
+      REAL ERR_BEFORE, ERR_AFTER
 
       CALL MATWILKINSON(A, N)
       CALL COMPUTEBVECTOR(A, B, N)
       CALL TOZERO(A, B, I)
-      CALL BACKSUB(A, B, N, X)
-      ERR = SOLERROR(X, N)
+      CALL BACKSUB(A, B, N, X_BEFORE)
+      ERR_BEFORE = SOLERROR(X_BEFORE, N)
 
 *     X is now the solution to the initial matrix
 *     We will now perturbate the A(N, N) element
+*     NOTE: the A matrix has been altered by the
+*     		Gauss algorithm, so we have to compute
+C     		the matrix and the B vector again
+
+      CALL MATWILKINSON(A, N)
+      CALL COMPUTEBVECTOR(A, B, N)
+      CALL PERTURBATEMATRIX(A, N, OFFSET)
+      CALL TOZERO(A, B, N)
+      CALL BACKSUB(A, B, N, X_AFTER)
+      ERR_AFTER = SOLERROR(X_AFTER, N)
+
 
       END
