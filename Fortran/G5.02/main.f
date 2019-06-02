@@ -240,7 +240,7 @@ C     mantenendo lo stesso vettore dei termini noti. Confrontare la
       PROGRAM MAIN
 
 *     Ordine della matrice
-      PARAMETER (N = 15)
+      PARAMETER (N = 5)
       PARAMETER (OFFSET = 0.01)
 
       REAL A(N, N), B(N), SOLERROR
@@ -249,7 +249,7 @@ C     mantenendo lo stesso vettore dei termini noti. Confrontare la
 
       CALL MATWILKINSON(A, N)
       CALL COMPUTEBVECTOR(A, B, N)
-      CALL TOZERO(A, B, I)
+      CALL TOZERO(A, B, N)
       CALL BACKSUB(A, B, N, X_BEFORE)
       ERR_BEFORE = SOLERROR(X_BEFORE, N)
 
