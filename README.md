@@ -64,10 +64,11 @@
   * [ ] Esercizio 4
   * [ ] Esercizio 5
 
-* [ ] Gruppo 7
-  * [ ] Esercizio 1
-  * [ ] Esercizio 2
-  * [ ] Esercizio 3
+* [x] Gruppo 7
+  * [x] Esercizio 1
+    * [Python](Python/cn/exercises/g7e01.py)
+  * [x] Esercizio 2 *Da non svolgere*
+  * [x] Esercizio 3 *Da non svolgere*
 
 * [x] Gruppo 8 *Da non svolgere*
   * [x] Esercizio 1
