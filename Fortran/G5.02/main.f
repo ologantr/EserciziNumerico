@@ -1,4 +1,11 @@
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*     Risolvere  un sistema  lineare  Ax=b con il metodo  di Gauss.
+C     Perturbare  almeno  un elemento di A e risolvere nuovamente il sistema
+C     mantenendo lo stesso vettore dei termini noti. Confrontare la
+*     soluzione ottenuta con quella del sistema non perturbato e spiegare
+*     quello che accade, evidenziando la relazione tra l’errore relativo
+*     sui dati e quello sulla soluzione.
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 *     Generate a Toeplitz matrix of N components in the space referenced
 *     by A
