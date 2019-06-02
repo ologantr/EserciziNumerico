@@ -253,7 +253,7 @@ C     mantenendo lo stesso vettore dei termini noti. Confrontare la
       CALL BACKSUB(A, B, N, X_BEFORE)
       ERR_BEFORE = SOLERROR(X_BEFORE, N)
 
-*     X is now the solution to the initial matrix
+*     X_BEFORE is now the solution to the initial matrix
 *     We will now perturbate the A(N, N) element
 *     NOTE: the A matrix has been altered by the
 *     		Gauss algorithm, so we have to compute
@@ -267,13 +267,17 @@ C     		the matrix and the B vector again
       ERR_AFTER = SOLERROR(X_AFTER, N)
 
 *     Solution to the original matrix
-      CALL PRINTVECTOR(X_AFTER, N)
+      CALL PRINTVECTOR(X_BEFORE, N)
 
 *     Blank
       WRITE(*,*) ''
 
 *     Solution to the perturbated matrix
-      CALL PRINTVECTOR(X_BEFORE, N)
+      CALL PRINTVECTOR(X_AFTER, N)
 
+*     Blank
+      WRITE(*,*) ''
+
+      WRITE(*,*) ERR_BEFORE, ERR_AFTER
 
       END
