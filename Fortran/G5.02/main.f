@@ -229,6 +229,8 @@ C     mantenendo lo stesso vettore dei termini noti. Confrontare la
 
       SUBROUTINE PRINTVECTOR(V, N)
 
+      REAL V(N)
+
       WRITE(*,*) (V(I), I = 1, N)
 
       END
@@ -263,6 +265,9 @@ C     		the matrix and the B vector again
       CALL TOZERO(A, B, N)
       CALL BACKSUB(A, B, N, X_AFTER)
       ERR_AFTER = SOLERROR(X_AFTER, N)
+
+*     Solution to the original matrix
+      CALL PRINTVECTOR(X_AFTER, N)
 
 
       END
