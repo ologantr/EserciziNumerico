@@ -213,3 +213,35 @@ C     mantenendo lo stesso vettore dei termini noti. Confrontare la
       END
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+*     Perturbates the A(N, N) element of the matrix with the offset
+*     argument. Note that the offset can be positive or negative
+
+      SUBROUTINE PERTURBATEMATRIX(A, N, OFFSET)
+
+      REAL A(N, N), OFFSET
+
+      A(N, N) = A(N, N) + OFFSET
+
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+      PROGRAM MAIN
+
+*     Ordine della matrice
+      PARAMETER (N = 15)
+      PARAMETER (OFFSET = 0.01)
+
+      REAL A(N, N), B(N), X(N), ERR, SOLERROR
+
+      CALL MATWILKINSON(A, N)
+      CALL COMPUTEBVECTOR(A, B, N)
+      CALL TOZERO(A, B, I)
+      CALL BACKSUB(A, B, N, X)
+      ERR = SOLERROR(X, N)
+
+*     X is now the solution to the initial matrix
+*     We will now perturbate the A(N, N) element
+
+      END
