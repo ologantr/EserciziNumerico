@@ -59,7 +59,8 @@
   * [ ] Esercizio 8
 
 * [ ] Gruppo 6
-  * [ ] Esercizio 1
+  * [x] Esercizio 1
+    * [Python](Python/cn/exercises/g6e01.py)
   * [ ] Esercizio 2
   * [ ] Esercizio 3
   * [ ] Esercizio 4
