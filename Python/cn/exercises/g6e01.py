@@ -63,5 +63,5 @@ def analyze_error():
     seidel_points = tuple(zip(range(len(seidel_error)),
                               seidel_error))
 
-    make_simple_figure(jacobi_points).show()
-    make_simple_figure(seidel_points).show()
+    make_simple_figure(jacobi_points, title='Jacobi').show()
+    make_simple_figure(seidel_points, title='Seidel').show()
