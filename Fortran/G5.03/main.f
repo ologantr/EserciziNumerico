@@ -156,19 +156,86 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+*     Generate a Toeplitz matrix of N components in the space referenced
+*     by A
+      SUBROUTINE MATTOEPLITZ(A, N)
+      REAL A(N, N)
+
+      DO I = 1, N
+         DO J = N, I, -1
+            A(I, J) = J - I + 1
+         ENDDO
+      ENDDO
+
+      DO I = 2, N
+         DO J = 1, I - 1
+            A(I, J) = I - J + 1
+         ENDDO
+      ENDDO
+
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+*     Set to zero every element of the matrix
+      SUBROUTINE ZEROMATRIX(A, N)
+
+      REAL A(N, N)
+
+      DO I = 1, N
+         DO J = 1, N
+            A(I, J) = 0
+         ENDDO
+      ENDDO
+
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*     Utility to get L and U after Crout Decomposition (TESTING ONLY)
+*     If it works, it will use only one matrix
+      SUBROUTINE GETLU(A, L, U, N)
+
+      REAL A(N, N), L(N, N), U(N, N)
+
+      CALL ZEROMATRIX(L, N)
+      CALL ZEROMATRIX(U, N)
+
+*     Upper Matrix
+      DO I = 1, N
+         DO J = I, N
+            U(I, J) = A(I, J)
+         ENDDO
+      ENDDO
+
+*     Lower Matrix
+      DO I = N, 1, -1
+         DO J = 1, I
+            L(I, J) = A(I, J)
+         ENDDO
+      ENDDO
+
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
       PROGRAM MAIN
       PARAMETER (N = 5)
-      REAL A(N, N), B(N)
+      REAL A(N, N)
+      REAL L(N, N), U(N, N), RES(N, N)
 
-      CALL ARROWMATRIX(A, N)
-      CALL MATPRINT(A, N)
+      CALL MATTOEPLITZ(A, N)
+      CALL CROUTDECOMP(A, N)
 
+      CALL GETLU(A, L, U, N)
+
+      CALL MATRIXPRODUCT(L, U, RES, N)
+
+      CALL MATPRINT(L, N)
       WRITE(*,*) ''
-      CALL TOZERO(A, B, N)
-
+      CALL MATPRINT(U, N)
+      WRITE(*,*) ''
       CALL MATPRINT(A, N)
-
-
-
+      WRITE(*,*) ''
+      CALL MATPRINT(RES, N)
 
       END
