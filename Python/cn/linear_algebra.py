@@ -1,4 +1,14 @@
-def jacobi(matrix, steps):
+# Stop the iteration when the difference between the
+# result of the current iteration and the previous
+# one is less than TOLERANCE.
+TOLERANCE = 1e-10
+
+# Stop after MAX_ITERATIONS even if the result has not
+# been found yet.
+MAX_ITERATIONS = 500
+
+
+def jacobi(matrix):
     a, b = matrix
     order = len(a)
 
@@ -16,13 +26,25 @@ def jacobi(matrix, steps):
 
     result = [step(b)]
 
-    for _ in range(steps - 1):
-        result.append(step(result[-1]))
+    for _ in range(MAX_ITERATIONS - 1):
+        previous = result[-1]
+        current = step(previous)
 
+        differences = tuple(abs(a - b)
+                            for a, b in zip(current, previous))
+
+        if all(difference < TOLERANCE for difference in differences):
+            # If we reach this code it means that we've
+            # reached the tolerance.
+            return tuple(result)
+        else:
+            result.append(step(result[-1]))
+    # If we reach this code it means that we've reached
+    # MAX_ITERATIONS.
     return tuple(result)
 
 
-def seidel(matrix, steps):
+def seidel(matrix):
     a, b = matrix
     order = len(a)
 
@@ -47,7 +69,19 @@ def seidel(matrix, steps):
 
     result = [step(b)]
 
-    for _ in range(steps - 1):
-        result.append(step(result[-1]))
+    for _ in range(MAX_ITERATIONS - 1):
+        previous = result[-1]
+        current = step(previous)
 
+        differences = tuple(abs(a - b)
+                            for a, b in zip(current, previous))
+        if all(difference < TOLERANCE for difference in differences):
+            # If we reach this code it means that we've
+            # reached the tolerance.
+            return tuple(result)
+        else:
+            result.append(step(result[-1]))
+
+    # If we reach this code it means that we've reached
+    # MAX_ITERATIONS.
     return tuple(result)
