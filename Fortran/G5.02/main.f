@@ -379,18 +379,42 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+*     Multiplies two matrices of order N and stores the result in C
+      SUBROUTINE MATRIXPRODUCT(A, B, C, N)
+      REAL A(N, N), B(N, N), C(N, N)
+      REAL TEMP
+
+      TEMP = 0
+
+      DO I = 1, N
+         DO J = 1, N
+            DO K = 1, N
+               TEMP = TEMP + (A(I, K) * B(K, J))
+            ENDDO
+            C(I, J) = TEMP
+            TEMP = 0
+         ENDDO
+      ENDDO
+
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
       PROGRAM MAIN
 
 *     Ordine della matrice
       PARAMETER (N = 5)
-      PARAMETER (OFFSET = 0.01)
+      PARAMETER (OFFSET = -0.01)
 
       REAL A(N, N), B(N), SOLERROR
       REAL X_BEFORE(N), X_AFTER(N)
       REAL ERR_BEFORE, ERR_AFTER
+      REAL COND_BEFORE, COND_AFTER
 
-      CALL MATWILKINSON(A, N)
+      CALL MATTOEPLITZ(A, N)
       CALL COMPUTEBVECTOR(A, B, N)
+      COND_BEFORE = CONDNUMBER(A, N)
+      CALL MATTOEPLITZ(A, N)
       CALL TOZERO(A, B, N)
       CALL BACKSUB(A, B, N, X_BEFORE)
       ERR_BEFORE = SOLERROR(X_BEFORE, N)
@@ -401,25 +425,34 @@
 *     		Gauss algorithm, so we have to compute
 *     		the matrix and the B vector again
 
-      CALL MATWILKINSON(A, N)
+      CALL MATTOEPLITZ(A, N)
       CALL COMPUTEBVECTOR(A, B, N)
+      CALL PERTURBATEMATRIX(A, N, OFFSET)
+      COND_AFTER = CONDNUMBER(A, N)
+      CALL MATTOEPLITZ(A, N)
       CALL PERTURBATEMATRIX(A, N, OFFSET)
       CALL TOZERO(A, B, N)
       CALL BACKSUB(A, B, N, X_AFTER)
       ERR_AFTER = SOLERROR(X_AFTER, N)
 
 *     Solution to the original matrix
+      WRITE(*,*) 'Solution before the perturbation: '
       CALL PRINTVECTOR(X_BEFORE, N)
 
 *     Blank
       WRITE(*,*) ''
 
 *     Solution to the perturbated matrix
+      WRITE(*,*) 'Solution after the perturbation: '
       CALL PRINTVECTOR(X_AFTER, N)
 
 *     Blank
       WRITE(*,*) ''
 
+      WRITE(*,*) 'Error before/after'
       WRITE(*,*) ERR_BEFORE, ERR_AFTER
+      WRITE(*,*) ''
+      WRITE(*,*) 'Condition number before/after'
+      WRITE(*,*) COND_BEFORE, COND_AFTER
 
       END
