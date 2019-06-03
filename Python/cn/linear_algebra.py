@@ -33,16 +33,20 @@ def jacobi(matrix):
         previous = result[-1]
         current = step(previous)
 
-        previous_norm = cn.vector.norm_inf(previous)
-        current_norm = cn.vector.norm_inf(current)
-        norm_difference = abs(current_norm - previous_norm)
+        difference = cn.vector.difference(current, previous)
 
-        if norm_difference < TOLERANCE:
+        current_norm = cn.vector.norm_inf(current)
+        difference_norm = cn.vector.norm_inf(difference)
+
+        relative_error = difference_norm / current_norm
+
+        if relative_error < TOLERANCE:
             # If we reach this code it means that we've
             # reached the tolerance.
             return tuple(result)
         else:
             result.append(step(result[-1]))
+
     # If we reach this code it means that we've reached
     # MAX_ITERATIONS.
     return tuple(result)
@@ -77,11 +81,14 @@ def seidel(matrix):
         previous = result[-1]
         current = step(previous)
 
-        previous_norm = cn.vector.norm_inf(previous)
-        current_norm = cn.vector.norm_inf(current)
-        norm_difference = abs(current_norm - previous_norm)
+        difference = cn.vector.difference(current, previous)
 
-        if norm_difference < TOLERANCE:
+        current_norm = cn.vector.norm_inf(current)
+        difference_norm = cn.vector.norm_inf(difference)
+
+        relative_error = difference_norm / current_norm
+
+        if relative_error < TOLERANCE:
             # If we reach this code it means that we've
             # reached the tolerance.
             return tuple(result)
