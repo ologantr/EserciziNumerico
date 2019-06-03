@@ -124,7 +124,7 @@
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
       PROGRAM MAIN
-      PARAMETER (N = 5)
+      PARAMETER (N = 8)
       REAL A(N, N), L(N, N), U(N, N)
       REAL RES(N, N)
 
