@@ -135,13 +135,15 @@
       SUBROUTINE CROUTDECOMP(A, N)
       REAL A(N ,N), TEMP
 
-      DO J = 1, N
-         DO I = J, N
+      TEMP = 0
+
+      DO I = 1, N
+         DO K = J, N
             TEMP = A(I, J)
-            DO K = 1, J - 1
-               TEMP = TEMP - (A(I, K)*A(K, J))
+            DO J = 1, I - 1
+               TEMP = TEMP - (A(I, J)*A(J, K))
             ENDDO
-            A(I, J) = TEMP
+            A(I, K) = A(I, K) - TEMP
          ENDDO
          DO L = J + 1, N
             TEMP = A(I, L)
@@ -155,7 +157,6 @@
       END
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
 *     Generate a Toeplitz matrix of N components in the space referenced
 *     by A
       SUBROUTINE MATTOEPLITZ(A, N)
@@ -224,7 +225,10 @@
       REAL L(N, N), U(N, N), RES(N, N)
 
       CALL MATTOEPLITZ(A, N)
+      CALL MATPRINT(A, N)
+      WRITE(*,*) ''
       CALL CROUTDECOMP(A, N)
+
 
       CALL GETLU(A, L, U, N)
 
@@ -233,8 +237,6 @@
       CALL MATPRINT(L, N)
       WRITE(*,*) ''
       CALL MATPRINT(U, N)
-      WRITE(*,*) ''
-      CALL MATPRINT(A, N)
       WRITE(*,*) ''
       CALL MATPRINT(RES, N)
 
