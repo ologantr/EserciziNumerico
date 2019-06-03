@@ -400,6 +400,49 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+      SUBROUTINE MATRIXVECPRODUCT(A, X, RES, N)
+
+      REAL A(N, N), X(N), RES(N, N)
+
+      DO I = 1, N
+         DO J = 1, N
+            RES(I, J) = A(I, J) * X(J)
+         ENDDO
+      ENDDO
+
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+      SUBROUTINE MATRIXSUB(A, B, C, N)
+
+      REAL A(N, N), B(N, N), C(N, N)
+
+      DO I = 1, N
+         DO J = 1, N
+            C(I, J) = A(I, J) - B(I, J)
+         ENDDO
+      ENDDO
+
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+      REAL FUNCTION RESIDUE(A, B, X)
+*     To compute the residue we need the matrix, the B vector
+*     and the perturbated solution
+*     r = b - Ax
+
+      REAL A(N, N), B(N), X(N)
+      REAL NORM_1
+      REAL NORM1
+      REAL R(N)
+      REAL TEMP(N, N)
+
+      CALL MATRIXVECPRODUCT(A, X, TEMP, N)
+
+
+
+      END
+
       PROGRAM MAIN
 
 *     Ordine della matrice
