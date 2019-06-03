@@ -94,6 +94,7 @@
       END
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
 *     Copies B into A
       SUBROUTINE MATRIXCPY(A, B, N)
       REAL A(N, N), B(N, N)
@@ -101,21 +102,6 @@
       DO I = 1, N
          DO J = 1, N
             A(I, J) = B(I, J)
-         ENDDO
-      ENDDO
-
-      END
-
-*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
-*     Set to zero every element of the matrix
-      SUBROUTINE ZEROMATRIX(A, N)
-
-      REAL A(N, N)
-
-      DO I = 1, N
-         DO J = 1, N
-            A(I, J) = 0
          ENDDO
       ENDDO
 
@@ -145,6 +131,5 @@
       CALL MATRIXPRODUCT(L, U, RES, N)
       CALL MATPRINT(RES, N)
       WRITE(*,*) ''
-
 
       END
