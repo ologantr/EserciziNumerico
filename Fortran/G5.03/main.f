@@ -132,25 +132,34 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-      SUBROUTINE CROUTDECOMP(A, N)
+      SUBROUTINE CROUTDECOMP(A, L, U, N)
       REAL A(N ,N), TEMP
+      REAL U(N, N), L(N, N)
 
-      TEMP = 0
-
+*     Setting the main diagonal of the upper triangular to 1
       DO I = 1, N
-         DO K = J, N
-            TEMP = A(I, J)
-            DO J = 1, I - 1
-               TEMP = TEMP - (A(I, J)*A(J, K))
+         U(I, I) = 1
+         L(I, 1) = A(I, 1)
+      ENDDO
+
+      DO J = 1, N
+         DO I = J, N
+            TEMP = 0
+            DO K = 1, J
+               TEMP = TEMP + (L(I, K)*U(K, J))
             ENDDO
-            A(I, K) = A(I, K) - TEMP
+            L(I, J) = A(I, J) - TEMP
          ENDDO
-         DO L = J + 1, N
-            TEMP = A(I, L)
-            DO K = 1, I - 1
-               TEMP = TEMP - (A(L, K)*A(K, I))
+
+         DO I = J, N - 1
+            TEMP = 0
+            DO K = 1, J - 1
+               TEMP = TEMP + (L(J, K)*U(K, I))
             ENDDO
-            A(L, I) = TEMP/A(L, I)
+            IF (L(J, J) .EQ. 0) THEN
+               STOP
+            ENDIF
+            U(J, I) = (A(J, I) - TEMP) / L(J, J)
          ENDDO
       ENDDO
 
