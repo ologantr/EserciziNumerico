@@ -111,6 +111,27 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+*     Multiplies two matrices of order N and stores the result in C
+      SUBROUTINE MATRIXPRODUCT(A, B, C, N)
+      REAL A(N, N), B(N, N), C(N, N)
+      REAL TEMP
+
+      TEMP = 0
+
+      DO I = 1, N
+         DO J = 1, N
+            DO K = 1, N
+               TEMP = TEMP + (A(I, K) * B(K, J))
+            ENDDO
+            C(I, J) = TEMP
+            TEMP = 0
+         ENDDO
+      ENDDO
+
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
       PROGRAM MAIN
       PARAMETER (N = 5)
       REAL A(N, N), B(N)
