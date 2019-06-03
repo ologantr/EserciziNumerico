@@ -36,35 +36,6 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-      REAL FUNCTION RNORM1(V, N)
-      REAL V(N)
-
-      RNORM1 = 0
-
-      DO I = 1, N
-         RNORM1 = RNORM1 + ABS(V(I))
-      ENDDO
-
-      END
-
-*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
-      REAL FUNCTION SOLERROR(X, N)
-      REAL X(N), ERRX(N), SOL(N), NORMERRX, NORMSOL
-
-      DO I = 1, N
-         SOL(I) = 1
-         ERRX(I) = SOL(I) - X(I)
-      ENDDO
-
-      NORMSOL = RNORM1(SOL, N)
-      NORMERRX = RNORM1(ERRX, N)
-      SOLERROR = NORMERRX/NORMSOL
-
-      END
-
-*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
 *     Multiplies two matrices of order N and stores the result in C
       SUBROUTINE MATRIXPRODUCT(A, B, C, N)
       REAL A(N, N), B(N, N), C(N, N)
@@ -86,7 +57,8 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-      SUBROUTINE CROUTDECOMP(A, L, U, N)
+*     Doolittle decomposition
+      SUBROUTINE DOOLITTLEDECOMP(A, L, U, N)
       REAL A(N ,N), U(N, N), L(N, N)
 
       CALL IDENTITYMATRIX(L, N)
@@ -104,26 +76,7 @@
       END
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-*     Generate a Toeplitz matrix of N components in the space referenced
-*     by A
-      SUBROUTINE MATTOEPLITZ(A, N)
-      REAL A(N, N)
 
-      DO I = 1, N
-         DO J = N, I, -1
-            A(I, J) = J - I + 1
-         ENDDO
-      ENDDO
-
-      DO I = 2, N
-         DO J = 1, I - 1
-            A(I, J) = I - J + 1
-         ENDDO
-      ENDDO
-
-      END
-
-*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 *     Build an identity matrix of order N
       SUBROUTINE IDENTITYMATRIX(A, N)
       REAL A(N, N)
