@@ -132,6 +132,30 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+      SUBROUTINE CROUTDECOMP(A, N)
+      REAL A(N ,N), TEMP
+
+      DO J = 1, N
+         DO I = J, N
+            TEMP = A(I, J)
+            DO K = 1, J - 1
+               TEMP = TEMP - (A(I, K)*A(K, J))
+            ENDDO
+            A(I, J) = TEMP
+         ENDDO
+         DO L = J + 1, N
+            TEMP = A(I, L)
+            DO K = 1, I - 1
+               TEMP = TEMP - (A(L, K)*A(K, I))
+            ENDDO
+            A(L, I) = TEMP/A(L, I)
+         ENDDO
+      ENDDO
+
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
       PROGRAM MAIN
       PARAMETER (N = 5)
       REAL A(N, N), B(N)
