@@ -132,7 +132,7 @@
       WRITE(*,*) 'Original matrix: '
       CALL MATPRINT(A, N)
       WRITE(*,*) ''
-      CALL CROUTDECOMP(A, L, U, N)
+      CALL DOOLITTLEDECOMP(A, L, U, N)
 
       WRITE(*,*) 'Lower triangular: '
       CALL MATPRINT(L, N)
