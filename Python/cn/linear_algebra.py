@@ -1,3 +1,6 @@
+import cn.vector
+
+
 # Stop the iteration when the difference between the
 # result of the current iteration and the previous
 # one is less than TOLERANCE.
@@ -30,10 +33,11 @@ def jacobi(matrix):
         previous = result[-1]
         current = step(previous)
 
-        differences = tuple(abs(a - b)
-                            for a, b in zip(current, previous))
+        previous_norm = cn.vector.norm_inf(previous)
+        current_norm = cn.vector.norm_inf(current)
+        norm_difference = abs(current_norm - previous_norm)
 
-        if all(difference < TOLERANCE for difference in differences):
+        if norm_difference < TOLERANCE:
             # If we reach this code it means that we've
             # reached the tolerance.
             return tuple(result)
@@ -73,9 +77,11 @@ def seidel(matrix):
         previous = result[-1]
         current = step(previous)
 
-        differences = tuple(abs(a - b)
-                            for a, b in zip(current, previous))
-        if all(difference < TOLERANCE for difference in differences):
+        previous_norm = cn.vector.norm_inf(previous)
+        current_norm = cn.vector.norm_inf(current)
+        norm_difference = abs(current_norm - previous_norm)
+
+        if norm_difference < TOLERANCE:
             # If we reach this code it means that we've
             # reached the tolerance.
             return tuple(result)
