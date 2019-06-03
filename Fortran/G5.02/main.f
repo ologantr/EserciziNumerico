@@ -378,83 +378,41 @@
       END
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*     Function that takes the original matrix A, the perturbated
+*     matrix A_OFF and gives in output the relative error with the 1-norm
 
-*     Multiplies two matrices of order N and stores the result in C
-      SUBROUTINE MATRIXPRODUCT(A, B, C, N)
-      REAL A(N, N), B(N, N), C(N, N)
-      REAL TEMP
+      REAL FUNCTION RELERROR(A, A_OFF, N)
 
-      TEMP = 0
+      REAL A(N, N), A_OFF(N, N)
+      REAL NORM_1, NORMA, NORMA_OFF
 
-      DO I = 1, N
-         DO J = 1, N
-            DO K = 1, N
-               TEMP = TEMP + (A(I, K) * B(K, J))
-            ENDDO
-            C(I, J) = TEMP
-            TEMP = 0
-         ENDDO
-      ENDDO
+      NORMA_OFF = NORM_1(A_OFF, N)
+      NORMA = NORM_1(A, N)
+
+      RELERROR = NORMA_OFF/NORMA
 
       END
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
-      SUBROUTINE MATRIXVECPRODUCT(A, X, RES, N)
-
-      REAL A(N, N), X(N), RES(N, N)
-
-      DO I = 1, N
-         DO J = 1, N
-            RES(I, J) = A(I, J) * X(J)
-         ENDDO
-      ENDDO
-
-      END
-
-*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-      SUBROUTINE MATRIXSUB(A, B, C, N)
-
-      REAL A(N, N), B(N, N), C(N, N)
-
-      DO I = 1, N
-         DO J = 1, N
-            C(I, J) = A(I, J) - B(I, J)
-         ENDDO
-      ENDDO
-
-      END
-
-*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-      REAL FUNCTION RESIDUE(A, B, X)
-*     To compute the residue we need the matrix, the B vector
-*     and the perturbated solution
-*     r = b - Ax
-
-      REAL A(N, N), B(N), X(N)
-      REAL NORM_1
-      REAL NORM1
-      REAL R(N)
-      REAL TEMP(N, N)
-
-      CALL MATRIXVECPRODUCT(A, X, TEMP, N)
-
-
-
-      END
 
       PROGRAM MAIN
 
 *     Ordine della matrice
       PARAMETER (N = 5)
-      PARAMETER (OFFSET = -0.01)
+      PARAMETER (OFFSET = 0.01)
 
       REAL A(N, N), B(N), SOLERROR
       REAL X_BEFORE(N), X_AFTER(N)
       REAL ERR_BEFORE, ERR_AFTER
       REAL COND_BEFORE, COND_AFTER
+      REAL RELERROR, DATAERROR
+      REAL Z(N, N)
 
+      WRITE(*,*) 'Original matrix:'
       CALL MATTOEPLITZ(A, N)
+      CALL MATPRINT(A, N)
+      WRITE(*,*) ''
+
       CALL COMPUTEBVECTOR(A, B, N)
       COND_BEFORE = CONDNUMBER(A, N)
       CALL MATTOEPLITZ(A, N)
@@ -478,6 +436,7 @@
       CALL BACKSUB(A, B, N, X_AFTER)
       ERR_AFTER = SOLERROR(X_AFTER, N)
 
+
 *     Solution to the original matrix
       WRITE(*,*) 'Solution before the perturbation: '
       CALL PRINTVECTOR(X_BEFORE, N)
@@ -497,5 +456,14 @@
       WRITE(*,*) ''
       WRITE(*,*) 'Condition number before/after'
       WRITE(*,*) COND_BEFORE, COND_AFTER
+
+      CALL MATTOEPLITZ(A, N)
+      CALL MATTOEPLITZ(Z, N)
+      CALL PERTURBATEMATRIX(Z, N, OFFSET)
+
+      DATAERROR = RELERROR(A, Z, N)
+
+      WRITE(*,*) ''
+      WRITE(*,*) 'Data error:', DATAERROR
 
       END
