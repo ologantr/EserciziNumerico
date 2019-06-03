@@ -36,52 +36,6 @@
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-      SUBROUTINE TOZERO(A, B, N)
-
-      REAL A(N, N), B(N), R, TEMP, PIVOT
-      INTEGER Y, P_POS
-
-*     A is the complete matrix of the linear system
-
-      DO K = 1, N-1
-         PIVOT = 0.0
-         DO I = K, N
-            IF (ABS(A(I, K)) .GT. PIVOT) THEN
-               PIVOT = A(I, K)
-               P_POS = I
-            ENDIF
-         ENDDO
-
-         IF (PIVOT .EQ. 0) THEN
-            STOP
-         ELSE
-            IF (K .NE. P_POS) THEN
-               DO Y = 1, N+1
-*                 Swap row k with row
-                  TEMP = A(K, Y)
-                  A(K, Y) = A(P_POS, Y)
-                  A(P_POS, Y) = TEMP
-               ENDDO
-            ENDIF
-
-            DO I = K+1, N
-               R = A(I, K)/A(K, K)
-               DO J = K, N
-                  A(I, J) = A(I, J) - R*A(K, J)
-               ENDDO
-               B(I) = B(I) - R*B(K)
-            ENDDO
-         ENDIF
-      ENDDO
-
-      IF (A(N, N) .EQ. 0) THEN
-         STOP
-      ENDIF
-
-      END
-
-*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
       REAL FUNCTION RNORM1(V, N)
       REAL V(N)
 
@@ -133,33 +87,17 @@
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
       SUBROUTINE CROUTDECOMP(A, L, U, N)
-      REAL A(N ,N), TEMP
-      REAL U(N, N), L(N, N)
+      REAL A(N ,N), U(N, N), L(N, N)
 
-*     Setting the main diagonal of the upper triangular to 1
-      DO I = 1, N
-         U(I, I) = 1
-         L(I, 1) = A(I, 1)
-      ENDDO
+      CALL IDENTITYMATRIX(L, N)
+      CALL MATRIXCPY(U, A, N)
 
-      DO J = 1, N
-         DO I = J, N
-            TEMP = 0
-            DO K = 1, J
-               TEMP = TEMP + (L(I, K)*U(K, J))
+      DO K = 1, N - 1
+         DO J = K + 1, N
+            L(J, K) = U(J, K)/U(K, K)
+            DO M = K, N
+               U(J, M) = U(J, M) - L(J, K)*U(K, M)
             ENDDO
-            L(I, J) = A(I, J) - TEMP
-         ENDDO
-
-         DO I = J, N - 1
-            TEMP = 0
-            DO K = 1, J - 1
-               TEMP = TEMP + (L(J, K)*U(K, I))
-            ENDDO
-            IF (L(J, J) .EQ. 0) THEN
-               STOP
-            ENDIF
-            U(J, I) = (A(J, I) - TEMP) / L(J, J)
          ENDDO
       ENDDO
 
@@ -186,6 +124,36 @@
       END
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*     Build an identity matrix of order N
+      SUBROUTINE IDENTITYMATRIX(A, N)
+      REAL A(N, N)
+
+      DO I = 1, N
+         DO J = 1, N
+            IF (I .EQ. J) THEN
+               A(I, J) = 1
+            ELSE
+               A(I, J) = 0
+            ENDIF
+         ENDDO
+      ENDDO
+
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*     Copies B into A
+      SUBROUTINE MATRIXCPY(A, B, N)
+      REAL A(N, N), B(N, N)
+
+      DO I = 1, N
+         DO J = 1, N
+            A(I, J) = B(I, J)
+         ENDDO
+      ENDDO
+
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 *     Set to zero every element of the matrix
       SUBROUTINE ZEROMATRIX(A, N)
@@ -201,52 +169,29 @@
       END
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-*     Utility to get L and U after Crout Decomposition (TESTING ONLY)
-*     If it works, it will use only one matrix
-      SUBROUTINE GETLU(A, L, U, N)
-
-      REAL A(N, N), L(N, N), U(N, N)
-
-      CALL ZEROMATRIX(L, N)
-      CALL ZEROMATRIX(U, N)
-
-*     Upper Matrix
-      DO I = 1, N
-         DO J = I, N
-            U(I, J) = A(I, J)
-         ENDDO
-      ENDDO
-
-*     Lower Matrix
-      DO I = N, 1, -1
-         DO J = 1, I
-            L(I, J) = A(I, J)
-         ENDDO
-      ENDDO
-
-      END
-
-*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
       PROGRAM MAIN
       PARAMETER (N = 5)
-      REAL A(N, N)
-      REAL L(N, N), U(N, N), RES(N, N)
+      REAL A(N, N), L(N, N), U(N, N)
+      REAL RES(N, N)
 
-      CALL MATTOEPLITZ(A, N)
+      CALL ARROWMATRIX(A, N)
+      WRITE(*,*) 'Original matrix: '
       CALL MATPRINT(A, N)
       WRITE(*,*) ''
-      CALL CROUTDECOMP(A, N)
+      CALL CROUTDECOMP(A, L, U, N)
 
-
-      CALL GETLU(A, L, U, N)
-
-      CALL MATRIXPRODUCT(L, U, RES, N)
-
+      WRITE(*,*) 'Lower triangular: '
       CALL MATPRINT(L, N)
       WRITE(*,*) ''
+      WRITE(*,*) 'Upper triangular: '
       CALL MATPRINT(U, N)
       WRITE(*,*) ''
+
+      WRITE(*,*) 'Product LU: '
+      CALL MATRIXPRODUCT(L, U, RES, N)
       CALL MATPRINT(RES, N)
+      WRITE(*,*) ''
+
 
       END
