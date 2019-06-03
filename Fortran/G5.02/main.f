@@ -1,7 +1,7 @@
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 *     Risolvere  un sistema  lineare  Ax=b con il metodo  di Gauss.
-C     Perturbare  almeno  un elemento di A e risolvere nuovamente il sistema
-C     mantenendo lo stesso vettore dei termini noti. Confrontare la
+*     Perturbare  almeno  un elemento di A e risolvere nuovamente il sistema
+*     mantenendo lo stesso vettore dei termini noti. Confrontare la
 *     soluzione ottenuta con quella del sistema non perturbato e spiegare
 *     quello che accade, evidenziando la relazione tra l’errore relativo
 *     sui dati e quello sulla soluzione.
@@ -257,7 +257,7 @@ C     mantenendo lo stesso vettore dei termini noti. Confrontare la
 *     We will now perturbate the A(N, N) element
 *     NOTE: the A matrix has been altered by the
 *     		Gauss algorithm, so we have to compute
-C     		the matrix and the B vector again
+*     		the matrix and the B vector again
 
       CALL MATWILKINSON(A, N)
       CALL COMPUTEBVECTOR(A, B, N)
