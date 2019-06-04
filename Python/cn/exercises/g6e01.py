@@ -16,7 +16,7 @@ MATRICES = (
 
     (((4, 1, 1),       # Solution: (0.83, -0.96, 3.61)
       (2, 9, 0),       # Jacobi CAN   solve
-      (0, -8, -6)),    # Seidel CAN'T solve
+      (0, -8, -6)),    # Seidel CAN'T solve. Stops at second step
      (6, -7, -14)),
 
     (((7, 6, 9),       # Solution: (1, 1, 1)
