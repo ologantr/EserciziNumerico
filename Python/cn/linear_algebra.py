@@ -27,7 +27,7 @@ def jacobi(matrix):
         return tuple(x(previous, i)
                      for i in range(order))
 
-    result = [step(b)]
+    result = [step((0, 0, 0))]
 
     for _ in range(MAX_ITERATIONS - 1):
         previous = result[-1]
@@ -75,7 +75,7 @@ def seidel(matrix):
 
         return tuple(current)
 
-    result = [step(b)]
+    result = [step((0, 0, 0))]
 
     for _ in range(MAX_ITERATIONS - 1):
         previous = result[-1]
