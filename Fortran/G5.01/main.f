@@ -202,11 +202,11 @@
       NORMSOL = RNORM1(SOL, N)
       NORMERRX = RNORM1(ERRX, N)
       SOLERROR = NORMERRX/NORMSOL
-     
+
       END
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-      
+
       PROGRAM MAIN
       PARAMETER (N = 15)
       REAL A(N, N), X(N), B(N)
@@ -218,21 +218,21 @@
          CALL TOZERO(A, B, I)
          CALL BACKSUB(A, B, I, X)
          ERR = SOLERROR(X, I)
-         WRITE(1,*) ERR
+         WRITE(1,*) I, ERR
 
          CALL MATWILKINSON(A, I)
          CALL COMPUTEBVECTOR(A, B, I)
          CALL TOZERO(A, B, I)
          CALL BACKSUB(A, B, I, X)
          ERR = SOLERROR(X, I)
-         WRITE(2,*) ERR
+         WRITE(2,*) I, ERR
 
          CALL MATTOEPLITZ(A, I)
          CALL COMPUTEBVECTOR(A, B, I)
          CALL TOZERO(A, B, I)
          CALL BACKSUB(A, B, I, X)
          ERR = SOLERROR(X, I)
-         WRITE(3,*) ERR
+         WRITE(3,*) I, ERR
       ENDDO
 
       END
