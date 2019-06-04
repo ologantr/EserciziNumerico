@@ -4,6 +4,7 @@ from functools import reduce
 
 PLOT_LABEL = 'label'
 PLOT_POINTS = 'points'
+PLOT_STYLE = 'style'
 
 
 def make_simple_figure(points, title=None):
@@ -55,7 +56,7 @@ def get_global_range(points_list):
                    min(ys), max(ys)))
 
 
-def make_plot_descriptor(label, points):
+def make_plot_descriptor(label, points, style=None):
     """
     Return the descriptor for a series of points
     to be plotted.
@@ -65,7 +66,8 @@ def make_plot_descriptor(label, points):
     """
     return {
         PLOT_LABEL: label,
-        PLOT_POINTS: points
+        PLOT_POINTS: points,
+        PLOT_STYLE: style
     }
 
 
@@ -89,7 +91,10 @@ def make_compound_figure(*descriptors, title=None):
 
     for descriptor in descriptors:
         xs, ys = tuple(zip(*descriptor[PLOT_POINTS]))
-        axes.plot(xs, ys, label=descriptor[PLOT_LABEL])
+        if descriptor[PLOT_STYLE] is not None:
+            axes.plot(xs, ys, descriptor[PLOT_STYLE], label=descriptor[PLOT_LABEL])
+        else:
+            axes.plot(xs, ys, label=descriptor[PLOT_LABEL])
 
     axes.legend()
 
