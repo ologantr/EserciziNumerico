@@ -39,22 +39,12 @@ def analyze_error():
     jacobi_result = jacobi(matrix)
     seidel_result = seidel(matrix)
 
-    # Difference between the result of the k-th iteration
-    # and the previous iteration.
-    jacobi_differences = tuple(norm_fn(b) - norm_fn(a)
+    jacobi_error = tuple(norm_fn(cn.vector.difference(a, b)) / norm_fn(b)
                                for a, b in zip(jacobi_result[:-1],
                                                jacobi_result[1:]))
-    seidel_differences = tuple(norm_fn(b) - norm_fn(a)
+    seidel_error = tuple(norm_fn(cn.vector.difference(a, b)) / norm_fn(b)
                                for a, b in zip(seidel_result[:-1],
                                                seidel_result[1:]))
-
-    # Ratio between each difference and the result of the
-    # last iteration which should, in theory, be the
-    # correct result.
-    jacobi_error = tuple(difference / norm_fn(jacobi_result[-1])
-                         for difference in jacobi_differences)
-    seidel_error = tuple(difference / norm_fn(seidel_result[-1])
-                         for difference in seidel_differences)
 
     # Tuples in the form of (x, y) so that we can plot the
     # error.
