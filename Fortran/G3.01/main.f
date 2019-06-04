@@ -100,7 +100,7 @@
 
 *        Sum each element in a column and store the result in TMP.
          DO I = 1, N
-            TMP = TMP + A(I, J)
+            TMP = TMP + ABS(A(I, J))
          ENDDO
 
 *        NORM_1 is the greatest TMP we got.
