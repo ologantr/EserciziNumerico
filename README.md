@@ -48,9 +48,11 @@
 * [ ] Gruppo 5
   * [x] Esercizio 1
     * [Fortran](Fortran/G5.01)
-  * [ ] Esercizio 2
+  * [x] Esercizio 2
+    * [Fortran](Fortran/G5.02)
   * [x] Esercizio 3
     * [Fortran](Fortran/G5.03)
+  * [ ] Esercizio 3
   * [ ] Esercizio 4
   * [ ] Esercizio 5
   * [x] Esercizio 6
