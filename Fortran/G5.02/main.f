@@ -384,22 +384,37 @@
       REAL FUNCTION RELERROR(A, A_OFF, N)
 
       REAL A(N, N), A_OFF(N, N)
+      REAL C(N, N)
       REAL NORM_1, NORMA, NORMA_OFF
 
       NORMA_OFF = NORM_1(A_OFF, N)
       NORMA = NORM_1(A, N)
 
-      RELERROR = NORMA_OFF/NORMA
+      CALL SUBMATRIX(A, A_OFF, C, N)
+
+      RELERROR = NORM_1(C, N)/NORMA
 
       END
 
 *     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+      SUBROUTINE SUBMATRIX(A, B, C, N)
+
+      REAL A(N, N), B(N, N), C(N, N)
+
+      DO J = 1, N
+         DO I = 1, N
+            C(I, J) = A(I, J) - B(I, J)
+         ENDDO
+      ENDDO
+      END
+
+*     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
       PROGRAM MAIN
 
 *     Ordine della matrice
       PARAMETER (N = 5)
-      PARAMETER (OFFSET = 0.01)
+      PARAMETER (OFFSET = 0.0001)
 
       REAL A(N, N), B(N), SOLERROR
       REAL X_BEFORE(N), X_AFTER(N)
@@ -409,13 +424,13 @@
       REAL Z(N, N)
 
       WRITE(*,*) 'Original matrix:'
-      CALL MATTOEPLITZ(A, N)
+      CALL MATHILBERT(A, N)
       CALL MATPRINT(A, N)
       WRITE(*,*) ''
 
       CALL COMPUTEBVECTOR(A, B, N)
       COND_BEFORE = CONDNUMBER(A, N)
-      CALL MATTOEPLITZ(A, N)
+      CALL MATHILBERT(A, N)
       CALL TOZERO(A, B, N)
       CALL BACKSUB(A, B, N, X_BEFORE)
       ERR_BEFORE = SOLERROR(X_BEFORE, N)
@@ -426,11 +441,11 @@
 *     		Gauss algorithm, so we have to compute
 *     		the matrix and the B vector again
 
-      CALL MATTOEPLITZ(A, N)
+      CALL MATHILBERT(A, N)
       CALL COMPUTEBVECTOR(A, B, N)
       CALL PERTURBATEMATRIX(A, N, OFFSET)
       COND_AFTER = CONDNUMBER(A, N)
-      CALL MATTOEPLITZ(A, N)
+      CALL MATHILBERT(A, N)
       CALL PERTURBATEMATRIX(A, N, OFFSET)
       CALL TOZERO(A, B, N)
       CALL BACKSUB(A, B, N, X_AFTER)
@@ -457,8 +472,8 @@
       WRITE(*,*) 'Condition number before/after'
       WRITE(*,*) COND_BEFORE, COND_AFTER
 
-      CALL MATTOEPLITZ(A, N)
-      CALL MATTOEPLITZ(Z, N)
+      CALL MATHILBERT(A, N)
+      CALL MATHILBERT(Z, N)
       CALL PERTURBATEMATRIX(Z, N, OFFSET)
 
       DATAERROR = RELERROR(A, Z, N)
