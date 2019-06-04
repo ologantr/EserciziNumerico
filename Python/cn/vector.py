@@ -1,6 +1,14 @@
 from math import sqrt
 
 
+def difference(a, b):
+    """
+    >>> difference((5, 7), (3, 2))
+    (2, 5)
+    """
+    return tuple(a - b for a, b in zip(a, b))
+
+
 def norm_1(v):
     """
     >>> norm_1((12, -5))
