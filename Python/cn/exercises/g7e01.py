@@ -39,13 +39,13 @@ def alt_linspace(range_, step_count):
 
     def t(i):
         return ((max_ - min_)
-                / (2 * x(i)
-                   + ((max_ + min_) / 2)))
+                / 2 * x(i)
+                + (max_ + min_) / 2)
 
     if min_ == -1 and max_ == 1:
-        return tuple(x(i) for i in range(step_count))
+        return tuple(x(i) for i in range(step_count + 1))
     else:
-        return tuple(t(i) for i in range(step_count))
+        return tuple(t(i) for i in range(step_count + 1))
 
 
 #
@@ -78,7 +78,7 @@ def analyze_function():
                          in zip(expected_points, interpolated_points))
 
     make_compound_figure(
-        make_plot_descriptor('Funzione originale', actual_points),
+        make_plot_descriptor('Funzione originale', actual_points, style='o'),
         make_plot_descriptor('Funzione interpolata', interpolated_points),
         make_plot_descriptor('Funzione prevista', expected_points),
         make_plot_descriptor('Errore', error_points)
