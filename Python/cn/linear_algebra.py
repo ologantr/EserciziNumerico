@@ -14,6 +14,7 @@ MAX_ITERATIONS = 500
 def jacobi(matrix):
     a, b = matrix
     order = len(a)
+    first_step = (0,) * order
 
     def x(previous, i):
         def sum_(i):
@@ -27,7 +28,7 @@ def jacobi(matrix):
         return tuple(x(previous, i)
                      for i in range(order))
 
-    result = [step((0, 0, 0))]
+    result = [step(first_step)]
 
     for _ in range(MAX_ITERATIONS - 1):
         previous = result[-1]
@@ -55,6 +56,7 @@ def jacobi(matrix):
 def seidel(matrix):
     a, b = matrix
     order = len(a)
+    first_step = (0,) * order
 
     def x(current, previous, i):
         def sum_1(current, i):
@@ -75,7 +77,7 @@ def seidel(matrix):
 
         return tuple(current)
 
-    result = [step((0, 0, 0))]
+    result = [step(first_step)]
 
     for _ in range(MAX_ITERATIONS - 1):
         previous = result[-1]
