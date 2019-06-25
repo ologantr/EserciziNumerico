@@ -71,3 +71,23 @@ $$
   altrimenti è **incompatibile**.
 
 * Il sistema è **omogeneo** se tutti i termini noti sono nulli.
+
+* Il sistema è **normale** o **quadrato** se $m = n$ cioè se il
+  numero di equazioni è uguale al numero di incognite.
+
+* Il sistema è **sottodeterminato** se $m < n$ cioè se le equazioni
+  sono meno delle incognite.
+
+* Il sistema è **sovradimensionato** se $m > n$ cioè se le equazioni
+  sono più delle incognite.
+
+## Condizioni di esistenza e di unicità di soluzioni
+
+* Condizione necessaria e sufficiente dell'esistenza di soluzioni:
+
+  La matrice dei coefficienti $A$ e la matrice completa del sistema
+  $C = (A \, | \, \boldsymbol{b})$ devono avere lo stesso rango.
+
+* Condizione necessaria dell'unicità della soluzione:
+
+  Il sistema deve essere normale.
