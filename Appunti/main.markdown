@@ -70,7 +70,8 @@ $$
 * Il sistema è **compatibile** se ammette almeno una soluzione,
   altrimenti è **incompatibile**.
 
-* Il sistema è **omogeneo** se tutti i termini noti sono nulli.
+* Il sistema è **omogeneo** se tutti i termini noti sono nulli,
+  quindi $\boldsymbol{b} = 0$.
 
 * Il sistema è **normale** o **quadrato** se $m = n$ cioè se il
   numero di equazioni è uguale al numero di incognite.
@@ -88,7 +89,7 @@ $$
   La matrice dei coefficienti $A$ e la matrice completa del sistema
   $C = (A \, | \, \boldsymbol{b})$ devono avere lo stesso rango.
 
-Tale teorema assicura che un sistema omogeneo ammette sempre almeno
+Tale teorema garantisce che un sistema omogeneo ammette sempre almeno
 una soluzione. Infatti quando $\boldsymbol{b} = 0$ il rango della
 matrice dei coefficienti $A$ è uguale a quello della matrice completa
 $C$ ed esiste almeno la soluzione $\boldsymbol{x} = 0$.
@@ -115,7 +116,6 @@ In quanto:
 
 Data una matrice $A$ $(n \times n)$, le seguenti tre proposizioni
 sono equivalenti:
-
 
 * Il sistema omogeneo $A \, \boldsymbol{x} = 0$ ammette soltanto la soluzione
   nulla $\boldsymbol{x} = 0$.
