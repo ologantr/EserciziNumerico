@@ -88,6 +88,41 @@ $$
   La matrice dei coefficienti $A$ e la matrice completa del sistema
   $C = (A \, | \, \boldsymbol{b})$ devono avere lo stesso rango.
 
+Tale teorema assicura che un sistema omogeneo ammette sempre almeno
+una soluzione. Infatti quando $\boldsymbol{b} = 0$ il rango della
+matrice dei coefficienti $A$ è uguale a quello della matrice completa
+$C$ ed esiste almeno la soluzione $\boldsymbol{x} = 0$.
+
 * Condizione necessaria dell'unicità della soluzione:
 
   Il sistema deve essere normale.
+
+In quanto:
+
+* Dato un sistema che ammette una soluzione, essa è unica se e solo se
+  il corrispondente sistema omogeneo $A \, \boldsymbol{x} = 0$ ammette
+  solo la soluzione $\boldsymbol{x} = 0$.
+
+* Ogni sistema omogeneo sottodimensionato $A \, \boldsymbol{x} = 0$ con
+  un numero di equazioni inferiore al numero di incognite ammette
+  soluzioni non nulle $\boldsymbol{x} \neq 0$.
+
+* Data una matrice dei coefficienti $A$ $(m \times n)$, se il sistema
+  $A \, \boldsymbol{x} = 0$ ammette una soliuzione per qualsiasi vettore
+  dei termini noti $\boldsymbol{b}$ ne consegue che $m \leq n$.
+
+## Sistemi normali
+
+Data una matrice $A$ $(n \times n)$, le seguenti tre proposizioni
+sono equivalenti:
+
+
+* Il sistema omogeneo $A \, \boldsymbol{x} = 0$ ammette soltanto la soluzione
+  nulla $\boldsymbol{x} = 0$.
+
+* Per ogni vettore dei termini noti $\boldsymbol{b}$ il sistema
+  $A \, \boldsymbol{x} = \boldsymbol{b}$ ammette una unica soluzione.
+
+* $A$ non è singolare.
+
+  Cioè $A$ è una matrice quadrata con rango massimo.
