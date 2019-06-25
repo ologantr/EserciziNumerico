@@ -21,7 +21,7 @@ main.html: main.markdown meta.yaml
 	    --to=html5\
 	    --section-divs\
 	    --toc\
-	    --mathml\
+	    --mathjax\
 	    -o $@ $<
 
 .PHONY: clean
