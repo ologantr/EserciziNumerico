@@ -1,6 +1,6 @@
 # Sistemi lineari
 
-Dato un sistema di ***m*** equazioni lineari in **n** incognite:
+Dato un sistema di $m$ equazioni lineari in $n$ incognite:
 
 $$
 \left\{
