@@ -244,18 +244,98 @@ $$
 Se si esprime la matrice $A$ come un vettore $\boldsymbol{a}$ formato
 dagli elementi diagonali della matrice allora:
 
+* ```
+  per i = 1 ... n
+      x[i] <- a[i] / b[i]
+  ```
+
+* ```python
+  def solve_diag(as, bs):
+      return [b / a
+              for a, b in zip(as, bs)]
+  ```
+
+### Matrice dei coefficienti triangolare inferiore[^gauss_triangolare]
+
+Il sistema assume la seguente forma:
+
+$$
+\left\{
+\begin{array}{c c c c c c c c c}
+    a_{11} \, x_{1} &   &                 &   &        &   &                 & = & b_{1}  \\
+    a_{21} \, x_{1} & + & a_{22} \, x_{2} &   &        &   &                 & = & b_{2}  \\
+    \vdots          &   & \vdots          &   & \vdots &   &                 &   & \vdots \\
+    a_{n1} \, x_{1} & + & a_{n2} \, x_{2} & + & \ldots & + & a_{nn} \, x_{n} & = & b_{n}  \\
+\end{array}
+\right.
+$$
+
+E si ricavano le seguenti formule ricorsive per la risoluzione:
+
+$$
+\left\{
+\begin{array}{c c}
+    x_{1} = & \dfrac{b_{1}}{a_{11}}          \\
+    x_{k} = & \dfrac{b_{k} \,
+                     - a_{k1} \, x_{1} \,
+                     - a_{k2} \, x_{2} \,
+                     - \ldots \,
+                     - a_{k k-1} \, x_{k-1}}
+                    {a_{kk}}                 \\
+\end{array}
+\right.
+$$
+
+#### Pseudocodice
+
 ```
-per i = 1 ... n
-    x[i] = a[i] / b[i]
+per i = 1 .. n
+    x[i] <- b[i]
+    per j = 1 .. i - 1
+        x[i] <- x[i] - a[i,j] * x[j]
+    x[i] <- x[i] / a[i,j]
 ```
 
-```python
-def solve_diag(as, bs):
-    return [b / a
-            for a, b in zip(as, bs)]
-```
+### Matrice dei coefficienti triangolare superiore[^gauss_triangolare]
 
-### Matrice dei coefficienti triangolare[^gauss_triangolare]
+Il sistema assume la seguente forma:
+
+$$
+\left\{
+\begin{array}{c c c c c c c c c}
+    a_{11} \, x_{1} & + & a_{12} \, x_{2} & + & \ldots & + & a_{1n} \, x_{n} & = & b_{1}  \\
+                    & + & a_{22} \, x_{2} & + & \ldots & + & a_{2n} \, x_{n} & = & b_{2}  \\
+                    &   &                 &   & \vdots &   & \vdots          &   & \vdots \\
+                    &   &                 &   &        &   & a_{nn} \, x_{n} & = & b_{n}  \\
+\end{array}
+\right.
+$$
+
+E si ricavano le seguenti formule ricorsive per la risoluzione:
+
+$$
+\left\{
+\begin{array}{c c}
+    x_{n} = & \dfrac{b_{n}}{a_{nn}}          \\
+    x_{k} = & \dfrac{b_{k} \,
+                     - a_{k k+1} \, x_{k+1} \,
+                     - a_{k k+2} \, x_{k+2} \,
+                     - \, \ldots
+                     - a_{kn} \, x_{n}}
+                    {a_{kk}}                 \\
+\end{array}
+\right.
+$$
+
+#### Pseudocodice
+
+```
+per i = n .. 1
+    x[i] <- b[i]
+    per j = i + 1 .. n
+        x[i] <- x[i] - a[i,j] * x[j]
+    x[i] <- x[i] / a[i,j]
+```
 
 ### Matrice dei coefficienti tridiagonale[^gauss_tridiagonale]
 
