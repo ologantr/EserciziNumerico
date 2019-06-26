@@ -134,8 +134,24 @@ Data una matrice $A$ $(n \times n)$ allora il sistema omogeneo
 $A \, \boldsymbol{x} = \boldsymbol{b} = 0$ ammette una soluzione non nulla,
 $\boldsymbol{x} \neq 0$ se e solo se la matrice $A$ è singolare.[^th_singolare_2]
 
+    ...
+
 [^th_singolare_1]: Galligani, 2.2, Teorema 2 (p. 48)
 [^th_singolare_2]: Galligani, 2.2, Teorema 3 (p. 48)
+
+## Ben posizione
+
+Nel 1923, J. Hadamard dette la seguente definizione di problema ben posto:
+
+1. Esiste una soluzione del problema (esistenza).
+2. La soluzione è unica (unicità).
+3. La soluzione dipende con continuità dai dati (stabilità).
+
+Viceversa, un problema si dice mal posto quando non verifica una di
+queste condizioni.
+
+La condizione di stabilità implica che piccole perturbazioni dei dati del
+problema non provochino significative variazioni del risultato del problema.
 
 # Glossario
 
