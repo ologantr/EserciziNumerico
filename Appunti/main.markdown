@@ -165,9 +165,112 @@ matrice $G_{n}$ i cui elementi sono perturbati sull'ultima cifra decimale.
 Infatti supponendo che il metodo risolutore adottato non provochi alcun
 errore di arrotondamento il risultato sarà relativo al dato $G_{n}$.
 
+## Metodo diretto di eliminazione di Gauss
+
+Consideriamo sistemi di equazioni lineari normali e con matrice dei
+coefficienti non singolare.
+
+### Matrice dei coefficienti generica[^gauss_generica]
+
+Dato un sistema lineare $A \, \boldsymbol{x} = \boldsymbol{b}$,
+essendo $A$ non singolare, esso ammette un'unica soluzione
+qualunque sia il vettore $\boldsymbol{b}$:
+
+$$
+\boldsymbol{x} = A^{-1} \, \boldsymbol{b}
+$$
+
+Pertanto se la matrice inversa $A^{-1}$ è nota la soluzione del sistema
+si ottiene facilmente moltiplicando una matrice per un vettore.
+
+Tuttavia, ad eccezione di alcuni casi particolari, è generalmente difficile
+determinare la matrice $A^{-1}$.
+
+### Matrice dei coefficienti diagonale[^gauss_diagonale]
+
+In tal caso è immediato il calcolo di
+$\boldsymbol{x} = A^{-1} \, \boldsymbol{b}$.
+
+$$
+A =
+\begin{pmatrix}
+    a_{11} & 0       & \ldots & 0      \\
+    0      & a_{22}  & \ldots & 0      \\
+    \ldots & \ldots  & \ldots & \ldots \\
+    0      & 0       & \ldots & a_{nn} \\
+\end{pmatrix}
+\qquad
+A^{-1} =
+\begin{pmatrix}
+    \dfrac{1}{a_{11}} & 0                  & \ldots & 0                 \\[2ex]
+    0                 & \dfrac{1}{a_{22}}  & \ldots & 0                 \\[2ex]
+    \ldots            & \ldots             & \ldots & \ldots            \\[2ex]
+    0                 & 0                  & \ldots & \dfrac{1}{a_{nn}} \\[2ex]
+\end{pmatrix}
+$$
+
+$$
+\boldsymbol{x} =
+\begin{pmatrix}
+    x_{1}  \\[2ex]
+    x_{2}  \\[2ex]
+    \ldots \\[2ex]
+    x_{n}  \\[2ex]
+\end{pmatrix}
+ =
+\begin{pmatrix}
+    \dfrac{1}{a_{11}} & 0                  & \ldots & 0                 \\[2ex]
+    0                 & \dfrac{1}{a_{22}}  & \ldots & 0                 \\[2ex]
+    \ldots            & \ldots             & \ldots & \ldots            \\[2ex]
+    0                 & 0                  & \ldots & \dfrac{1}{a_{nn}} \\[2ex]
+\end{pmatrix}
+\begin{pmatrix}
+    b_{1}  \\[2ex]
+    b_{2}  \\[2ex]
+    \ldots \\[2ex]
+    b_{n}  \\[2ex]
+\end{pmatrix}
+ =
+\begin{pmatrix}
+    \dfrac{b_{1}}{a_{11}} \\[2ex]
+    \dfrac{b_{2}}{a_{22}} \\[2ex]
+    \ldots                \\[2ex]
+    \dfrac{b_{n}}{a_{nn}} \\[2ex]
+\end{pmatrix}
+$$
+
+### Matrice dei coefficienti diagonale[^gauss_triangolare]
+
+### Matrice dei coefficienti tridiagonale[^gauss_tridiagonale]
+
+[^gauss_generica]: Galligani, 2.4 a) (p. 52)
+[^gauss_diagonale]: Galligani, 2.4 b) (p. 53)
+[^gauss_triangolare]: Galligani, 2.4 c) (p. 54)
+[^gauss_tridiagonale]: Galligani, 2.4 d) (p. 57)
+
 # Glossario
 
 ## Matrici notevoli
+
+### Matrice triangolare
+
+$$
+A =
+\begin{pmatrix}
+    a_{11} & 0       & \ldots & 0      \\
+    0      & a_{22}  & \ldots & 0      \\
+    \ldots & \ldots  & \ldots & \ldots \\
+    0      & 0       & \ldots & a_{nn} \\
+\end{pmatrix}
+\qquad
+A^{-1} =
+\begin{pmatrix}
+    \dfrac{1}{a_{11}} & 0                  & \ldots & 0                 \\[2ex]
+    0                 & \dfrac{1}{a_{22}}  & \ldots & 0                 \\[2ex]
+    \ldots            & \ldots             & \ldots & \ldots            \\[2ex]
+    0                 & 0                  & \ldots & \dfrac{1}{a_{nn}} \\[2ex]
+\end{pmatrix}
+$$
 
 ### Matrice di Hilbert
 
