@@ -246,7 +246,7 @@ dagli elementi diagonali della matrice allora:
 
 ```
 per i = 1 ... n
-    x[i] = a[i] * b[i]
+    x[i] = a[i] / b[i]
 ```
 
 ```python
