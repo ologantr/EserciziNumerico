@@ -136,3 +136,20 @@ $\boldsymbol{x} \neq 0$ se e solo se la matrice $A$ è singolare.[^th_singolare_
 
 [^th_singolare_1]: Galligani, 2.2, Teorema 2 (p. 48)
 [^th_singolare_2]: Galligani, 2.2, Teorema 3 (p. 48)
+
+# Glossario
+
+## Matrici
+
+Matrice invertibile
+:   Una matrice quadrata è invertibile se possiede una matrice inversa
+    (l'elemento inverso per l'operazione di composizione).
+
+    Una matrice è invertibile se e solo se il suo determinante è invertibile.
+
+Matrice singolare
+:   Una matrice singolare è una matrice quadrata con determinante uguale
+    a zero, oppure, analogamente, una matrice quadrata il cui rango non
+    è massimo.
+
+    In particolare, nessuna matrice singolare è invertibile.
