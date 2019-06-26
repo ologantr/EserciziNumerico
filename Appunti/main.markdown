@@ -87,7 +87,7 @@ $$
 * Condizione necessaria e sufficiente dell'esistenza di soluzioni:
 
   La matrice dei coefficienti $A$ e la matrice completa del sistema
-  $C = (A \, | \, \boldsymbol{b})$ devono avere lo stesso rango.
+  $C = (A \, | \, \boldsymbol{b})$ devono avere lo stesso rango.[^th_esistenza]
 
 Tale teorema garantisce che un sistema omogeneo ammette sempre almeno
 una soluzione. Infatti quando $\boldsymbol{b} = 0$ il rango della
@@ -96,7 +96,7 @@ $C$ ed esiste almeno la soluzione $\boldsymbol{x} = 0$.
 
 * Condizione necessaria dell'unicità della soluzione:
 
-  Il sistema deve essere normale.
+  Il sistema deve essere normale.[^unicità]
 
 In quanto:
 
@@ -112,10 +112,13 @@ In quanto:
   $A \, \boldsymbol{x} = 0$ ammette una soliuzione per qualsiasi vettore
   dei termini noti $\boldsymbol{b}$ ne consegue che $m \leq n$.
 
+[^th_esistenza]: Galligani, 2.2, Teorema 1 (p. 45)
+[^unicità]: Galligani, 2.2 (p. 47)
+
 ## Sistemi normali
 
 Data una matrice $A$ $(n \times n)$, le seguenti tre proposizioni
-sono equivalenti:
+sono equivalenti:[^th_singolare_1]
 
 * Il sistema omogeneo $A \, \boldsymbol{x} = 0$ ammette soltanto la soluzione
   nulla $\boldsymbol{x} = 0$.
@@ -126,3 +129,10 @@ sono equivalenti:
 * $A$ non è singolare.
 
   Cioè $A$ è una matrice quadrata con rango massimo.
+
+Data una matrice $A$ $(n \times n)$ allora il sistema omogeneo
+$A \, \boldsymbol{x} = \boldsymbol{b} = 0$ ammette una soluzione non nulla,
+$\boldsymbol{x} \neq 0$ se e solo se la matrice $A$ è singolare.[^th_singolare_2]
+
+[^th_singolare_1]: Galligani, 2.2, Teorema 2 (p. 48)
+[^th_singolare_2]: Galligani, 2.2, Teorema 3 (p. 48)
