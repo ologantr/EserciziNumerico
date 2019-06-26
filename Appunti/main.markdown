@@ -29,7 +29,7 @@ $$
 \boldsymbol{b} =
 \begin{pmatrix}
     b_{1} \\
-    b_{1} \\
+    b_{2} \\
     \vdots \\
     b_{m} \\
     \end{pmatrix}
@@ -37,7 +37,7 @@ $$
 \boldsymbol{x} =
 \begin{pmatrix}
     x_{1} \\
-    x_{1} \\
+    x_{2} \\
     \vdots \\
     x_{n} \\
 \end{pmatrix}
