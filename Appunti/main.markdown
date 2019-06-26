@@ -239,7 +239,23 @@ $$
 \end{pmatrix}
 $$
 
-### Matrice dei coefficienti diagonale[^gauss_triangolare]
+#### Pseudocodice
+
+Se si esprime la matrice $A$ come un vettore $\boldsymbol{a}$ formato
+dagli elementi diagonali della matrice allora:
+
+```
+per i = 1 ... n
+    x[i] = a[i] * b[i]
+```
+
+```python
+def solve_diag(as, bs):
+    return [b / a
+            for a, b in zip(as, bs)]
+```
+
+### Matrice dei coefficienti triangolare[^gauss_triangolare]
 
 ### Matrice dei coefficienti tridiagonale[^gauss_tridiagonale]
 
