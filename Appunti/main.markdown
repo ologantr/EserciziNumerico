@@ -8,7 +8,7 @@ $$
     a_{11} \, x_{1} & + & a_{12} \, x_{2} & + & \ldots & + & a_{1n} \, x_{n} & = & b_{1}  \\
     a_{21} \, x_{1} & + & a_{22} \, x_{2} & + & \ldots & + & a_{2n} \, x_{n} & = & b_{2}  \\
     \vdots          &   & \vdots          &   & \vdots &   & \vdots          &   & \vdots \\
-    a_{m1} \, x_{1} & + & a_{m2} \, x_{2} & + & \ldots & + & a_{mn} \, x_{n} & = & b_{m}
+    a_{m1} \, x_{1} & + & a_{m2} \, x_{2} & + & \ldots & + & a_{mn} \, x_{n} & = & b_{m}  \\
 \end{array}
 \right.
 $$
@@ -153,19 +153,56 @@ queste condizioni.
 La condizione di stabilità implica che piccole perturbazioni dei dati del
 problema non provochino significative variazioni del risultato del problema.
 
+### Esempio
+
+Qualunque studio sulla matrice di Hilbert che richieda la memorizzazione
+della matrice è un problema mal posto, in quanto si commette un errore sui
+dati iniziali.
+
+Non si sta infatti operando sulla matrice di Hilbert $H_{n}$ bensì una
+matrice $G_{n}$ i cui elementi sono perturbati sull'ultima cifra decimale.
+
+Infatti supponendo che il metodo risolutore adottato non provochi alcun
+errore di arrotondamento il risultato sarà relativo al dato $G_{n}$.
+
 # Glossario
+
+## Matrici notevoli
+
+### Matrice di Hilbert
+
+$$
+h_{i j} = \frac{1}{i + j - 1},
+\qquad
+i = 1, 2, \ldots, n
+\quad
+j = 1, 2, \ldots, n
+$$
+
+$$
+H_{5} =
+\begin{pmatrix}
+    1            & \dfrac{1}{2} & \dfrac{1}{3} & \dfrac{1}{4} & \dfrac{1}{5} \\[2ex]
+    \dfrac{1}{2} & \dfrac{1}{3} & \dfrac{1}{4} & \dfrac{1}{5} & \dfrac{1}{6} \\[2ex]
+    \dfrac{1}{3} & \dfrac{1}{4} & \dfrac{1}{5} & \dfrac{1}{6} & \dfrac{1}{7} \\[2ex]
+    \dfrac{1}{4} & \dfrac{1}{5} & \dfrac{1}{6} & \dfrac{1}{7} & \dfrac{1}{8} \\[2ex]
+    \dfrac{1}{5} & \dfrac{1}{6} & \dfrac{1}{7} & \dfrac{1}{8} & \dfrac{1}{9} \\[2ex]
+\end{pmatrix}
+$$
 
 ## Matrici
 
-Matrice invertibile
-:   Una matrice quadrata è invertibile se possiede una matrice inversa
-    (l'elemento inverso per l'operazione di composizione).
+### Matrice invertibile
 
-    Una matrice è invertibile se e solo se il suo determinante è invertibile.
+Una matrice quadrata è invertibile se possiede una matrice inversa
+(l'elemento inverso per l'operazione di composizione).
 
-Matrice singolare
-:   Una matrice singolare è una matrice quadrata con determinante uguale
-    a zero, oppure, analogamente, una matrice quadrata il cui rango non
-    è massimo.
+Una matrice è invertibile se e solo se il suo determinante è invertibile.
 
-    In particolare, nessuna matrice singolare è invertibile.
+### Matrice singolare
+
+Una matrice singolare è una matrice quadrata con determinante uguale
+a zero, oppure, analogamente, una matrice quadrata il cui rango non
+è massimo.
+
+In particolare, nessuna matrice singolare è invertibile.
