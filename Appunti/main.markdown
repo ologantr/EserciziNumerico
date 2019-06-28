@@ -238,21 +238,24 @@ $$
 \end{pmatrix}
 $$
 
-#### Pseudocodice
+Pseudocodice
+:   Se si esprime la matrice $A$ come un vettore $\boldsymbol{a}$ formato
+    dagli elementi diagonali della matrice allora:
 
-Se si esprime la matrice $A$ come un vettore $\boldsymbol{a}$ formato
-dagli elementi diagonali della matrice allora:
+:   $$
+    \left| \,
+    \begin{aligned}
+        \text{per $i = 1, 2, \ldots n$} \\
+        \qquad x_{i} \leftarrow a_{i} / b_{i}
+    \end{aligned}
+    \right.
+    $$
 
-* ```
-  per i = 1 ... n
-          x[i] <- a[i] / b[i]
-  ```
-
-* ```python
-  def solve_diag(as, bs):
-      return [b / a
-              for a, b in zip(as, bs)]
-  ```
+:   ```python
+       def solve_diag(as, bs):
+           return [b / a
+                  for a, b in zip(as, bs)]
+    ```
 
 ### Matrice dei coefficienti triangolare inferiore[^risoluzione_triangolare]
 
@@ -285,15 +288,43 @@ $$
 \right.
 $$
 
-#### Pseudocodice
+Pseudocodice
+:   (Forward substitution)
 
-```
-per i = 1 .. n
-        x[i] <- b[i]
-        per j = 1 .. i - 1
-                x[i] <- x[i] - a[i,j] * x[j]
-        x[i] <- x[i] / a[i,j]
-```
+:   $$
+    \begin{aligned}
+        &
+        \left| \,
+        \begin{aligned}
+            & \text{per $i = 1, 2, \ldots n$} \\
+            & \qquad \sum_{j=1}^{i} a_{ij} \, x_{ij} = b_{i}
+        \end{aligned}
+        \right.
+        \quad \Longrightarrow \quad
+        \left| \,
+        \begin{aligned}
+            & \text{per $i = 1 \ldots n$} \\
+            & \qquad a_{ii} \, x_{i} + \sum_{j=1}^{i-1} a_{ij} \, x_{ij} = b_{i}
+        \end{aligned}
+        \right.
+        \\[2.5ex]
+        \Longrightarrow \quad &
+        \left| \,
+        \begin{aligned}
+            & \text{per $i = 1 \ldots n$} \\
+            & \qquad x_{i} = \dfrac{b_{i} - \sum_{j=1}^{i-1} a_{ij} \, x_{ij}}{a_{ii}}
+        \end{aligned}
+        \right.
+    \end{aligned}
+    $$
+
+:    ```
+     per i = 1 .. n
+             x[i] <- b[i]
+             per j = 1 .. i - 1
+                     x[i] <- x[i] - a[i,j] * x[j]
+             x[i] <- x[i] / a[i,j]
+     ```
 
 ### Matrice dei coefficienti triangolare superiore[^risoluzione_triangolare]
 
@@ -326,15 +357,43 @@ $$
 \right.
 $$
 
-#### Pseudocodice
+Pseudocodice
+:   (Backward substitution)
 
-```
-per i = n .. 1
-        x[i] <- b[i]
-        per j = i + 1 .. n
-                x[i] <- x[i] - a[i,j] * x[j]
-        x[i] <- x[i] / a[i,j]
-```
+:   $$
+    \begin{aligned}
+        &
+        \left| \,
+        \begin{aligned}
+            & \text{per $i = 1, 2, \ldots n$} \\
+            & \qquad \sum_{j=1}^{n} a_{ij} \, x_{ij} = b_{i}
+        \end{aligned}
+        \right.
+        \quad \Longrightarrow \quad
+        \left| \,
+        \begin{aligned}
+            & \text{per $i = 1 \ldots n$} \\
+            & \qquad a_{ii} \, x_{i} + \sum_{j=1+1}^{n} a_{ij} \, x_{ij} = b_{i}
+        \end{aligned}
+        \right.
+        \\[2.5ex]
+        \Longrightarrow \quad &
+        \left| \,
+        \begin{aligned}
+            & \text{per $i = 1 \ldots n$} \\
+            & \qquad x_{i} = \dfrac{b_{i} - \sum_{j=1}^{i-1} a_{ij} \, x_{ij}}{a_{ii}}
+        \end{aligned}
+        \right.
+    \end{aligned}
+    $$
+
+:   ```
+    per i = n .. 1
+            x[i] <- b[i]
+            per j = i + 1 .. n
+                    x[i] <- x[i] - a[i,j] * x[j]
+            x[i] <- x[i] / a[i,j]
+    ```
 
 ### Matrice dei coefficienti tridiagonale[^risoluzione_tridiagonale]
 
