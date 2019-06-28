@@ -443,6 +443,27 @@ Esempio di matrice principale di testa
 
 : $B$ e $C$ sono matrici principali di testa di $A$.
 
+Esempio sulla condizione di fattorizzazione
+:   Data la matrice $A$ e la propria sottomatrice principale di testa $B$:
+
+:   $$
+    A =
+    \begin{pmatrix}
+        0  & 10 \\
+        -1 & 2  \\
+    \end{pmatrix}
+    \qquad
+    B =
+    \begin{pmatrix}
+        0
+    \end{pmatrix}
+    $$
+
+: si nota che $det(A) \neq 0$, tuttavia $det(B) = 0$. Quindi $A$ non è
+  fattorizzabile.
+
+### Matrici di permutazione
+
 ## Metodo di eliminazione di Gauss
 
 Permette di risolvere in modo efficiente qualunque sistema normale con
