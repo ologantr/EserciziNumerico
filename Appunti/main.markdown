@@ -165,12 +165,12 @@ matrice $G_{n}$ i cui elementi sono perturbati sull'ultima cifra decimale.
 Infatti supponendo che il metodo risolutore adottato non provochi alcun
 errore di arrotondamento il risultato sarà relativo al dato $G_{n}$.
 
-## Metodo diretto di eliminazione di Gauss
+## Risoluzione di particolari sistemi lineari
 
 Consideriamo sistemi di equazioni lineari normali e con matrice dei
 coefficienti non singolare.
 
-### Matrice dei coefficienti generica[^gauss_generica]
+### Matrice dei coefficienti generica[^risoluzione_generica]
 
 Dato un sistema lineare $A \, \boldsymbol{x} = \boldsymbol{b}$,
 essendo $A$ non singolare, esso ammette un'unica soluzione
@@ -186,7 +186,7 @@ si ottiene facilmente moltiplicando una matrice per un vettore.
 Tuttavia, ad eccezione di alcuni casi particolari, è generalmente difficile
 determinare la matrice $A^{-1}$.
 
-### Matrice dei coefficienti diagonale[^gauss_diagonale]
+### Matrice dei coefficienti diagonale[^risoluzione_diagonale]
 
 In tal caso è immediato il calcolo di
 $\boldsymbol{x} = A^{-1} \, \boldsymbol{b}$.
@@ -246,7 +246,7 @@ dagli elementi diagonali della matrice allora:
 
 * ```
   per i = 1 ... n
-      x[i] <- a[i] / b[i]
+          x[i] <- a[i] / b[i]
   ```
 
 * ```python
@@ -255,7 +255,7 @@ dagli elementi diagonali della matrice allora:
               for a, b in zip(as, bs)]
   ```
 
-### Matrice dei coefficienti triangolare inferiore[^gauss_triangolare]
+### Matrice dei coefficienti triangolare inferiore[^risoluzione_triangolare]
 
 Il sistema assume la seguente forma:
 
@@ -290,13 +290,13 @@ $$
 
 ```
 per i = 1 .. n
-    x[i] <- b[i]
-    per j = 1 .. i - 1
-        x[i] <- x[i] - a[i,j] * x[j]
-    x[i] <- x[i] / a[i,j]
+        x[i] <- b[i]
+        per j = 1 .. i - 1
+                x[i] <- x[i] - a[i,j] * x[j]
+        x[i] <- x[i] / a[i,j]
 ```
 
-### Matrice dei coefficienti triangolare superiore[^gauss_triangolare]
+### Matrice dei coefficienti triangolare superiore[^risoluzione_triangolare]
 
 Il sistema assume la seguente forma:
 
@@ -331,18 +331,124 @@ $$
 
 ```
 per i = n .. 1
-    x[i] <- b[i]
-    per j = i + 1 .. n
-        x[i] <- x[i] - a[i,j] * x[j]
-    x[i] <- x[i] / a[i,j]
+        x[i] <- b[i]
+        per j = i + 1 .. n
+                x[i] <- x[i] - a[i,j] * x[j]
+        x[i] <- x[i] / a[i,j]
 ```
 
-### Matrice dei coefficienti tridiagonale[^gauss_tridiagonale]
+### Matrice dei coefficienti tridiagonale[^risoluzione_tridiagonale]
 
-[^gauss_generica]: Galligani, 2.4 a) (p. 52)
-[^gauss_diagonale]: Galligani, 2.4 b) (p. 53)
-[^gauss_triangolare]: Galligani, 2.4 c) (p. 54)
-[^gauss_tridiagonale]: Galligani, 2.4 d) (p. 57)
+    ...
+
+[^risoluzione_generica]: Galligani, 2.4 a) (p. 52)
+[^risoluzione_diagonale]: Galligani, 2.4 b) (p. 53)
+[^risoluzione_triangolare]: Galligani, 2.4 c) (p. 54)
+[^risoluzione_tridiagonale]: Galligani, 2.4 d) (p. 57)
+
+## Fattorizzazione
+
+Una matrice quadrata $A$ di ordine $n$ si può fattorizzare nel prodotto
+di una matrice $L$ $n \times n$ triangolare inferiore e una matrice $U$
+$n \times n$ triangolare superiore.
+
+Dato il sistema lineare $A \, \boldsymbol{x} = \boldsymbol{b}$, $A$ si
+può fattorizzare nel prodotto $A = LU$.
+
+Quindi:
+
+$$
+A \, \boldsymbol{x} = \boldsymbol{b}
+\qquad
+A = LU
+\qquad
+LU \, \boldsymbol{x} = \boldsymbol{b}
+$$
+
+$$
+\left\{
+\begin{array}{c c c}
+    L \, \boldsymbol{y} & = & \boldsymbol{b} \\
+    U \, \boldsymbol{x} & = & \boldsymbol{y} \\
+\end{array}
+\right.
+\qquad
+\left\{
+\begin{array}{c c c}
+    \boldsymbol{b} & = & L \, \boldsymbol{y} \\
+    \boldsymbol{y} & = & U \, \boldsymbol{x} \\
+\end{array}
+\right.
+$$
+
+La matrice $A$ è fattorizzabile se e solo se i propri minori principali
+di testa sono tutti diversi da zero.
+
+Minore
+:   Determinante di una sottomatrice quadrata.
+
+Matrice principale
+:   Una matrice $B$ è matrice principale di $A$ se gli elementi della
+    diagonale principale di $B$ sono elementi della diagonale principale di $A$.
+
+Matrice principale di testa
+:   Una matrice principale $B$ di $A$ in cui gli elementi di $B$ hanno gli stessi
+    indici degli elementi di $A$.
+
+Esempio di matrice principale di testa
+:   $$
+    A =
+    \left(
+    \begin{array}{c c}
+        \begin{array}{c | c |}
+            a_{11} & a_{12} \\
+            \hline
+        \end{array}
+        &
+        \begin{array}{c}
+            a_{13} \\
+        \end{array}
+        \\
+        \begin{array}{c c |}
+            a_{21} & a_{22} \\
+            \hline
+        \end{array}
+        &
+        \begin{array}{c}
+            a_{23} \\
+        \end{array}
+        \\
+        \begin{array}{c c}
+            a_{31} & a_{32} \\
+        \end{array}
+        &
+        \begin{array}{c}
+            a_{33} \\
+        \end{array}
+    \end{array}
+    \right)
+    $$
+
+:   $$
+    B =
+    \begin{pmatrix}
+        a_{11}
+    \end{pmatrix}
+    \qquad
+    C =
+    \begin{pmatrix}
+        a_{11} & a_{12} & a_{13} \\
+        a_{21} & a_{22} & a_{23} \\
+    \end{pmatrix}
+    $$
+
+: $B$ e $C$ sono matrici principali di testa di $A$.
+
+
+## Metodo di eliminazione di Gauss
+
+Permette di risolvere in modo efficiente qualunque sistema normale con
+matrice dei coefficienti non singolare e non avente alcuna speciale struttura.
 
 # Glossario
 
