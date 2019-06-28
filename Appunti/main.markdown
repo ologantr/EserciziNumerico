@@ -153,17 +153,16 @@ queste condizioni.
 La condizione di stabilità implica che piccole perturbazioni dei dati del
 problema non provochino significative variazioni del risultato del problema.
 
-### Esempio
+Esempio
+:   Qualunque studio sulla matrice di Hilbert che richieda la memorizzazione
+    della matrice è un problema mal posto, in quanto si commette un errore sui
+    dati iniziali.
 
-Qualunque studio sulla matrice di Hilbert che richieda la memorizzazione
-della matrice è un problema mal posto, in quanto si commette un errore sui
-dati iniziali.
+:   Non si sta infatti operando sulla matrice di Hilbert $H_{n}$ bensì una
+    matrice $G_{n}$ i cui elementi sono perturbati sull'ultima cifra decimale.
 
-Non si sta infatti operando sulla matrice di Hilbert $H_{n}$ bensì una
-matrice $G_{n}$ i cui elementi sono perturbati sull'ultima cifra decimale.
-
-Infatti supponendo che il metodo risolutore adottato non provochi alcun
-errore di arrotondamento il risultato sarà relativo al dato $G_{n}$.
+:   Infatti supponendo che il metodo risolutore adottato non provochi alcun
+    errore di arrotondamento il risultato sarà relativo al dato $G_{n}$.
 
 ## Risoluzione di particolari sistemi lineari
 
@@ -437,13 +436,12 @@ Esempio di matrice principale di testa
     \qquad
     C =
     \begin{pmatrix}
-        a_{11} & a_{12} & a_{13} \\
-        a_{21} & a_{22} & a_{23} \\
+        a_{11} & a_{12} \\
+        a_{21} & a_{22} \\
     \end{pmatrix}
     $$
 
 : $B$ e $C$ sono matrici principali di testa di $A$.
-
 
 ## Metodo di eliminazione di Gauss
 
