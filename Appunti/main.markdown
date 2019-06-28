@@ -562,7 +562,7 @@ $B$ è una matrice permutata di $A$.
 Se $A$ è una matrice singolare esiste sempre una matrice
 permutata di $A$ fattorizzabile.
 
-È fondamentale premoltiplicare la matrica $A$ per la matrice di
+È fondamentale premoltiplicare la matrice $A$ per la matrice di
 permutazione $P$:
 
 $$
