@@ -411,16 +411,16 @@ di una matrice $L$ $n \times n$ triangolare inferiore e una matrice $U$
 $n \times n$ triangolare superiore.
 
 Dato il sistema lineare $A \, \boldsymbol{x} = \boldsymbol{b}$, $A$ si
-può fattorizzare nel prodotto $A = LU$.
+può fattorizzare nel prodotto $A = L \, U$.
 
 Quindi:
 
 $$
 A \, \boldsymbol{x} = \boldsymbol{b}
 \qquad
-A = LU
+A = L \, U
 \qquad
-LU \, \boldsymbol{x} = \boldsymbol{b}
+L \, U \, \boldsymbol{x} = \boldsymbol{b}
 $$
 
 $$
@@ -518,10 +518,67 @@ Esempio sulla condizione di fattorizzazione
     \end{pmatrix}
     $$
 
-: si nota che $det(A) \neq 0$, tuttavia $det(B) = 0$. Quindi $A$ non è
+: Si nota che $det(A) \neq 0$, tuttavia $det(B) = 0$. Quindi $A$ non è
   fattorizzabile.
 
 ### Matrici di permutazione
+
+Si può trasformare una matrice $A$ moltiplicandola per una matrice
+di permutazione $P$.
+
+$$
+A =
+\begin{pmatrix}
+    0  & 10 \\
+    -1 & 2  \\
+\end{pmatrix}
+\qquad
+P =
+\begin{pmatrix}
+    0 & 1 \\
+    1 & 0 \\
+\end{pmatrix}
+$$
+
+$$
+B = P \, A =
+\begin{pmatrix}
+    0 & 1 \\
+    1 & 0 \\
+\end{pmatrix}
+\begin{pmatrix}
+    0  & 10 \\
+    -1 & 2  \\
+\end{pmatrix}
+ =
+\begin{pmatrix}
+    -1 & 2  \\
+    0  & 10 \\
+\end{pmatrix}
+$$
+
+$B$ è una matrice permutata di $A$.
+
+Se $A$ è una matrice singolare esiste sempre una matrice
+permutata di $A$ fattorizzabile.
+
+È fondamentale premoltiplicare la matrica $A$ per la matrice di
+permutazione $P$:
+
+$$
+A\, \boldsymbol{x} = \boldsymbol{b}
+\qquad
+P \, A \, \boldsymbol{x} = P \, A
+$$
+
+$$
+\begin{aligned}
+\boldsymbol{x} & = (P \, A)^{-1}                             \\
+               & = A^{-1} \, (P^{-1} \, P) \, \boldsymbol{b} \\
+               & = A^{-1} \, I \, \boldsymbol{b}             \\
+               & = A^{-1} \, \boldsymbol{b}                  \\
+\end{aligned}
+$$
 
 ## Metodo di eliminazione di Gauss
 
@@ -589,3 +646,9 @@ a zero, oppure, analogamente, una matrice quadrata il cui rango non
 è massimo.
 
 In particolare, nessuna matrice singolare è invertibile.
+
+### Inversione del prodotto di due matrici
+
+$$
+(A \, B)^{-1} = B^{-1} \, A^{-1}
+$$
