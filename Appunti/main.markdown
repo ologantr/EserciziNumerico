@@ -289,7 +289,7 @@ $$
 $$
 
 Pseudocodice
-:   (Forward substitution)
+:   Forward substitution. Complessità: $O \left( \dfrac{n^{2}}{2} \right)$.
 
 :   $$
     \begin{aligned}
@@ -358,7 +358,7 @@ $$
 $$
 
 Pseudocodice
-:   (Backward substitution)
+:   Backward substitution. Complessità: $O \left( \dfrac{n^{2}}{2} \right)$.
 
 :   $$
     \begin{aligned}
