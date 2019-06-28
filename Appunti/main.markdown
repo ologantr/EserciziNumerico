@@ -442,66 +442,6 @@ $$
 La matrice $A$ è fattorizzabile se e solo se i propri minori principali
 di testa sono tutti diversi da zero.
 
-Minore
-:   Determinante di una sottomatrice quadrata.
-
-Matrice principale
-:   Una matrice $B$ è matrice principale di $A$ se gli elementi della
-    diagonale principale di $B$ sono elementi della diagonale principale di $A$.
-
-Matrice principale di testa
-:   Una matrice principale $B$ di $A$ in cui gli elementi di $B$ hanno gli stessi
-    indici degli elementi di $A$.
-
-Esempio di matrice principale di testa
-:   $$
-    A =
-    \left(
-    \begin{array}{c c}
-        \begin{array}{c | c |}
-            a_{11} & a_{12} \\
-            \hline
-        \end{array}
-        &
-        \begin{array}{c}
-            a_{13} \\
-        \end{array}
-        \\
-        \begin{array}{c c |}
-            a_{21} & a_{22} \\
-            \hline
-        \end{array}
-        &
-        \begin{array}{c}
-            a_{23} \\
-        \end{array}
-        \\
-        \begin{array}{c c}
-            a_{31} & a_{32} \\
-        \end{array}
-        &
-        \begin{array}{c}
-            a_{33} \\
-        \end{array}
-    \end{array}
-    \right)
-    $$
-
-:   $$
-    B =
-    \begin{pmatrix}
-        a_{11}
-    \end{pmatrix}
-    \qquad
-    C =
-    \begin{pmatrix}
-        a_{11} & a_{12} \\
-        a_{21} & a_{22} \\
-    \end{pmatrix}
-    $$
-
-: $B$ e $C$ sono matrici principali di testa di $A$.
-
 Esempio sulla condizione di fattorizzazione
 :   Data la matrice $A$ e la propria sottomatrice principale di testa $B$:
 
@@ -573,10 +513,47 @@ $$
 
 $$
 \begin{aligned}
-\boldsymbol{x} & = (P \, A)^{-1}                             \\
-               & = A^{-1} \, (P^{-1} \, P) \, \boldsymbol{b} \\
-               & = A^{-1} \, I \, \boldsymbol{b}             \\
-               & = A^{-1} \, \boldsymbol{b}                  \\
+    \boldsymbol{x} & = (P \, A)^{-1}                             \\
+                   & = A^{-1} \, (P^{-1} \, P) \, \boldsymbol{b} \\
+                   & = A^{-1} \, I \, \boldsymbol{b}             \\
+                   & = A^{-1} \, \boldsymbol{b}                  \\
+\end{aligned}
+$$
+
+### Matrice di permutazione degli elementi sottodiagonali
+
+Data una matrice $A$ è facilmente individuabile una matrice di permutazione
+che porta a zero gli elementi sottodiagonali appartenenti alla prima colonna
+$R^{(1)}$.
+
+$$
+\begin{aligned}
+    R^{(1)} = P \, A
+    & =
+    \begin{pmatrix}
+        1       & 0 & 0 \\
+        -m_{21} & 1 & 0 \\
+        -m_{31} & 0 & 1 \\
+    \end{pmatrix}
+    \begin{pmatrix}
+        a_{11} & a_{12} & a_{13} & b_{1} \\
+        a_{21} & a_{22} & a_{23} & b_{2} \\
+        a_{31} & a_{32} & a_{23} & b_{2} \\
+    \end{pmatrix}
+    \\
+    & =
+    \begin{pmatrix}
+        a_{11}                    & a_{12}                    & a_{13}                    & b_{1}                   \\
+        a_{21} - m_{21} \, a_{11} & a_{22} - m_{21} \, a_{12} & a_{23} - m_{21} \, a_{13} & b_{2} - m_{21} \, b_{1} \\
+        a_{31} - m_{31} \, a_{11} & a_{32} - m_{31} \, a_{12} & a_{33} - m_{31} \, a_{13} & b_{3} - m_{31} \, b_{1} \\
+    \end{pmatrix}
+    \\
+    & =
+    \begin{pmatrix}
+        a_{11} & a_{12}       & a_{13}       & b_{1}       \\[1ex]
+        0      & a_{22}^{(1)} & a_{23}^{(1)} & b_{2}^{(1)} \\[1ex]
+        0      & a_{32}^{(1)} & a_{33}^{(1)} & b_{3}^{(1)} \\[1ex]
+    \end{pmatrix}
 \end{aligned}
 $$
 
@@ -589,7 +566,7 @@ matrice dei coefficienti non singolare e non avente alcuna speciale struttura.
 
 ## Matrici notevoli
 
-### Matrice triangolare
+### Matrice diagonale
 
 $$
 A =
@@ -646,6 +623,68 @@ a zero, oppure, analogamente, una matrice quadrata il cui rango non
 è massimo.
 
 In particolare, nessuna matrice singolare è invertibile.
+
+### Minore
+
+Determinante di una sottomatrice quadrata.
+
+### Matrice principale
+
+Una matrice $B$ è matrice principale di $A$ se gli elementi della
+diagonale principale di $B$ sono elementi della diagonale principale di $A$.
+
+### Matrice principale di testa
+Una matrice principale $B$ di $A$ in cui gli elementi di $B$ hanno gli stessi
+indici degli elementi di $A$.
+
+Esempio di matrice principale di testa
+:   $$
+    A =
+    \left(
+    \begin{array}{c c}
+        \begin{array}{c | c |}
+            a_{11} & a_{12} \\
+            \hline
+        \end{array}
+        &
+        \begin{array}{c}
+            a_{13} \\
+        \end{array}
+        \\
+        \begin{array}{c c |}
+            a_{21} & a_{22} \\
+            \hline
+        \end{array}
+        &
+        \begin{array}{c}
+            a_{23} \\
+        \end{array}
+        \\
+        \begin{array}{c c}
+            a_{31} & a_{32} \\
+        \end{array}
+        &
+        \begin{array}{c}
+            a_{33} \\
+        \end{array}
+    \end{array}
+    \right)
+    $$
+
+:   $$
+    B =
+    \begin{pmatrix}
+        a_{11}
+    \end{pmatrix}
+    \qquad
+    C =
+    \begin{pmatrix}
+        a_{11} & a_{12} \\
+        a_{21} & a_{22} \\
+    \end{pmatrix}
+    $$
+
+: $B$ e $C$ sono matrici principali di testa di $A$.
 
 ### Inversione del prodotto di due matrici
 
