@@ -134,10 +134,22 @@ Data una matrice $A$ $(n \times n)$ allora il sistema omogeneo
 $A \, \boldsymbol{x} = \boldsymbol{b} = 0$ ammette una soluzione non nulla,
 $\boldsymbol{x} \neq 0$ se e solo se la matrice $A$ è singolare.[^th_singolare_2]
 
-    ...
+Questi teoremi permettono di ottenere alcune proposizioni sulla matrice
+inversa:[^th_inversa]
+
+* Date due matrici quadrate di ordine $n$ $A$ e $B$ tali che $A \, B = I$,
+  allora $B = A^{-1}$ e $B \, A = I$.
+
+* Date due matrici quadrate di ordine $n$, la matrice $A \, B$ è non singolare
+  se e solo se $A$ e $B$ sono non singolari.
+
+* Data $T$ una matrice triangolare superiore $n \times n$, essa è non singolare
+  se e solo se i propri elementi diagonali sono diversi da zero. La matrice
+  $T^{-1}$ è la diagonale superiore.
 
 [^th_singolare_1]: Galligani, 2.2, Teorema 2 (p. 48)
 [^th_singolare_2]: Galligani, 2.2, Teorema 3 (p. 48)
+[^th_inversa]: Galligani, 2.2, e) (p. 49)
 
 ## Ben posizione
 
@@ -520,15 +532,15 @@ $$
 \end{aligned}
 $$
 
-### Matrice di permutazione degli elementi sottodiagonali
+### Metodo di eliminazione di Gauss
 
 Data una matrice $A$ è facilmente individuabile una matrice di permutazione
-che porta a zero gli elementi sottodiagonali appartenenti alla prima colonna
-$R^{(1)}$.
+$L^{(1)}$ che porta a zero gli elementi sottodiagonali appartenenti alla
+prima colonna, trasformando $A$ in $A^{(1)}$.
 
 $$
 \begin{aligned}
-    R^{(1)} = P \, A
+    A^{(1)} = L^{(1)} \, A
     & =
     \begin{pmatrix}
         1       & 0 & 0 \\
@@ -557,10 +569,58 @@ $$
 \end{aligned}
 $$
 
-## Metodo di eliminazione di Gauss
+Poiché si vuole che gli elementi sottodiagonali della prima colonna
+siano zero, si impone che:
 
-Permette di risolvere in modo efficiente qualunque sistema normale con
-matrice dei coefficienti non singolare e non avente alcuna speciale struttura.
+$$
+\begin{aligned}
+    a_{21} - m_{21} \, a_{11} = 0 & \quad \Longrightarrow \quad m_{21} = \dfrac{a_{21}}{a_{11}} \\[1ex]
+    a_{31} - m_{31} \, a_{11} = 0 & \quad \Longrightarrow \quad m_{31} = \dfrac{a_{31}}{a_{11}} \\[1ex]
+\end{aligned}
+$$
+
+Più generalmente:
+
+$$
+m_{i1} = \dfrac{a_{i1}}{a_{11}}
+\qquad
+i = 2, 3, \ldots, n
+$$
+
+Si può quindi definire una generica matrice di permutazione $L^{(k)}$ che
+azzera gli elementi sottodiagonali di una generica colonna che prende il
+nome di trasformazione elementare di Gauss:
+
+$$
+L^{(k)} =
+\begin{pmatrix}
+    1      & 0      & \ldots & 0          & \ldots & 0      \\
+    0      & 1      & \ldots & 0          & \ldots & 0      \\
+    \ldots & \ldots & \ldots & \ldots     & \ldots & \ldots \\
+    0      & 0      & \ldots & 1          & \ldots & 0      \\
+    0      & 0      & \ldots & -m_{k+1 k} & \ldots & 0      \\
+    \ldots & \ldots & \ldots & \ldots     & \ldots & \ldots \\
+    0      & 0      & \ldots & -m_{nk}    & \ldots & 1      \\
+\end{pmatrix}
+\qquad \qquad
+m_{ik} = \dfrac{a_{ik}^{(k-1)}}{a_{kk}^{(k-1)}}
+\qquad
+i = 1, 2, \dots, n-1
+$$
+
+Le iterazioni totali per costruire tutte le matrici di permutazione
+$L^{(k)}$ sono $n-1$ in quanto l'ultima colonna non ha elementi
+sottodiagonali.
+
+$$
+\begin{aligned}
+    L & \, = \, L^{(n-1)} \, \ldots \, L^{(2)} \, L^{(1)} \\
+    U & \, = \, A^{(n-1)} \\
+      & \, = \, L \, A \, = \, L^{(n-1)} \, \ldots \, L^{(2)} \, L^{(1)} \, A
+\end{aligned}
+$$
+
+
 
 # Glossario
 
