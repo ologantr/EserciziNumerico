@@ -133,24 +133,26 @@ $\boldsymbol{x}$ e $\boldsymbol{b}$, quindi:
 $$
 \begin{aligned}
     A \, (\boldsymbol{x} + \delta \boldsymbol{x})
-    & = \boldsymbol{b} + \delta \boldsymbol{b}        \\
+    & = \boldsymbol{b} + \delta \boldsymbol{b}                         \\
     A \, \boldsymbol{x} + A \, \delta \boldsymbol{x}
-    & = \boldsymbol{b} + \delta \boldsymbol{b}        \\
+    & = \boldsymbol{b} + \delta \boldsymbol{b}                         \\
     A \, \delta \boldsymbol{x} & = \delta \boldsymbol{b}
-    & \qquad \qquad A\, \boldsymbol{x} = \boldsymbol{b} \\
+    & \qquad \qquad \text{perché } A\, \boldsymbol{x} = \boldsymbol{b} \\
     A^{-1} \, A \, \delta \boldsymbol{x}
     & = A^{-1} \, \delta \boldsymbol{b}
-    & \qquad \qquad \text{si moltiplica per } A^{-1}\\
+    & \qquad \qquad \text{si moltiplica per } A^{-1}                   \\
     I \, \delta \boldsymbol{x}
-    & = A^{-1} \, \delta \boldsymbol{b}                  \\
-    \delta \boldsymbol{x} = A^{-1} \delta \boldsymbol{b}
+    & = A^{-1} \, \delta \boldsymbol{b}                                \\
+    \delta \boldsymbol{x} & = A^{-1} \delta \boldsymbol{b}
 \end{aligned}
 $$
 
 Si è appena trovato un legame tra l'errore sulla soluzione e
-l'errore sui dati.
+l'errore sui dati. Infatti l'errore sul vettore $\boldsymbol{x}$
+dipende dall'errore sul vettore $\boldsymbol{b}$.
 
-Per semplicità si esprimono la matrice e i vettori come norme:
+Per semplicità si esprime il risultato appena ottenuto mediante
+le rispettive norme:
 
 $$
 \left\lVert \delta \boldsymbol{x} \right\rVert
@@ -169,9 +171,72 @@ Quindi possiamo scrivere:
 
 $$
 \left\lVert \delta \boldsymbol{x} \right\rVert
-\, \leq \, \left\lVert A^{-1} \right\rVert
+= \left\lVert A^{-1} \delta \boldsymbol{b} \right\rVert
+\leq \left\lVert A^{-1} \right\rVert
 \left\lVert \delta \boldsymbol{b} \right\rVert
 $$
+
+Allora:
+
+$$
+\begin{aligned}
+    \left\lVert \delta \boldsymbol{x} \right\rVert
+    & \leq \left\lVert A^{-1} \right\rVert
+    \left\lVert \delta \boldsymbol{b} \right\rVert                                \\[2ex]
+    \dfrac{\left\lVert \delta \boldsymbol{x} \right\rVert}
+          {\left\lVert \boldsymbol{x} \right\rVert}
+    & \leq \left\lVert A^{-1} \right\rVert
+    \dfrac{\left\lVert \delta \boldsymbol{b} \right\rVert}
+          {\left\lVert \boldsymbol{x} \right\rVert}
+    & \qquad \qquad \text{si divide per } \left\lVert \boldsymbol{x} \right\rVert \\[2ex]
+    \dfrac{\left\lVert \delta \boldsymbol{x} \right\rVert}
+          {\left\lVert \boldsymbol{x} \right\rVert}
+    & \leq \left\lVert A \right\rVert \left\lVert A^{-1} \right\rVert
+    \dfrac{\left\lVert \delta \boldsymbol{b} \right\rVert}
+          {\left\lVert A \right\rVert \left\lVert \boldsymbol{x} \right\rVert}
+    & \qquad \qquad \text{si moltiplica e si divide per }
+    \left\lVert A \right\rVert                                                    \\[2ex]
+    \dfrac{\left\lVert \delta \boldsymbol{x} \right\rVert}
+          {\left\lVert \boldsymbol{x} \right\rVert}
+    & \leq \left\lVert A \right\rVert \left\lVert A^{-1} \right\rVert
+    \dfrac{\left\lVert \delta \boldsymbol{b} \right\rVert}
+          {\left\lVert \boldsymbol{b} \right\rVert}
+    & \qquad \qquad \text{si sostituisce}
+    \left\lVert A \right\rVert \left\lVert \boldsymbol{x} \right\rVert
+    \text{con} \left\lVert \boldsymbol{b} \right\rVert                            \\[2ex]
+\end{aligned}
+$$
+
+Si definisce l'**errore relativo su $\boldsymbol{x}$** $\varepsilon_{x}$
+e l'**errore relativo su $\boldsymbol{b}$** $\varepsilon_{b}$:
+
+$$
+\varepsilon_{x} =
+\dfrac{\left\lVert \delta \boldsymbol{x} \right\rVert}
+      {\left\lVert \boldsymbol{x} \right\rVert}
+\qquad \qquad \qquad
+\varepsilon_{b} =
+\dfrac{\left\lVert \delta \boldsymbol{b} \right\rVert}
+      {\left\lVert \boldsymbol{b} \right\rVert}
+$$
+
+E vale la relazione:
+
+$$
+\varepsilon_{x}
+\, \leq \,
+\left\lVert A \right\rVert \left\lVert A^{-1} \right\rVert
+\, \varepsilon_{b}
+$$
+
+Si definisce l'**indice di condizionamento**:
+
+$$
+\mu (A) = cond(A) =
+\left\lVert A \right\rVert \left\lVert A^{-1} \right\rVert
+$$
+
+L'indice di condizionamento è sempre maggiore o uguale a $1$.
 
 [^relazione_norma_indotta]: ???, Teorema 3.9 (p. 78)
 
