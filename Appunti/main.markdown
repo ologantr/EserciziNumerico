@@ -82,6 +82,51 @@ $$
 * Il sistema è **sovradimensionato** se $m > n$ cioè se le equazioni
   sono più delle incognite.
 
+## Ben posizione
+
+Nel 1923, J. Hadamard dette la seguente definizione di problema ben posto:
+
+1. Esiste una soluzione del problema (esistenza).
+2. La soluzione è unica (unicità).
+3. La soluzione dipende con continuità dai dati (stabilità).
+
+Viceversa, un problema si dice mal posto quando non verifica una di
+queste condizioni.
+
+La condizione di stabilità implica che piccole perturbazioni dei dati del
+problema non provochino significative variazioni del risultato del problema.
+
+Esempio
+:   Qualunque studio sulla matrice di Hilbert che richieda la memorizzazione
+    della matrice è un problema mal posto, in quanto si commette un errore sui
+    dati iniziali.
+
+:   Non si sta infatti operando sulla matrice di Hilbert $H_{n}$ bensì una
+    matrice $G_{n}$ i cui elementi sono perturbati sull'ultima cifra decimale.
+
+:   Infatti supponendo che il metodo risolutore adottato non provochi alcun
+    errore di arrotondamento il risultato sarà relativo al dato $G_{n}$.
+
+## Condizionamento
+
+Prima di risolvere un sistema è opportuno studiare il condizionamento del
+problema, cioè la stabilità del sistema, valutando la variazione della
+soluzione ottenuta dovuta alla perturbazione dei dati.
+
+Quando si rappresenta un numero in macchina bisogna considerare l'errore
+dovuto alla rappresentazione stessa.
+
+È dato il sistema $A \, \boldsymbol{x} = \boldsymbol{b}$ con
+$A \in \mathbb{R}^{n \times n}$, $det(A) \neq 0$,
+$\boldsymbol{x}, \boldsymbol{b} \in \mathbb{R}^{n}$.
+
+Tale sistema in macchina è in realtà rappresentato come:
+
+$$
+(A + \delta A) (\boldsymbol{x} + \delta \boldsymbol{x})
+= \boldsymbol{b} + \delta \boldsymbol{b}
+$$
+
 ## Condizioni di esistenza e di unicità di soluzioni
 
 * Condizione necessaria e sufficiente dell'esistenza di soluzioni:
@@ -150,31 +195,6 @@ inversa:[^th_inversa]
 [^th_singolare_1]: Galligani, 2.2, Teorema 2 (p. 48)
 [^th_singolare_2]: Galligani, 2.2, Teorema 3 (p. 48)
 [^th_inversa]: Galligani, 2.2, e) (p. 49)
-
-## Ben posizione
-
-Nel 1923, J. Hadamard dette la seguente definizione di problema ben posto:
-
-1. Esiste una soluzione del problema (esistenza).
-2. La soluzione è unica (unicità).
-3. La soluzione dipende con continuità dai dati (stabilità).
-
-Viceversa, un problema si dice mal posto quando non verifica una di
-queste condizioni.
-
-La condizione di stabilità implica che piccole perturbazioni dei dati del
-problema non provochino significative variazioni del risultato del problema.
-
-Esempio
-:   Qualunque studio sulla matrice di Hilbert che richieda la memorizzazione
-    della matrice è un problema mal posto, in quanto si commette un errore sui
-    dati iniziali.
-
-:   Non si sta infatti operando sulla matrice di Hilbert $H_{n}$ bensì una
-    matrice $G_{n}$ i cui elementi sono perturbati sull'ultima cifra decimale.
-
-:   Infatti supponendo che il metodo risolutore adottato non provochi alcun
-    errore di arrotondamento il risultato sarà relativo al dato $G_{n}$.
 
 ## Risoluzione di particolari sistemi lineari
 
