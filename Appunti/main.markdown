@@ -127,6 +127,29 @@ $$
 = \boldsymbol{b} + \delta \boldsymbol{b}
 $$
 
+Per semplificare consideriamo una perturbazione applicata solo sui vettori
+$\boldsymbol{x}$ e $\boldsymbol{b}$, quindi:
+
+$$
+\begin{aligned}
+    A \, (\boldsymbol{x} + \delta \boldsymbol{x})
+    & = \boldsymbol{b} + \delta \boldsymbol{b}        \\
+    A \, \boldsymbol{x} + A \, \delta \boldsymbol{x}
+    & = \boldsymbol{b} + \delta \boldsymbol{b}        \\
+    A \, \delta \boldsymbol{x} & = \delta \boldsymbol{b}
+    & \qquad \qquad A\, \boldsymbol{x} = \boldsymbol{b} \\
+    A^{-1} \, A \, \delta \boldsymbol{x}
+    & = A^{-1} \, \delta \boldsymbol{b}
+    & \qquad \qquad \text{si moltiplica per } A^{-1}\\
+    I \, \delta \boldsymbol{x}
+    & = A^{-1} \, \delta \boldsymbol{b}                  \\
+    \delta \boldsymbol{x} = A^{-1} \delta \boldsymbol{b}
+\end{aligned}
+$$
+
+Si è appena trovato un legame tra l'errore sulla soluzione e
+l'errore sui dati.
+
 ## Condizioni di esistenza e di unicità di soluzioni
 
 * Condizione necessaria e sufficiente dell'esistenza di soluzioni:
