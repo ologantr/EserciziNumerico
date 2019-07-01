@@ -620,11 +620,28 @@ $$
 \end{aligned}
 $$
 
-
-
 # Glossario
 
 ## Matrici notevoli
+
+### Matrice identica
+
+È una matrice quadrata i cui elementi $\delta_{ij}$ sono:
+
+$$
+\delta_{ij} =
+\left\{
+\begin{aligned}
+\, 1 & \quad \text{se } i = j    \\
+\, 0 & \quad \text{se } i \neq j
+\end{aligned}
+\right.
+$$
+
+La matrice identica gode delle seguenti proprietà:
+
+* $A \, I = I \, A = A$ per ogni matrice $A$
+* $I \, \boldsymbol{x} = \boldsymbol{x}$ per ogni vettore $\boldsymbol{x}$
 
 ### Matrice diagonale
 
@@ -669,12 +686,13 @@ $$
 
 ## Matrici
 
-### Matrice invertibile
+### Matrice inversa
 
-Una matrice quadrata è invertibile se possiede una matrice inversa
-(l'elemento inverso per l'operazione di composizione).
+Data una matrice $A$ $n \times n$, se esiste una matrice $B$ $n \times n$
+tale che $B \, A = A \, B = I$ allora A è **invertibile** o **non singolare**
+e $B$ è detta **inversa** di $A$.
 
-Una matrice è invertibile se e solo se il suo determinante è invertibile.
+Una matrice è invertibile se e solo se il proprio determinante è invertibile.
 
 ### Matrice singolare
 
