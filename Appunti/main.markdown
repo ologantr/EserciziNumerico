@@ -150,6 +150,31 @@ $$
 Si è appena trovato un legame tra l'errore sulla soluzione e
 l'errore sui dati.
 
+Per semplicità si esprimono la matrice e i vettori come norme:
+
+$$
+\left\lVert \delta \boldsymbol{x} \right\rVert
+\, = \, \left\lVert A^{-1} \delta \boldsymbol{b} \right\rVert
+$$
+
+Se $A \in \mathbb{R}^{n \times n}$ e $\boldsymbol{x} \in \mathbb{R}^{n}$
+vale la seguente relazione:[^relazione_norma_indotta]
+
+$$
+\left\lVert A \, \boldsymbol{x} \right\rVert
+\leq \left\lVert A \right\rVert \left\lVert \boldsymbol{x} \right\rVert
+$$
+
+Quindi possiamo scrivere:
+
+$$
+\left\lVert \delta \boldsymbol{x} \right\rVert
+\, \leq \, \left\lVert A^{-1} \right\rVert
+\left\lVert \delta \boldsymbol{b} \right\rVert
+$$
+
+[^relazione_norma_indotta]: ???, Teorema 3.9 (p. 78)
+
 ## Condizioni di esistenza e di unicità di soluzioni
 
 * Condizione necessaria e sufficiente dell'esistenza di soluzioni:
