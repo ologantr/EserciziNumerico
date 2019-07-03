@@ -232,7 +232,7 @@ $$
 Si definisce l'**indice di condizionamento**:
 
 $$
-\mu (A) = cond(A) =
+\mu(A) = cond(A) =
 \left\lVert A \right\rVert \left\lVert A^{-1} \right\rVert
 $$
 
@@ -667,55 +667,55 @@ $$
 
 ### Metodo di eliminazione di Gauss
 
-Data una matrice $A$ è facilmente individuabile una matrice di permutazione
-$L^{(1)}$ che porta a zero gli elementi sottodiagonali appartenenti alla
-prima colonna, trasformando $A$ in $A^{(1)}$.
+Data una matrice $A^{(1)}$ si individua una matrice di permutazione
+$L^{(1)}$ che porta a zero gli elementi sottodiagonali appartenenti
+alla prima colonna, trasformando $A^{(1)}$ in $A^{(2)}$.
 
 $$
 \begin{aligned}
-    A^{(1)} = L^{(1)} \, A
+    A^{(2)} = L^{(1)} \, A^{(1)}
     & =
     \begin{pmatrix}
-        1       & 0 & 0 \\
-        -m_{21} & 1 & 0 \\
-        -m_{31} & 0 & 1 \\
+        1       & 0 & 0 \\[2ex]
+        -m_{21} & 1 & 0 \\[2ex]
+        -m_{31} & 0 & 1 \\[2ex]
     \end{pmatrix}
     \begin{pmatrix}
-        a_{11} & a_{12} & a_{13} & b_{1} \\
-        a_{21} & a_{22} & a_{23} & b_{2} \\
-        a_{31} & a_{32} & a_{23} & b_{2} \\
-    \end{pmatrix}
-    \\
-    & =
-    \begin{pmatrix}
-        a_{11}                    & a_{12}                    & a_{13}                    & b_{1}                   \\
-        a_{21} - m_{21} \, a_{11} & a_{22} - m_{21} \, a_{12} & a_{23} - m_{21} \, a_{13} & b_{2} - m_{21} \, b_{1} \\
-        a_{31} - m_{31} \, a_{11} & a_{32} - m_{31} \, a_{12} & a_{33} - m_{31} \, a_{13} & b_{3} - m_{31} \, b_{1} \\
+        a_{11}^{(1)} & a_{12}^{(1)} & a_{13}^{(1)} & b_{1}^{(1)} \\[2ex]
+        a_{21}^{(1)} & a_{22}^{(1)} & a_{23}^{(1)} & b_{2}^{(1)} \\[2ex]
+        a_{31}^{(1)} & a_{32}^{(1)} & a_{23}^{(1)} & b_{2}^{(1)} \\[2ex]
     \end{pmatrix}
     \\
     & =
     \begin{pmatrix}
-        a_{11} & a_{12}       & a_{13}       & b_{1}       \\[1ex]
-        0      & a_{22}^{(1)} & a_{23}^{(1)} & b_{2}^{(1)} \\[1ex]
-        0      & a_{32}^{(1)} & a_{33}^{(1)} & b_{3}^{(1)} \\[1ex]
+        a_{11}^{(1)}                          & a_{12}^{(1)}                          & a_{13}^{(1)}                          & b_{1}^{(1)}                         \\[2ex]
+        a_{21}^{(1)} - m_{21} \, a_{11}^{(1)} & a_{22}^{(1)} - m_{21} \, a_{12}^{(1)} & a_{23}^{(1)} - m_{21} \, a_{13}^{(1)} & b_{2}^{(1)} - m_{21} \, b_{1}^{(1)} \\[2ex]
+        a_{31}^{(1)} - m_{31} \, a_{11}^{(1)} & a_{32}^{(1)} - m_{31} \, a_{12}^{(1)} & a_{33}^{(1)} - m_{31} \, a_{13}^{(1)} & b_{3}^{(1)} - m_{31} \, b_{1}^{(1)} \\[2ex]
+    \end{pmatrix}
+    \\
+    & =
+    \begin{pmatrix}
+        a_{11}^{(1)} & a_{12}^{(1)} & a_{13}^{(1)} & b_{1}^{(1)} \\[2ex]
+        0            & a_{22}^{(2)} & a_{23}^{(2)} & b_{2}^{(2)} \\[2ex]
+        0            & a_{32}^{(1)} & a_{33}^{(2)} & b_{3}^{(2)} \\[2ex]
     \end{pmatrix}
 \end{aligned}
 $$
 
 Poiché si vuole che gli elementi sottodiagonali della prima colonna
-siano zero, si impone che:
+siano zero ($a_{21}, a_{31}, \ldots ,a_{i1}$), si impone che:
 
 $$
 \begin{aligned}
-    a_{21} - m_{21} \, a_{11} = 0 & \quad \Longrightarrow \quad m_{21} = \dfrac{a_{21}}{a_{11}} \\[1ex]
-    a_{31} - m_{31} \, a_{11} = 0 & \quad \Longrightarrow \quad m_{31} = \dfrac{a_{31}}{a_{11}} \\[1ex]
+    a_{21}^{(1)} - m_{21} \, a_{11}^{(1)} = 0 & \quad \Longrightarrow \quad m_{21} = \dfrac{a_{21}^{(1)}}{a_{11}^{(1)}} \\[2ex]
+    a_{31}^{(1)} - m_{31} \, a_{11}^{(1)} = 0 & \quad \Longrightarrow \quad m_{31} = \dfrac{a_{31}^{(1)}}{a_{11}^{(1)}} \\[2ex]
 \end{aligned}
 $$
 
-Più generalmente:
+Più generalmente per la prima colonna:
 
 $$
-m_{i1} = \dfrac{a_{i1}}{a_{11}}
+m_{i1} = \dfrac{a_{i1}^{(1)}}{a_{11}^{(1)}}
 \qquad
 i = 2, 3, \ldots, n
 $$
@@ -736,9 +736,22 @@ L^{(k)} =
     0      & 0      & \ldots & -m_{nk}    & \ldots & 1      \\
 \end{pmatrix}
 \qquad \qquad
-m_{ik} = \dfrac{a_{ik}^{(k-1)}}{a_{kk}^{(k-1)}}
-\qquad
-i = 1, 2, \dots, n-1
+\begin{aligned}
+    m_{ik} = \dfrac{a_{ik}^{(k)}}{a_{kk}^{(k)}}
+    \qquad
+    i = k + 1, k + 2, \ldots, n
+    \\[2ex]
+    a_{ij}^{k+1}
+    = \left\{
+    \begin{aligned}
+        & a_{ij}^{(k)}                       & \quad \text{se } i \leq k \\[2ex]
+        & a_{ij}^{(k)} - m_{ik} a_{kj}^{(k)} & \quad \text{se } i > k    \\[2ex]
+    \end{aligned}
+    \right.
+\end{aligned}
+$$
+
+$$
 $$
 
 Le iterazioni totali per costruire tutte le matrici di permutazione
@@ -752,6 +765,10 @@ $$
       & \, = \, L \, A \, = \, L^{(n-1)} \, \ldots \, L^{(2)} \, L^{(1)} \, A
 \end{aligned}
 $$
+
+## Metodo di eliminazione di Gauss con scambio delle righe
+
+    ...
 
 # Glossario
 
