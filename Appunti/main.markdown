@@ -751,9 +751,6 @@ L^{(k)} =
 \end{aligned}
 $$
 
-$$
-$$
-
 Le iterazioni totali per costruire tutte le matrici di permutazione
 $L^{(k)}$ sono $n-1$ in quanto l'ultima colonna non ha elementi
 sottodiagonali.
@@ -766,9 +763,227 @@ $$
 \end{aligned}
 $$
 
-## Metodo di eliminazione di Gauss con scambio delle righe
+L'algoritmo ha una complessità di $O\left(\dfrac{n^{3}}{3}\right)$.
+
+### Metodo di eliminazione di Gauss con scambio delle righe
 
     ...
+
+## Metodi iterativi
+
+Dato un sistema lineare $A \, \boldsymbol{x} = \boldsymbol{b}$ dove $A$ è una
+matrice non singolare, si esprime $A$ come differenza tra due matrici $M$ e $N$
+dove $M$ è una matrice non singolare:
+
+$$
+\begin{aligned}
+    A \, \boldsymbol{x} & = \boldsymbol{b}                       \\
+    (M - N) \, \boldsymbol{x} & = \boldsymbol{b}                 \\
+    M \, \boldsymbol{x} - N \, \boldsymbol{x} & = \boldsymbol{b} \\
+    M \, \boldsymbol{x} & = N \, \boldsymbol{x} + \boldsymbol{b} \\
+\end{aligned}
+$$
+
+quindi:
+
+$$
+\boldsymbol{x} = M^{-1} N \, \boldsymbol{x} + M^{-1} \, \boldsymbol{b}
+$$
+
+Si considera $M^{-1} \, N = P$ e $M^{-1} \, \boldsymbol{b} = \boldsymbol{q}$
+e si ottiene quindi:
+
+$$
+\boldsymbol{x} = P \, \boldsymbol{x} + \boldsymbol{q}
+$$
+
+Dato un vettore iniziale $\boldsymbol{x}^{(0)}$, si considera la successione
+$\boldsymbol{x}^{(1)}, \boldsymbol{x}^{(2)}, \ldots$ così definita:
+
+$$
+\boldsymbol{x}^{(k)} = P \, \boldsymbol{x}^{(k-1)} + \boldsymbol{q}
+\qquad
+\text{con } k = 1, 2, \ldots
+$$
+
+La successione di tutti gli elementi $\boldsymbol{x}^{(k)}$ si dice convergente
+al vettore $\boldsymbol{x}^{*}$ e si indica:
+
+$$
+\boldsymbol{x}^{*} = \lim_{k \to \infty} \boldsymbol{x}^{(k)}
+$$
+
+se al tendere di $k$ a infinito le componenti di $\boldsymbol{x}^{(k)}$
+convergono alle corrispondenti componenti di $\boldsymbol{x}^{(k)}$.
+In tal caso:
+
+$$
+\boldsymbol{x}^{*} = P \, \boldsymbol{x}^{*} + \boldsymbol{q}
+$$
+
+e cioè $\boldsymbol{x}^{*}$ è la soluzione del sistema
+$\boldsymbol{x}^{(k)} = P \, \boldsymbol{(k-1)} + \boldsymbol{q}$
+e quindi anche del sistema $A \, \boldsymbol{x} = \boldsymbol{b}$.
+
+Si individua quindi un metodo iterativo in cui a partire da un vettore
+iniziale $\boldsymbol{x}^{(0)}$, la soluzione viene approssimata utilizzando
+una successione $\boldsymbol{x}^{(k)}$ di vettori.
+
+La matrice $P$ si dice **matrice di iterazione**.
+
+Al variare del vettore iniziale $\boldsymbol{x}^{(0)}$ si ottengono diverse
+successioni $\boldsymbol{x}^{(k)}$, alcune delle quali possono essere
+convergenti e altre no.
+
+Un metodo iterativo è **convergente** se qualunque sia il vattore iniziale la
+successione converge.
+
+Teorema della convergenza
+:   Se esiste una norma matriciale indotta $\left\lVert \cdot \right\rVert$
+    per cui $\left\lVert P \right\rVert$ < 1 allora il metodo iterativo è
+    convergente.
+
+:   Si dimostra. Dati:
+
+:   $$
+    \begin{aligned}
+    \boldsymbol{x}^{(k)} = P \, \boldsymbol{x}^{(k-1)} + \boldsymbol{q} \\
+    \boldsymbol{x}^{*} = P \, \boldsymbol{x}^{*} + \boldsymbol{q}
+    \end{aligned}
+    $$
+
+:   Si sottrae $\boldsymbol{x}^{(k)}$ a $\boldsymbol{x}^{*}$:
+
+:   $$
+    \boldsymbol{x}^{*}- \boldsymbol{x}^{(k)} =
+    P \, (\boldsymbol{x}^{*} - \boldsymbol{x}^{k-1})
+    $$
+
+:   Si indica con $\boldsymbol{e}^{(k)}$ il vettore errore alla $k$-esima iterazione:
+
+:   $$
+    \begin{aligned}
+    \boldsymbol{e}^{(k)} & = \boldsymbol{x}^{*} - \boldsymbol{x}^{(k)} \\
+    \boldsymbol{e}^{(k)} & = P \, \boldsymbol{e}^{(k-1)} = P^{2} \, \boldsymbol{e}^{(k-2)} = \ldots = P^{k} \, \boldsymbol{e}^{(0)} \\
+    \end{aligned}
+    $$
+
+:   Passando alle norme si ha:
+
+:   $$
+    \left\lVert \boldsymbol{e}^{(k)} \right\rVert
+    \, = \,
+    \left\lVert P^{k} \, \boldsymbol{e}^{(0)} \right\rVert
+    \, \leq \,
+    \left\lVert P^{k} \right\rVert \left\lVert \boldsymbol{e}^{(0)} \right\rVert
+    \, \leq \,
+    \left\lVert P \right\rVert^{k} \left\lVert \boldsymbol{e}^{(0)} \right\rVert
+    $$
+
+:   Poiché $\left\lVert P \right\rVert < 1$ allora:
+
+:   $$
+    \begin{aligned}
+        \lim_{k \to \infty} \left\lVert P \right\rVert^{k}                & = 0 \\
+        \lim_{k \to \infty} \left\lVert \boldsymbol{e}^{(k)} \right\rVert & = 0 \\
+    \end{aligned}
+    $$
+
+:   Quindi per la continuità della norma:
+
+:   $$
+    \begin{aligned}
+    \lim_{k \to \infty} \boldsymbol{e}^{(k)} & = \boldsymbol{0}     \\
+    \lim_{k \to \infty} \boldsymbol{x}^{(k)} & = \boldsymbol{x}^{*} \\
+    \end{aligned}
+    $$
+
+È necessario fissare dei criteri di arresto per il procedimento iterativo.
+Quelli usati più comunemente sono:
+
+* $\left\lVert \boldsymbol{x}^{(k)} - \boldsymbol{x}^{(k-1)} \right\rVert \leq \varepsilon$
+
+* $\dfrac{\left\lVert \boldsymbol{x}^{(k)} - \boldsymbol{x}^{(k-1)} \right\rVert}{\boldsymbol{x}^{(k)}} \leq \varepsilon$
+  $\quad$ se $\boldsymbol{x}^{(k)} \neq \boldsymbol{0}$
+
+Queste sono però soltanto delle condizioni di arresto e non garantiscono che
+la soluzione sia approssimataq con la precisione $\varepsilon$. È necessario
+comunque effettuare un controllo quando il numero di iterazioni diventa troppo
+elevato.
+
+Può accadere che un metodo iterativo convergente, a causa di errori di
+arrotondamento, in pratica non converga. Ciò accade quando la matrice $A$
+è malcondizionata
+
+Può accadere che un metodo iterativo convergente, a causa di errori di
+arrotondamento, in pratica non converga. Ciò accade quando la matrice $A$
+è malcondizionata.
+
+I metodi iterativi si distinguono per la particolare decomposizione della
+matrice $A$.
+
+Come visto precedentemente, si consideri $A = M - N$ e la propria ulteriore
+decomposizione $A = D - B - C$, in cui:
+
+$$
+d_{ij} =
+\left\{
+\begin{aligned}
+    & a_{ij} & \text{se } i = j    \\
+    & 0      & \text{se } i \neq j \\
+\end{aligned}
+\right.
+\qquad
+b_{ij} =
+\left\{
+\begin{aligned}
+    & -a_{ij} & \text{se } i > j    \\
+    & 0       & \text{se } i \geq  j \\
+\end{aligned}
+\right.
+\qquad
+c_{ij} =
+\left\{
+\begin{aligned}
+    & 0       & \text{se } i \geq j \\
+    & -a_{ij} & \text{se } i < j    \\
+\end{aligned}
+\right.
+$$
+
+* Usando $M = D$ e $N = B + C$ si ottiene il **metodo di Jacobi**.
+
+  La matrice di iterazione è $J = D^{-1} \, (B + C)$.
+
+  Il vettore risultato è $\boldsymbol{x}^{(k)} = J \, \boldsymbol{x}^{(k-1)} + D^{-1} \, \boldsymbol{b}$.
+
+  Il metodo di Jacobi è anche detto **metodo degli spostamenti simultanei**
+  e ad ogni iterazione le componenti del vettore $\boldsymbol{x}^{k-1}$ sono
+  sostituite simultaneamente dalle componenti di $\boldsymbol{x}^{(k)}$.
+
+  Quindi durante il processo di calcolo è necessario avere in memoria allo
+  stesso tempo entrambi i vettori $\boldsymbol{x}^{(k)}$ e $\boldsymbol{x}^{(k-1)}$.
+
+* Usando $M = D - B$ e $N = C$ si ottiene il **metodo di Gauss-Seidel**.
+
+  La matrice di iterazione è $G = (D - B)^{-1} \, C$.
+
+  Il vettore risultato è $\boldsymbol{x}^{(k)} = G \, \boldsymbol{x}^{(k-1)} + (D - B)^{-1} \, \boldsymbol{b}$.
+
+  Il metodo di Gauss-Seidel è anche detto **metodo degli spostamenti successivi**
+  e ad ogni iterazione le componenti del vettore $\boldsymbol{x}^{(k)}$ sono
+  calcolate utilizzando anche componenti già determinate dello stesso vettore.
+
+  Quindi durante il processo di calcolo è necessario avere in memoria soltanto
+  il vettore $\boldsymbol{x}^{(k)}$.
+
+In un metodo iterativo il costo computazione è principalmente determinato dalle
+moltiplicazioni della matrice $P$ per il vettore $\boldsymbol{x}^{(k-1)}$ che
+generalmente richiedono ciascuna $n^{2}$ moltiplicazioni.
+
+Tranne che per particolari matrici $A$ (per esempio se $A$ è sparsa) il costo
+computazionale è generalmente superiore rispetto ai metodi diretti.
+
 
 # Glossario
 
