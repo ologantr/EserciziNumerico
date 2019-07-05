@@ -159,21 +159,33 @@ $$
 \, = \, \left\lVert A^{-1} \delta \boldsymbol{b} \right\rVert
 $$
 
-Se $A \in \mathbb{R}^{n \times n}$ e $\boldsymbol{x} \in \mathbb{R}^{n}$
-vale la seguente relazione:[^relazione_norma_indotta]
+Poiché $A \in \mathbb{R}^{n \times n}$ e $\boldsymbol{x} \in \mathbb{R}^{n}$,
+vale la norma indotta:
 
 $$
-\left\lVert A \, \boldsymbol{x} \right\rVert
-\leq \left\lVert A \right\rVert \left\lVert \boldsymbol{x} \right\rVert
+\begin{aligned}
+    \left\lVert A^{-1} \delta \boldsymbol{b} \right\rVert
+    & \leq \left\lVert A^{-1} \right\rVert
+         \left\lVert \delta \boldsymbol{b} \right\rVert    \\[1ex]
+    \left\lVert \delta \boldsymbol{x} \right\rVert
+    & \leq \left\lVert A^{-1} \right\rVert
+         \left\lVert \delta \boldsymbol{b} \right\rVert    \\[1ex]
+\end{aligned}
 $$
 
-Quindi possiamo scrivere:
+E anche:
 
 $$
-\left\lVert \delta \boldsymbol{x} \right\rVert
-= \left\lVert A^{-1} \delta \boldsymbol{b} \right\rVert
-\leq \left\lVert A^{-1} \right\rVert
-\left\lVert \delta \boldsymbol{b} \right\rVert
+\begin{aligned}
+    \left\lVert \boldsymbol{b} \right\rVert
+    & = \left\lVert A \, \boldsymbol{x} \right\rVert  \\[1ex]
+    \left\lVert A \, \boldsymbol{x} \right\rVert
+    & \leq \left\lVert A \right\rVert
+           \left\lVert \boldsymbol{x} \right\rVert    \\[1ex]
+    \left\lVert \boldsymbol{b} \right\rVert
+    & \leq \left\lVert A \right\rVert
+           \left\lVert \boldsymbol{x} \right\rVert    \\[1ex]
+\end{aligned}
 $$
 
 Allora:
@@ -182,28 +194,19 @@ $$
 \begin{aligned}
     \left\lVert \delta \boldsymbol{x} \right\rVert
     & \leq \left\lVert A^{-1} \right\rVert
-    \left\lVert \delta \boldsymbol{b} \right\rVert                                \\[2ex]
+    \left\lVert \delta \boldsymbol{b} \right\rVert                                                                                  \\[2ex]
     \dfrac{\left\lVert \delta \boldsymbol{x} \right\rVert}
-          {\left\lVert \boldsymbol{x} \right\rVert}
-    & \leq \left\lVert A^{-1} \right\rVert
-    \dfrac{\left\lVert \delta \boldsymbol{b} \right\rVert}
-          {\left\lVert \boldsymbol{x} \right\rVert}
-    & \qquad \qquad \text{si divide per } \left\lVert \boldsymbol{x} \right\rVert \\[2ex]
-    \dfrac{\left\lVert \delta \boldsymbol{x} \right\rVert}
-          {\left\lVert \boldsymbol{x} \right\rVert}
-    & \leq \left\lVert A \right\rVert \left\lVert A^{-1} \right\rVert
-    \dfrac{\left\lVert \delta \boldsymbol{b} \right\rVert}
           {\left\lVert A \right\rVert \left\lVert \boldsymbol{x} \right\rVert}
-    & \qquad \qquad \text{si moltiplica e si divide per }
-    \left\lVert A \right\rVert                                                    \\[2ex]
+    & \leq \dfrac{\left\lVert A^{-1} \right\rVert \left\lVert \delta \boldsymbol{b} \right\rVert}
+                 {\left\lVert \boldsymbol{b} \right\rVert}
+    & \qquad \qquad \text{si rapporta a }
+                    \left\lVert A \right\rVert \left\lVert \boldsymbol{x} \right\rVert \geq \left\lVert \boldsymbol{b} \right\rVert \\[2ex]
     \dfrac{\left\lVert \delta \boldsymbol{x} \right\rVert}
           {\left\lVert \boldsymbol{x} \right\rVert}
     & \leq \left\lVert A \right\rVert \left\lVert A^{-1} \right\rVert
     \dfrac{\left\lVert \delta \boldsymbol{b} \right\rVert}
-          {\left\lVert \boldsymbol{b} \right\rVert}
-    & \qquad \qquad \text{si sostituisce}
-    \left\lVert A \right\rVert \left\lVert \boldsymbol{x} \right\rVert
-    \text{con} \left\lVert \boldsymbol{b} \right\rVert                            \\[2ex]
+          {\left\lVert \boldsymbol{x} \right\rVert}
+    & \qquad \qquad \text{si moltiplicano entrambi i membri per } \left\lVert A \right\rVert                                        \\[2ex]
 \end{aligned}
 $$
 
@@ -237,8 +240,6 @@ $$
 $$
 
 L'indice di condizionamento è sempre maggiore o uguale a $1$.
-
-[^relazione_norma_indotta]: ???, Teorema 3.9 (p. 78)
 
 ## Condizioni di esistenza e di unicità di soluzioni
 
