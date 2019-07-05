@@ -82,6 +82,10 @@ $$
 * Il sistema è **sovradimensionato** se $m > n$ cioè se le equazioni
   sono più delle incognite.
 
+## Norme di vettori e matrici
+
+    ...
+
 ## Ben posizione
 
 Nel 1923, J. Hadamard dette la seguente definizione di problema ben posto:
@@ -985,7 +989,65 @@ generalmente richiedono ciascuna $n^{2}$ moltiplicazioni.
 Tranne che per particolari matrici $A$ (per esempio se $A$ è sparsa) il costo
 computazionale è generalmente superiore rispetto ai metodi diretti.
 
+# Interpolazione e integrazione
 
+L'approssimazione di una funzione consiste nel determinare una funzione $g(x)$
+che meglio approssima una funzione $f(x)$.
+
+È una funzione $f(x)$, sono noti i valori $y_{i} = f(x_{i})$ che assume in
+$n + 1$ punti $x_{i}$ con $i = 0, 1, \ldots, n$ appartenenti a un intervallo
+$[a,b]$. Tali punti sono chiamati **nodi** o **punti base dell'interpolazione**.
+
+È fissato un insieme di $n + 1$ funzioni $\phi_{i}(x)$ con $j = 0, 1, \ldots, n$
+definite su $[a,b]$ e linearmente indipendenti.
+
+Si vuole determinare una funzione:
+
+$$
+g(x) = \sum_{j=0}^{n} a_{j} \phi_{j}(x)
+$$
+
+che assuma nei punti $x_{i}$ gli stessi valori di $y_{i}$. Quindi
+$g(x_{i}) = y_{i}$ con $i = 0, 1, \ldots, n$.
+
+È importante individuare la classe delle funzioni $\phi_{j}(x)$ (cioè scegliere
+il modello dell'approssimazione) che deve tener conto delle specifiche proprietà
+della funzione $f(x)$. Le principali classi di funzioni utilizzate sono le
+funzioni razionali e le funzioni trigonometriche.
+
+Si esamina la classe delle funzioni polinomiali in cui $\phi_{j}(x) = x^{j}$ e
+si può dimostrare che $g(x)$ esiste ed è unica.
+
+## Polinomio di interpolazione
+
+Un polinomio di grado $n$ è una funzione nella forma:
+
+$$
+p(x) = a_{0} x^{n} + a_{1} x^{n-1} + \ldots + a_{n-1} x + a_{n}
+$$
+
+Affinché il polinomio sia di grado $n$ è necessario che $a_{0} \neq 0$.
+I numeri $a_{i}$ sono detti coefficienti del polinomio.
+
+Dati gli $n + 1$ punti $(x_{i}, y_{i})$ con $i = 0, 1, \ldots, n$ tali che
+$x_{i} \neq x_{j}$ per $i \neq j$, allora esiste ed è unico il polinomio
+$p(x)$ di grado $n$ al più tale che $p(x_{i}) = y_{i}$ con $i = 0, 1, \ldots, n$.
+
+## Polinomio di Lagrange
+
+    ...
+
+## Errore nell'interpolazione
+
+Dato il polinomio di interpolazione $p(x)$ della funzione $f(x)$ nei punti
+$x_{0}, x_{1}, \ldots, x_{n}$ si definisce la funzione errore
+dell'interpolazione di $f(x)$ con il polinomio $p(x)$:
+
+$$
+r(x) = f(x) - p(x)
+$$
+
+    ...
 # Glossario
 
 ## Matrici notevoli
