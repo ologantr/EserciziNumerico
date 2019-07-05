@@ -209,7 +209,7 @@ $$
           {\left\lVert \boldsymbol{x} \right\rVert}
     & \leq \left\lVert A \right\rVert \left\lVert A^{-1} \right\rVert
     \dfrac{\left\lVert \delta \boldsymbol{b} \right\rVert}
-          {\left\lVert \boldsymbol{x} \right\rVert}
+          {\left\lVert \boldsymbol{b} \right\rVert}
     & \qquad \qquad \text{si moltiplicano entrambi i membri per } \left\lVert A \right\rVert                                        \\[2ex]
 \end{aligned}
 $$
